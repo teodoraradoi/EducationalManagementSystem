@@ -1,22 +1,22 @@
 ﻿using ExtCore.Mvc.Infrastructure.Actions;
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Barebone.Actions
+namespace Secretary.Actions
 {
-    public class UseEndpointAction : IUseEndpointsAction
+    public class UseEndpointAciton : IUseEndpointsAction
     {
         public int Priority => 1000;
 
         public void Execute(IEndpointRouteBuilder endpointRouteBuilder, IServiceProvider serviceProvider)
         {
-            endpointRouteBuilder.MapControllerRoute(name: "Default", pattern: "{controller}/{action}", 
-                      defaults: new { controller = "Default", action = "Index" });
+            endpointRouteBuilder.MapControllerRoute(name: "Default", pattern: "{controller}/{action}",
+                defaults: new { controller = "Secretary", action = "Index" });
         }
     }
 }

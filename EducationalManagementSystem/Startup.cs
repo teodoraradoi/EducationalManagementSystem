@@ -26,8 +26,9 @@ namespace EducationalManagementSystem
 
         public void ConfigureServices(IServiceCollection services)
         {
-           // services.AddControllersWithViews();
-           // services.AddRazorPages();
+            // services.AddControllersWithViews();
+            // services.AddRazorPages();
+            services.AddControllersWithViews();
             services.AddExtCore(this.extensionsPath);
 
         }
