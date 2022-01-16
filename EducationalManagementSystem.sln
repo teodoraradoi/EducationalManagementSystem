@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationalManagementSystem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barebone", "Barebone\Barebone.csproj", "{72349B35-DC3F-40B4-9DF2-CDE11B5E770F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Secretary", "Secretary\Secretary.csproj", "{1FBC7F02-E3FF-4A4E-80B5-8A9EBA0843BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secretaries", "Secretaries\Secretaries.csproj", "{ED0AFCF8-5DE6-49E7-B745-4292E0E7F9A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secretaries.Data.Entities", "Secretaries.Data.Entities\Secretaries.Data.Entities.csproj", "{0116DBDB-77A2-41F9-9476-D17B29CDD1ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secretaries.Data.Abstractions", "Secretaries.Data.Abstractions\Secretaries.Data.Abstractions.csproj", "{91D9D280-76F4-4F36-8D9E-0AA2BB76FAB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secretaries.Data.EntityFramework.Sqlite", "Secretaries.Data.EntityFramework.Sqlite\Secretaries.Data.EntityFramework.Sqlite.csproj", "{7CFBA294-8985-4B13-9C08-FE8261451B26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +29,22 @@ Global
 		{72349B35-DC3F-40B4-9DF2-CDE11B5E770F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72349B35-DC3F-40B4-9DF2-CDE11B5E770F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72349B35-DC3F-40B4-9DF2-CDE11B5E770F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FBC7F02-E3FF-4A4E-80B5-8A9EBA0843BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FBC7F02-E3FF-4A4E-80B5-8A9EBA0843BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FBC7F02-E3FF-4A4E-80B5-8A9EBA0843BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FBC7F02-E3FF-4A4E-80B5-8A9EBA0843BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED0AFCF8-5DE6-49E7-B745-4292E0E7F9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED0AFCF8-5DE6-49E7-B745-4292E0E7F9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED0AFCF8-5DE6-49E7-B745-4292E0E7F9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED0AFCF8-5DE6-49E7-B745-4292E0E7F9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0116DBDB-77A2-41F9-9476-D17B29CDD1ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0116DBDB-77A2-41F9-9476-D17B29CDD1ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0116DBDB-77A2-41F9-9476-D17B29CDD1ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0116DBDB-77A2-41F9-9476-D17B29CDD1ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D9D280-76F4-4F36-8D9E-0AA2BB76FAB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D9D280-76F4-4F36-8D9E-0AA2BB76FAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D9D280-76F4-4F36-8D9E-0AA2BB76FAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D9D280-76F4-4F36-8D9E-0AA2BB76FAB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CFBA294-8985-4B13-9C08-FE8261451B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CFBA294-8985-4B13-9C08-FE8261451B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CFBA294-8985-4B13-9C08-FE8261451B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CFBA294-8985-4B13-9C08-FE8261451B26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
