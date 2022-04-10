@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Secretaries.Data.Entities.Secretary>
+Secretaries
+@foreach (var person in this.Model)
+{
+  <p>@person.Name</p>
+}

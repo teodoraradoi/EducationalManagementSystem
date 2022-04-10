@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using ExtCore.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using ExtCore.Data.EntityFramework;
+using Secretaries.Data.Abstractions;
+using Secretaries.Data.EntityFramework.Sqlite;
 
 namespace EducationalManagementSystem
 {
@@ -19,8 +22,11 @@ namespace EducationalManagementSystem
     {
         private string extensionsPath;
 
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
+            this.Configuration = configuration;
             this.extensionsPath = webHostEnvironment.ContentRootPath + configuration["Extensions:Path"];
         }
 
@@ -30,6 +36,14 @@ namespace EducationalManagementSystem
             // services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddExtCore(this.extensionsPath);
+            services.Configure<StorageContextOptions>(options =>
+            {
+                options.ConnectionString = this.Configuration.GetConnectionString("Default");
+            }
+             );
+
+            //services.AddIdentity<>
+            services.AddScoped<ISecretaryRepository, SecretaryRepository>();
 
         }
 

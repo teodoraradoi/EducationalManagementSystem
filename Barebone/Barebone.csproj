@@ -12,10 +12,6 @@
 	<ItemGroup>
 		 <EmbeddedResource Include="Styles\**;Views\**;JavaScript\**" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Secretary\Secretary.csproj" />
-	</ItemGroup>
 	
 	
 </Project>

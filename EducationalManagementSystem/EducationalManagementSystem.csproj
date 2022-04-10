@@ -5,8 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExtCore.Data" Version="6.0.0" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="7.0.0" />
+    <PackageReference Include="ExtCore.Data.Entities.Abstractions" Version="7.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="6.0.0" />
     <PackageReference Include="ExtCore.Mvc" Version="6.0.0" />
     <PackageReference Include="ExtCore.WebApplication" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="D:\EducationalManagementSystem\Secretaries.Data.Abstractions\Secretaries.Data.Abstractions.csproj" />
+    <ProjectReference Include="D:\EducationalManagementSystem\Secretaries.Data.EntityFramework.Sqlite\Secretaries.Data.EntityFramework.Sqlite.csproj" />
   </ItemGroup>
 
 </Project>
