@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Secretaries.Actions
 {
-    public class UseEndpointsAction
+    public class UseEndpointsAction : IUseEndpointsAction
     {
         public int Priority => 1000;
 

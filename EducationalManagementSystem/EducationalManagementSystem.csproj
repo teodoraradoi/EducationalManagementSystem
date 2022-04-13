@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="D:\EducationalManagementSystem\Secretaries.Data.Abstractions\Secretaries.Data.Abstractions.csproj" />
-    <ProjectReference Include="D:\EducationalManagementSystem\Secretaries.Data.EntityFramework.Sqlite\Secretaries.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Secretaries.Data.Abstractions\Secretaries.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Secretaries.Data.EntityFramework.Sqlite\Secretaries.Data.EntityFramework.Sqlite.csproj" />
   </ItemGroup>
 
 </Project>

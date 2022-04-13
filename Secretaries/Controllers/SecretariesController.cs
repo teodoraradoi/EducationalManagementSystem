@@ -17,10 +17,12 @@ namespace Secretaries.Controllers
         {
             this.storage = storage;
         }
-        public IActionResult Index()
+        public ActionResult Index()
         {
             //return View("~/Views/Index.cshtml");
             return View("~/Views/Index.cshtml", this.storage.GetRepository<ISecretaryRepository>().All());
+           // return View(this.storage.GetRepository<ISecretaryRepository>().All());
+            //return View();
         }
     }
 }
