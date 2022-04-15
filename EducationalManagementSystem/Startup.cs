@@ -15,6 +15,7 @@ using System.IO;
 using ExtCore.Data.EntityFramework;
 using Secretaries.Data.Abstractions;
 using Secretaries.Data.EntityFramework.Sqlite;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EducationalManagementSystem
 {
@@ -35,6 +36,9 @@ namespace EducationalManagementSystem
             // services.AddControllersWithViews();
             // services.AddRazorPages();
             services.AddControllersWithViews();
+            //services.AddRazorPages();
+            //services.AddControllers().AddApplicationPart();
+
             services.AddExtCore(this.extensionsPath);
             services.Configure<StorageContextOptions>(options =>
             {

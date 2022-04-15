@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	  <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Views\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="6.0.0" />
+  </ItemGroup>
+
+
+
+</Project>

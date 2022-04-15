@@ -1,0 +1,25 @@
+﻿<h1>Create secretary account</h1>
+
+<form asp-action="Create" enctype="multipart/form-data">
+   
+        <div class="col">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="Picture" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+        </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+            
+</form>

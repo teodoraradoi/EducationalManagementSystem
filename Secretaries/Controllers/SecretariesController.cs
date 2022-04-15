@@ -13,16 +13,27 @@ namespace Secretaries.Controllers
     {
         private IStorage storage;
 
-    public SecretariesController(IStorage storage)
+        public SecretariesController(IStorage storage)
         {
             this.storage = storage;
         }
         public ActionResult Index()
         {
             //return View("~/Views/Index.cshtml");
-            return View("~/Views/Index.cshtml", this.storage.GetRepository<ISecretaryRepository>().All());
-           // return View(this.storage.GetRepository<ISecretaryRepository>().All());
+            //return View("~/Views/Index.cshtml", this.storage.GetRepository<ISecretaryRepository>().All());
+             return View(this.storage.GetRepository<ISecretaryRepository>().All());
             //return View();
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        /* [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> Create([FromForm] Secretary model)
+         {
+         }*/
     }
 }

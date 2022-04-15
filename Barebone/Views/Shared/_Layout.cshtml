@@ -50,10 +50,10 @@
                             <a asp-area="" asp-controller="Secretaries" asp-actions="Index">Secretary</a>
                         </li>
                         <li>
-                            <a href="#">Home 2</a>
+                            <a asp-area="" asp-controller="Teachers" asp-actions="Index">Teachers</a>
                         </li>
-                        <li>
-                            <a href="#">Home 3</a>
+                         <li>
+                            <a asp-area="" asp-controller="Students" asp-actions="Index">Students</a>
                         </li>
                     </ul>
                 </li>
@@ -86,12 +86,10 @@
         <!-- Page Content -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+    
 
                     @RenderBody()
-                </div>
-            </nav>
+       
         </div>
     </div>
 
