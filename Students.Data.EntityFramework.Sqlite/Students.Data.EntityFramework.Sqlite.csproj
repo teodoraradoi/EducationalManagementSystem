@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Students.Data.Abstractions\Students.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Students.Data.Entities\Students.Data.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

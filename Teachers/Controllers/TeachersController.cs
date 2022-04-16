@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ExtCore.Data.Abstractions;
+using Teachers.Data.Abstractions;
 
 namespace Teachers.Controllers
 {
     public class TeachersController : Controller
     {
+        private IStorage storage;
+
+        public TeachersController(IStorage storage)
+        {
+            this.storage = storage;
+        }
         // GET: TeachersController
         public ActionResult Index()
         {
-           return View();
+           return View(this.storage.GetRepository<ITeachersRepository>().All());
         }
 
         // GET: TeachersController/Details/5

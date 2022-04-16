@@ -1,1 +1,8 @@
-﻿<h1>Students</h1>
+﻿@model IEnumerable<Students.Data.Entities.Student>
+
+<h1>Students</h1>
+
+@foreach (var person in this.Model)
+{
+  <p>@person.Name</p>
+}

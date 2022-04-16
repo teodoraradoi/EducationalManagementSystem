@@ -16,6 +16,8 @@ using ExtCore.Data.EntityFramework;
 using Secretaries.Data.Abstractions;
 using Secretaries.Data.EntityFramework.Sqlite;
 using Microsoft.AspNetCore.Mvc;
+using Teachers.Data.Abstractions;
+using Teachers.Data.EntityFramework.Sqlite;
 
 namespace EducationalManagementSystem
 {
@@ -47,7 +49,8 @@ namespace EducationalManagementSystem
              );
 
             //services.AddIdentity<>
-            services.AddScoped<ISecretaryRepository, SecretaryRepository>();
+            //services.AddScoped<ISecretaryRepository, SecretaryRepository>();
+            services.AddScoped<ITeachersRepository, TeachersRepository>();
 
         }
 

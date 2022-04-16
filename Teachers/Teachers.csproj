@@ -13,6 +13,10 @@
     <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="6.0.0" />
   </ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj" />
+	</ItemGroup>
+
 
 
 </Project>
