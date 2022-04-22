@@ -11,6 +11,15 @@
     <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="6.0.0" />
     <PackageReference Include="ExtCore.Mvc" Version="6.0.0" />
     <PackageReference Include="ExtCore.WebApplication" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +27,7 @@
     <ProjectReference Include="..\Secretaries.Data.EntityFramework.Sqlite\Secretaries.Data.EntityFramework.Sqlite.csproj" />
     <ProjectReference Include="..\Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Teachers.Data.EntityFramework.Sqlite\Teachers.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Barebone\Barebone.csproj" />
   </ItemGroup>
 
 </Project>

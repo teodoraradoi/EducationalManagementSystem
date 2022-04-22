@@ -25,17 +25,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StudentsExtension", "Studen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TeachersExtension", "TeachersExtension", "{466FCE46-6491-48A7-AD5C-2F459C9798C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Data.Entities", "Students.Data.Entities\Students.Data.Entities.csproj", "{7D5B77E7-AA51-47A8-BAF6-3352DF665614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Data.Entities", "Students.Data.Entities\Students.Data.Entities.csproj", "{7D5B77E7-AA51-47A8-BAF6-3352DF665614}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Data.Abstractions", "Students.Data.Abstractions\Students.Data.Abstractions.csproj", "{FD0F6346-878D-4020-8CAB-FA1CACBB34A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Data.Abstractions", "Students.Data.Abstractions\Students.Data.Abstractions.csproj", "{FD0F6346-878D-4020-8CAB-FA1CACBB34A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Data.EntityFramework.Sqlite", "Students.Data.EntityFramework.Sqlite\Students.Data.EntityFramework.Sqlite.csproj", "{1A282C70-59EA-4602-8070-14D4DD72D258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Data.EntityFramework.Sqlite", "Students.Data.EntityFramework.Sqlite\Students.Data.EntityFramework.Sqlite.csproj", "{1A282C70-59EA-4602-8070-14D4DD72D258}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Data.Entities", "Teachers.Data.Entities\Teachers.Data.Entities.csproj", "{941CE76B-71DD-415D-B306-789A2746286A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Data.Entities", "Teachers.Data.Entities\Teachers.Data.Entities.csproj", "{941CE76B-71DD-415D-B306-789A2746286A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Data.Abstractions", "Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj", "{1B897F32-2B1D-4786-8646-EBC95DF6C816}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Data.Abstractions", "Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj", "{1B897F32-2B1D-4786-8646-EBC95DF6C816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Data.EntityFramework.Sqlite", "Teachers.Data.EntityFramework.Sqlite\Teachers.Data.EntityFramework.Sqlite.csproj", "{BC493EBA-18E1-4054-881C-0DE4B458FFBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Data.EntityFramework.Sqlite", "Teachers.Data.EntityFramework.Sqlite\Teachers.Data.EntityFramework.Sqlite.csproj", "{BC493EBA-18E1-4054-881C-0DE4B458FFBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Data.Entities", "Identity.Data.Entities\Identity.Data.Entities.csproj", "{9E7EDB86-EAEB-428F-A142-9707EFF5B118}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Data.EntityFramework", "Identity.Data.EntityFramework\Identity.Data.EntityFramework.csproj", "{CC18C190-18E7-47D4-B49D-A1912E51D932}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +103,14 @@ Global
 		{BC493EBA-18E1-4054-881C-0DE4B458FFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC493EBA-18E1-4054-881C-0DE4B458FFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC493EBA-18E1-4054-881C-0DE4B458FFBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E7EDB86-EAEB-428F-A142-9707EFF5B118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E7EDB86-EAEB-428F-A142-9707EFF5B118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E7EDB86-EAEB-428F-A142-9707EFF5B118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E7EDB86-EAEB-428F-A142-9707EFF5B118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC18C190-18E7-47D4-B49D-A1912E51D932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC18C190-18E7-47D4-B49D-A1912E51D932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC18C190-18E7-47D4-B49D-A1912E51D932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC18C190-18E7-47D4-B49D-A1912E51D932}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

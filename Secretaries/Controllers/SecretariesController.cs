@@ -1,4 +1,5 @@
 ﻿using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Secretaries.Data.Abstractions;
 using System;
@@ -17,6 +18,8 @@ namespace Secretaries.Controllers
         {
             this.storage = storage;
         }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             //return View("~/Views/Index.cshtml");
