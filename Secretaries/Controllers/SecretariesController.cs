@@ -19,7 +19,7 @@ namespace Secretaries.Controllers
             this.storage = storage;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Index()
         {
             //return View("~/Views/Index.cshtml");

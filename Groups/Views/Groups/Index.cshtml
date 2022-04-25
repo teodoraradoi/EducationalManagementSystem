@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Groups.Data.Entities.Group>
+
+<h1>Groups</h1>
+
+@foreach (var person in this.Model)
+{
+  <p>@person.Name</p>
+}

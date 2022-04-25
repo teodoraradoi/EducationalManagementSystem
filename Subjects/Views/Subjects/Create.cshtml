@@ -1,0 +1,48 @@
+﻿@model Subjects.Data.Entities.Subject
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Create a subject</h1>
+
+
+<form asp-action="Create" enctype="multipart/form-data">
+   
+        <div class="col">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CourseId" class="control-label"></label>
+                <input asp-for="CourseID" class="form-control" />
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+
+       <select class="form-select" aria-label="Year">
+  <option selected>Please select the year</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="3">4</option>
+</select>
+
+       <select class="form-select" aria-label="Semester">
+  <option selected>Please select the semester</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+</select>
+
+
+
+        </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+            
+</form>

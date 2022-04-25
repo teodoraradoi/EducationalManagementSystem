@@ -20,6 +20,7 @@ using Teachers.Data.Abstractions;
 using Teachers.Data.EntityFramework.Sqlite;
 using Microsoft.AspNetCore.Identity;
 using Identity.Data.Entities;
+using Subjects.Data.Abstractions;
 
 namespace EducationalManagementSystem
 {
@@ -50,16 +51,17 @@ namespace EducationalManagementSystem
 
             //services.AddIdentity<>
             //services.AddScoped<ISecretaryRepository, SecretaryRepository>();
-            services.AddScoped<ITeachersRepository, TeachersRepository>();
+            //services.AddScoped<ITeachersRepository, TeachersRepository>();
+            //services.AddScoped<ISubjectRepository, SubjectRepository>();
 
             //var serviceProvider = services.BuildServiceProvider();
-           
-           // await this.CreateRolesandUsers(serviceProvider);
+
+            // await this.CreateRolesandUsers(serviceProvider);
 
         }
 
 
-        private async Task CreateRolesandUsers(IServiceProvider service)
+        /*private async Task CreateRolesandUsers(IServiceProvider service)
         {
             var _roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
             var _userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
@@ -106,19 +108,32 @@ namespace EducationalManagementSystem
                 role.Name = "Student";
                 await _roleManager.CreateAsync(role);
             }
-        }
+        }*/
 
 
 
 
         public void Configure(IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseAuthentication();
-            applicationBuilder.UseAuthorization();
+            
+               
 
 
             applicationBuilder.UseDeveloperExceptionPage();
+
             applicationBuilder.UseExtCore();
+
+
+
+            //applicationBuilder.UseRouting();
+
+            //applicationBuilder.UseAuthentication();
+            
+           // applicationBuilder.UseAuthorization();
+
+
+
+
             applicationBuilder.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Views\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="Views\Subjects\Create.cshtml" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Subjects.Data.Abstractions\Subjects.Data.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
