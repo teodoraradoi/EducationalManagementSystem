@@ -1,0 +1,45 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Tuple<Assignments.Data.Entities.Assignment, Courses.Data.Entities.Course, Laboratories.Data.Entities.Laboratory>>
+
+<h1>Assignments</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">SubjectId</th>
+      <th scope="col">Date</th>
+      <th scope="col">MaxGrade</th>
+      <th scope="col">Status</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int i = 1;}
+      @foreach (var assignment in this.Model)
+      {
+            <tr>
+              <td>@i</td>
+              <td>@assignment.Item1.Name</td>
+              <td>@assignment.Item1.Description</td>
+              @if(@assignment.Item2.Name != null) {
+                <td>@assignment.Item2.Name</td>
+              }
+              else {
+                   <td>@assignment.Item3.Name</td>
+              }
+              
+
+              <td>@assignment.Item1.DueDate</td>
+              <td>@assignment.Item1.MaxGrade</td>
+              <td>@assignment.Item1.Status</td>
+              <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id" class="btn btn-dark">Edit</a>
+               <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id" class="btn btn-dark">Delete</a>
+               <a asp-controller="Submissions" asp-action="Create" asp-route-id="@assignment.Item1.Id" class="btn btn-dark">Submit homework</a></td>
+            </tr>
+            i++;
+      }
+  </tbody>
+</table>

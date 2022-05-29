@@ -1,0 +1,36 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Tuple<Groups.Data.Entities.Subgroup, Groups.Data.Entities.Group>>
+
+<h1>List of laboratories</h1>
+@*
+@foreach (var person in this.Model)
+{
+  <p>@person.Name</p>
+}
+*@
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Group Name</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int i = 1;}
+      @foreach (var list in this.Model)
+      {
+            <tr>
+              <td>@i</td>
+              <td>@list.Item1.Name</td>
+              <td>@list.Item2.Name</td>
+              <td> <a asp-controller="Subgroups" asp-action="Edit" asp-route-id="@list.Item1.Id" class="btn btn-dark">Edit</a>
+               <a asp-controller="Subgroups" asp-action="Delete" asp-route-Id="@list.Item1.Id" class="btn btn-dark">Delete</a></td>
+            </tr>
+            i++;
+      }
+  </tbody>
+</table>

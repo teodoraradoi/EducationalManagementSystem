@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Groups.Data.Entities.Subgroup
+@model Groups.ViewModels.CreateViewModel
 
 
 @{
@@ -12,19 +12,29 @@
 <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Subgroup.Name" class="control-label"></label>
+                <input asp-for="Subgroup.Name" class="form-control" />
+                <span asp-validation-for="Subgroup.Name" class="text-danger"></span>
             </div>
+
+
+   
+
+                <select asp-for="Subgroup.GroupId" 
+            asp-items="@(new SelectList(Model.Groups, "Id", "Name"))">
+        <option>Please select one</option>
+    </select>
+           
+
          
 
+   @*
             <div class="form-group">
                 <label asp-for="GroupId" class="control-label"></label>
                 <input asp-for="GroupId" class="form-control" />
                 <span asp-validation-for="GroupId" class="text-danger"></span>
             </div>
 
-   @*
 
                                     <div class="form-group">
                 <label asp-for="Year" class="control-label"></label>

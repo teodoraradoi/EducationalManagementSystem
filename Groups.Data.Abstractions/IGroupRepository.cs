@@ -11,6 +11,9 @@ namespace Groups.Data.Abstractions
     public interface IGroupRepository : IRepository
     {
         IEnumerable<Group> All();
+        Group FindById(Guid? id);
         void Create(Group group);
+        void Edit(Group group);
+        void Delete(Guid id);
     }
 }

@@ -20,7 +20,6 @@ using Teachers.Data.Abstractions;
 using Teachers.Data.EntityFramework.Sqlite;
 using Microsoft.AspNetCore.Identity;
 using Identity.Data.Entities;
-using Subjects.Data.Abstractions;
 
 namespace EducationalManagementSystem
 {

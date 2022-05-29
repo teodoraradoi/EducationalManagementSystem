@@ -49,7 +49,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                @*<li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
@@ -62,36 +62,47 @@
                             <a asp-area="" asp-controller="Students" asp-actions="Index">Students</a>
                         </li>
                           <li>
-                            <a asp-area="" asp-controller="Subjects" asp-actions="Index">Subjects</a>
+                            <a asp-area="" asp-controller="Courses" asp-actions="Index">Courses</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Laboratories" asp-actions="Index">Laboratories</a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Groups" asp-actions="Index">Groups</a>
                         </li>
+
                     </ul>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
+                </li>*@
+                       <li>
+                            <a asp-area="" asp-controller="Default" asp-actions="Index">Home</a>
+                        </li>
+                   <li>
+                            <a asp-area="" asp-controller="Secretaries" asp-actions="Index">Secretary</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a asp-area="" asp-controller="Teachers" asp-actions="Index">Teachers</a>
+                        </li>
+                         <li>
+                            <a asp-area="" asp-controller="Students" asp-actions="Index">Students</a>
+                        </li>
+                          <li>
+                            <a asp-area="" asp-controller="Courses" asp-actions="Index">Courses</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a asp-area="" asp-controller="Laboratories" asp-actions="Index">Laboratories</a>
                         </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
+                        <li>
+                            <a asp-area="" asp-controller="Groups" asp-actions="Index">Groups</a>
+                        </li>
+                          <li>
+                            <a asp-area="" asp-controller="Subgroups" asp-actions="Index">Subgroups</a>
+                        </li>
+                         <li>
+                            <a asp-area="" asp-controller="Assignments" asp-actions="Index">Assignments</a>
+                        </li>
+                             <li>
+                            <a asp-area="" asp-controller="Submissions" asp-actions="Index">Submissions</a>
+                        </li>
             </ul>
 
 

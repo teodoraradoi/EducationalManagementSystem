@@ -1,0 +1,43 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Assignments.Data.Entities.Assignment
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit assignment</h1>
+
+<form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            
+            @Html.HiddenFor(model => model.SubjectId)
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+                        <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+             <div class="form-group">
+                <label asp-for="DueDate" class="control-label"></label>
+                <input asp-for="DueDate" class="form-control" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            
+                         <div class="form-group">
+                <label asp-for="MaxGrade" class="control-label"></label>
+                <input asp-for="MaxGrade" class="form-control" />
+                <span asp-validation-for="MaxGrade" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.Id" class="btn btn-success" /> <a asp-controller="Assignments" asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+</form>
+   

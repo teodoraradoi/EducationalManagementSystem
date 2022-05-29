@@ -26,8 +26,6 @@ namespace Groups.Controllers
             return View(this.storage.GetRepository<IGroupRepository>().All());
         }
 
-
-
         // GET: GroupsController/Create
         [HttpGet]
         public ActionResult Create()
@@ -48,5 +46,56 @@ namespace Groups.Controllers
             return this.View();
         }
 
+        // GET: GroupsController/Edit/5
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Group group = this.storage.GetRepository<IGroupRepository>().FindById(id);
+
+            return View(group);
+        }
+
+        // POST: GroupssController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Guid Id, [Bind("Id,SpecializationName,Name,Year")] Group group)
+        {
+            if (ModelState.IsValid)
+            {
+                this.storage.GetRepository<IGroupRepository>().Edit(group);
+                this.storage.Save();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        // GET: GroupsController/Delete/5
+        public ActionResult Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Group group = this.storage.GetRepository<IGroupRepository>().FindById(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            return View(group);
+        }
+
+        // POST: GroupsController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            this.storage.GetRepository<IGroupRepository>().Delete(id);
+            this.storage.Save();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

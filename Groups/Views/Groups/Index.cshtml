@@ -1,8 +1,32 @@
-﻿@model IEnumerable<Groups.Data.Entities.Group>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Groups.Data.Entities.Group>
 
 <h1>Groups</h1>
 
-@foreach (var person in this.Model)
-{
-  <p>@person.Name</p>
-}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+           <th scope="col">Name</th>
+           <th scope="col">Specialization Name</th>
+      <th scope="col">Year</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int i = 1;}
+      @foreach (var group in this.Model)
+      {
+            <tr>
+              <td>@i</td>
+              <td>@group.Name</td>
+              <td>@group.SpecializationName</td>
+              <td>@group.Year</td>
+              <td> <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" class="btn btn-dark">Edit</a>
+               <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-dark">Delete</a></td>
+            </tr>
+            i++;
+      }
+  </tbody>
+</table>
