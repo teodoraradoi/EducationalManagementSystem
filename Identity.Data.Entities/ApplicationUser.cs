@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Data.Entities
 {
-    public class ApplicationUser : IdentityUser<int>
-    {
-    
+    public class ApplicationUser : IdentityUser<Guid>
+    { 
     }
 }

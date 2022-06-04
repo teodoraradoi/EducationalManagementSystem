@@ -16,6 +16,11 @@ namespace Groups.Data.EntityFramework.Sqlite
         {
             return this.dbSet.OrderBy(p => p.Name);
         }
+        public IEnumerable<Subgroup> AllById(Guid id)
+        {
+            IEnumerable<Subgroup> subgroups= this.dbSet.Where(p => p.GroupId == id);
+            return subgroups;
+        }
         public Subgroup FindById(Guid? id)
         {
             return this.dbSet.FirstOrDefault(e => e.Id == id);

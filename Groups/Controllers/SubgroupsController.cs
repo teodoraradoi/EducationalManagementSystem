@@ -2,6 +2,7 @@
 using Groups.Data.Abstractions;
 using Groups.Data.Entities;
 using Groups.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,12 +16,14 @@ namespace Groups.Controllers
     {
         private IStorage storage;
 
+        
         public SubgroupsController(IStorage storage)
         {
             this.storage = storage;
         }
 
         // GET: SubgroupController
+        [Authorize(Roles = "Secretary")]
         public ActionResult Index()
         {
             IEnumerable subgroups = this.storage.GetRepository<ISubgroupRepository>().All();

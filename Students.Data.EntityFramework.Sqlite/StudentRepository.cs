@@ -13,7 +13,12 @@ namespace Students.Data.EntityFramework.Sqlite
     {
         public IEnumerable<Student> All()
         {
-            return this.dbSet.OrderBy(p => p.Name);
+            return this.dbSet.OrderBy(p => p.Id);
+        }
+
+        public void Create(Student student)
+        {
+            this.dbSet.Add(student);
         }
     }
 }

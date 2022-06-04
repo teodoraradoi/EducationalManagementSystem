@@ -17,6 +17,7 @@ namespace Courses.Data.Entities
         public DateTime Time { get; set; }
         public int Year { get; set; }
         public int Semester { get; set; }
+        public Guid TeacherId { get; set; }
         //public List<Groups> Groups { get; set; }
     }
 }

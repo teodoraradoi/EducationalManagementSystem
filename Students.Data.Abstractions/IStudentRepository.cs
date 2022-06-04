@@ -8,5 +8,6 @@ namespace Students.Data.Abstractions
     public interface IStudentRepository : IRepository
     {
         IEnumerable<Student> All();
+        void Create(Student student);
     }
 }

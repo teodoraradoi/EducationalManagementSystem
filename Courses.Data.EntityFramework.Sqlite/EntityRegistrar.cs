@@ -19,6 +19,13 @@ namespace Courses.Data.EntityFramework.Sqlite
                 etb.Property(e => e.Id);
                 etb.ToTable("Course");
             });
+
+            modelbuilder.Entity<Course>(etb =>
+            {
+                etb.HasKey(e => e.Id);
+                etb.Property(e => e.Id);
+                etb.ToTable("CourseGroup");
+            });
         }
     }
 }

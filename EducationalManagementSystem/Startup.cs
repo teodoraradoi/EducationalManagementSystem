@@ -126,9 +126,9 @@ namespace EducationalManagementSystem
 
             //applicationBuilder.UseRouting();
 
-            //applicationBuilder.UseAuthentication();
+             //applicationBuilder.UseAuthentication();
             
-           // applicationBuilder.UseAuthorization();
+            //applicationBuilder.UseAuthorization();
 
 
 

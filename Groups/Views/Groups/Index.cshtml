@@ -11,7 +11,10 @@
            <th scope="col">Name</th>
            <th scope="col">Specialization Name</th>
       <th scope="col">Year</th>
-      <th scope="col">Actions</th>
+      @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+            {
+                <th scope="col">Actions</th>
+            }
     </tr>
   </thead>
   <tbody>
@@ -23,8 +26,10 @@
               <td>@group.Name</td>
               <td>@group.SpecializationName</td>
               <td>@group.Year</td>
+              @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {
               <td> <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" class="btn btn-dark">Edit</a>
                <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-dark">Delete</a></td>
+              }
             </tr>
             i++;
       }

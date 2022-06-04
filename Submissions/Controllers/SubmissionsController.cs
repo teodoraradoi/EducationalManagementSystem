@@ -1,6 +1,7 @@
 ﻿using Assignments.Data.Abstractions;
 using Assignments.Data.Entities;
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,7 @@ namespace Submissions.Controllers
         }
 
         // GET: SubmissionsController/Create
+        [Authorize(Roles = "Student")]
         public ActionResult Create(Guid id)
         {
             SubmissionViewModel submission = new SubmissionViewModel();
@@ -52,6 +54,7 @@ namespace Submissions.Controllers
         }
 
         // POST: SubmissionsController/Create
+        [Authorize(Roles = "Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm] SubmissionViewModel model)

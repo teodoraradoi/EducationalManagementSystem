@@ -23,10 +23,8 @@ namespace Barebone.Actions
             applicationBuilder.UseStaticFiles();
 
 
-
-
-            applicationBuilder.UseAuthorization();
             applicationBuilder.UseAuthentication();
+            applicationBuilder.UseAuthorization();
         } 
     }
 }

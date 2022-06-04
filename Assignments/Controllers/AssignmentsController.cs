@@ -9,6 +9,7 @@ using Laboratories.Data.Entities;
 using System.Collections.Generic;
 using Courses.Data.Abstractions;
 using Laboratories.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignments.Controllers
 {
@@ -21,6 +22,7 @@ namespace Assignments.Controllers
         }
 
         // GET: AssignmentsController
+        [Authorize(Roles = "Student, Teacher")]
         public ActionResult Index()
         {
             IEnumerable<Assignment> assignments = this.storage.GetRepository<IAssignmentRepository>().All();
@@ -54,6 +56,7 @@ namespace Assignments.Controllers
         }
 
         // GET: AssignmentsController/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(Guid id)
         {
             Assignment assignment = new Assignment();
@@ -62,6 +65,7 @@ namespace Assignments.Controllers
         }
 
         // POST: AssignmentsController/Create
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Assignment assignment)
@@ -76,6 +80,7 @@ namespace Assignments.Controllers
         }
 
         // GET: AssignmentsController/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(Guid id)
         {
             Assignment assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(id);
@@ -83,6 +88,7 @@ namespace Assignments.Controllers
         }
 
         // POST: AssignmentsController/Edit/5
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid id, [Bind("Id,Name,Description,SubjectId,DueDate,MaxGrade")] Assignment assignment)
@@ -99,6 +105,7 @@ namespace Assignments.Controllers
         }
 
         // GET: AssignmentsController/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(Guid id)
         {
             Assignment assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(id);
@@ -124,6 +131,7 @@ namespace Assignments.Controllers
         }
 
         // POST: AssignmentsController/Delete/5
+        [Authorize(Roles = "Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

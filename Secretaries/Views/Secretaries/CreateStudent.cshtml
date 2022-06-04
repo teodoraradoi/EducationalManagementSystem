@@ -1,0 +1,124 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Secretaries.ViewModels.StudentAccountCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<head>
+ @*
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>*@
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+
+</head>
+
+
+
+<h1>Create student account</h1>
+
+ <div class="col-md-4">
+        <form  asp-action="CreateStudent" enctype="multipart/form-data" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+
+                        <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+       
+             <div class="input-box">
+                <label class="label-text">Group</label>
+                <div class="form-group">
+                <select id="groupDropdown" asp-for="GroupId" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))">
+                    <option value="">Select group...</option>
+                 </select>
+                 <span asp-validation-for="GroupId" class="text-danger"></span>
+                </div>
+             </div>
+
+            @*
+
+                  <div class="form-group">
+            <select id="subgroupDropdown" asp-for="SubgroupId">
+                <option>Please select one</option>
+             </select>
+            </div>
+
+*@
+
+
+    
+        <div class="input-box">
+            <label class="label-text">Subgroup</label>
+            <div class="form-group">
+                <select id="subgroupDropdown" asp-for="SubgroupId" class="form-control">
+                    <option value="">Select subgroup...</option>
+                </select>
+                <span asp-validation-for="SubgroupId" class="text-danger"></span>
+            </div>
+        </div>
+   
+
+
+
+
+            <input type="submit" name="CreateStudent" value="CreateStudent" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    
+
+    <script>
+
+
+        $(document).ready(function () {
+
+    $("#groupDropdown").change(function () {
+        var groupId = $(this).val();
+        $.getJSON("/Secretaries/GetSubgroupsList", { Id: groupId }, function (data) {
+            var item = "";
+            $("#subgroupDropdown").find('option').not(':first').remove();
+            //$("#subgroupDropdown").find('option').not(':first').remove();
+            item += '<option value="">Select subgroup...</option>'
+            $.each(data, function (i, subgroup) {
+                console.log(subgroup)
+                let id =  subgroup.id;
+                let name = subgroup.name;
+                item += '<option value="' + id + '">' + name + '</option>'
+                console.log(item)
+            });
+            console.log(item);
+            $("#subgroupDropdown").html(item);
+        });
+    });
+});
+
+
+</script>

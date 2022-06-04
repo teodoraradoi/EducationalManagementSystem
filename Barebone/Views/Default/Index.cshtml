@@ -1,23 +1,174 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
-<h1>Welcome!</h1>
+@{
+    ViewData["Title"] = "Dashboard";
+}
 
+<h1>Dashboard</h1>
+
+ @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {        
  <a asp-controller="Groups" asp-action="Create" class="btn btn-dark">Create group</a>
  <a asp-controller="Subgroups" asp-action="Create" class="btn btn-dark">Create subgroup</a>
- <a asp-controller="Courses" asp-action="Create" class="btn btn-dark">Create course</a>
- <a asp-controller="Laboratories" asp-action="Create" class="btn btn-dark">Create laboratory</a>
- <a asp-controller="Assignments" asp-action="Create" class="btn btn-dark">Create assignment</a>
-     <br>
+ <a asp-controller="Courses" asp-action="Create" class="btn btn-dark">Create course</a>               
+ <a asp-controller="Secretaries" asp-action="CreateStudent" class="btn btn-dark">Create student account</a>               
+ }
 
+@if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+{
+    <a asp-controller="Laboratories" asp-action="Create" class="btn btn-dark">Create laboratory</a>
+    <a asp-controller="Assignments" asp-action="Create" class="btn btn-dark">Create assignment</a>
+}
+<br>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed metus placerat, placerat urna nec, dapibus nisi. Mauris molestie nisi eu nulla luctus pretium. Maecenas velit felis, mollis in efficitur rhoncus, sollicitudin rutrum purus. Pellentesque nisl massa, tempus vitae enim eu, luctus suscipit nibh. Aliquam laoreet placerat felis, id ultricies ipsum fermentum sit amet. Proin vitae nulla libero. Integer libero tortor, pretium non aliquet eget, sollicitudin eget magna. Maecenas finibus leo felis, sed consectetur leo imperdiet pulvinar. Etiam a cursus est. Pellentesque lobortis dui leo, sed vestibulum arcu aliquam quis. Aenean urna nisl, faucibus et nulla eget, tristique finibus neque.
+     
+ @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {
 
-Cras ullamcorper velit nec ligula mattis, sed tempor metus viverra. Curabitur in metus et turpis rhoncus vulputate. Sed tristique purus eget nunc mattis volutpat. Fusce dolor ex, tristique id faucibus vel, ullamcorper eget velit. Suspendisse ultrices enim eu sem gravida, ultricies vehicula risus sodales. Proin nec ex ut ex ultricies iaculis. Nunc malesuada viverra sapien vitae aliquam. Duis rutrum posuere justo, sollicitudin semper orci efficitur et. Curabitur ultricies nulla non felis ullamcorper tempus. Vivamus quis viverra leo. Quisque nec sodales diam. Proin diam nulla, varius sit amet euismod et, eleifend eget augue.
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Students</h5>
+        <p class="card-text">There are currently 500 students enrolled.</p>
+        <a asp-controller="Students" asp-action="Index" class="btn btn-primary special-button">View students</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Teachers</h5>
+        <p class="card-text">There are currently 140 teachers.</p>
+        <a asp-controller="Teachers" asp-action="Index" class="btn btn-primary">View teachers</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-Suspendisse id justo interdum, porttitor arcu non, mollis ligula. Cras cursus leo non suscipit auctor. Mauris at mollis dui. Sed feugiat dictum massa, sit amet luctus urna faucibus sit amet. Quisque eros purus, tristique vel aliquet nec, viverra rhoncus nibh. Nam iaculis varius varius. Nam nec auctor dolor, eu dignissim diam. Maecenas gravida massa at est sodales imperdiet. Nullam aliquam risus nec eros suscipit, quis condimentum neque iaculis. Sed lacinia diam purus. Nulla facilisi. Vestibulum ut consequat urna, at interdum augue. Vivamus a dui leo. Integer sed vulputate ligula.
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Courses</h5>
+        <p class="card-text">There are currently 100 courses.</p>
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">View courses</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Laboratories</h5>
+        <p class="card-text">There are currently 100 laboratories.</p>
+        <a asp-controller="Laboratories" asp-action="Index" class="btn btn-primary">View laboratories</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-Cras vitae ante vitae nulla tincidunt dignissim. Quisque id ipsum ut massa gravida elementum. Aliquam molestie purus ipsum, et malesuada dui dapibus et. Quisque sed finibus enim, ac rutrum nunc. Aliquam quis congue nisl. Aliquam non velit ut nisi mattis pretium id vitae est. Etiam eros lorem, lobortis sit amet tellus convallis, mollis placerat diam. Proin rutrum lectus aliquam nisi euismod bibendum. Pellentesque sit amet molestie massa, et ullamcorper felis. In sem ex, auctor eget dui nec, iaculis volutpat nisi.
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Groups</h5>
+        <p class="card-text">There are currently 30 groups.</p>
+        <a asp-controller="Groups" asp-action="Index" class="btn btn-primary">View groups</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Subgroups</h5>
+        <p class="card-text">There are currently 60 subgroups.</p>
+        <a asp-controller="Subgroups" asp-action="Index" class="btn btn-primary">View subgroups</a>
+      </div>
+    </div>
+  </div>
+</div>
+}
 
-Pellentesque semper rutrum rutrum. Nullam in tincidunt neque. Nulla vitae eros efficitur, sagittis quam quis, accumsan lorem. Donec luctus iaculis lorem eget cursus. Suspendisse nec ultrices turpis, non pellentesque diam. Aenean malesuada dolor ut porttitor lacinia. Cras tellus arcu, efficitur in luctus vel, varius eu nibh.
+ @if(ViewContext.HttpContext.User.IsInRole("Teacher")) {
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Courses</h5>
+        <p class="card-text">You teach 10 courses.</p>
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-primary special-button">View courses</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Laboratories</h5>
+        <p class="card-text">You teach 3 laboratories.</p>
+        <a asp-controller="Laboratories" asp-action="Index" class="btn btn-primary">View laboratories</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Students</h5>
+        <p class="card-text">You have 140 students.</p>
+        <a asp-controller="Students" asp-action="Index" class="btn btn-primary">View students</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Assignments</h5>
+        <p class="card-text">There are currently 10 active assignments.</p>
+        <a asp-controller="Assignments" asp-action="Index" class="btn btn-primary">View assignments</a>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+@if(ViewContext.HttpContext.User.IsInRole("Student")) {
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Courses</h5>
+        <p class="card-text">You are enrolled in 7 courses.</p>
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-primary special-button">View courses</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Laboratories</h5>
+        <p class="card-text">You are enrolled in 7 laboratories.</p>
+        <a asp-controller="Laboratories" asp-action="Index" class="btn btn-primary">View laboratories</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Assignments</h5>
+        <p class="card-text">You have 3 assignments.</p>
+        <a asp-controller="Assignments" asp-action="Index" class="btn btn-primary">View assignments</a>
+      </div>
+    </div>
+  </div>
+</div>
+}
 

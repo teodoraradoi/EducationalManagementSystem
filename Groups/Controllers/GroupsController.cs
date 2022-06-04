@@ -8,25 +8,32 @@ using Groups.Data.Abstractions;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Groups.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using Identity.Data.Entities;
 
 namespace Groups.Controllers
 {
     public class GroupsController : Controller
     {
         private IStorage storage;
+        private UserManager<ApplicationUser> _userManager;
 
-        public GroupsController(IStorage storage)
+        public GroupsController(IStorage storage, UserManager<ApplicationUser> userManager)
         {
             this.storage = storage;
+            _userManager = userManager;
         }
-
+        
+        //[Authorize(Roles = "Secretary")]
         public ActionResult Index()
         {
-            //return View();
             return View(this.storage.GetRepository<IGroupRepository>().All());
         }
 
         // GET: GroupsController/Create
+        [Authorize(Roles = "Secretary")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -34,6 +41,7 @@ namespace Groups.Controllers
         }
 
         // POST: GroupsController/Create
+        [Authorize(Roles = "Secretary")]
         [HttpPost]
         public ActionResult Create([FromForm] Group group)
         {
@@ -47,6 +55,7 @@ namespace Groups.Controllers
         }
 
         // GET: GroupsController/Edit/5
+        [Authorize(Roles = "Secretary")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -59,6 +68,7 @@ namespace Groups.Controllers
         }
 
         // POST: GroupssController/Edit/5
+        [Authorize(Roles = "Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid Id, [Bind("Id,SpecializationName,Name,Year")] Group group)
@@ -74,6 +84,7 @@ namespace Groups.Controllers
         }
 
         // GET: GroupsController/Delete/5
+        [Authorize(Roles = "Secretary")]
         public ActionResult Delete(Guid id)
         {
             if (id == null)
@@ -89,6 +100,7 @@ namespace Groups.Controllers
         }
 
         // POST: GroupsController/Delete/5
+        [Authorize(Roles = "Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

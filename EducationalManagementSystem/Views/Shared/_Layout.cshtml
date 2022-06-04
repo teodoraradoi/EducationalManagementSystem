@@ -18,7 +18,7 @@
 
 
     <link rel="stylesheet" href="/Styles/styles.css">
-    <script src="/JavaScript/script.js"></script>
+    @*<script src="/JavaScript/script.js"></script>*@
 
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -76,33 +76,42 @@
                        <li>
                             <a asp-area="" asp-controller="Default" asp-actions="Index">Home</a>
                         </li>
-                   <li>
-                            <a asp-area="" asp-controller="Secretaries" asp-actions="Index">Secretary</a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Teachers" asp-actions="Index">Teachers</a>
-                        </li>
-                         <li>
-                            <a asp-area="" asp-controller="Students" asp-actions="Index">Students</a>
-                        </li>
-                          <li>
+                         @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Secretaries" asp-actions="Index">Secretaries</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Teachers" asp-actions="Index">Teachers</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Students" asp-actions="Index">Students</a>
+                    </li>
+                }
+                <li>
                             <a asp-area="" asp-controller="Courses" asp-actions="Index">Courses</a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Laboratories" asp-actions="Index">Laboratories</a>
                         </li>
+                        @if (ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Teacher")){
                         <li>
                             <a asp-area="" asp-controller="Groups" asp-actions="Index">Groups</a>
                         </li>
                           <li>
                             <a asp-area="" asp-controller="Subgroups" asp-actions="Index">Subgroups</a>
                         </li>
-                         <li>
-                            <a asp-area="" asp-controller="Assignments" asp-actions="Index">Assignments</a>
-                        </li>
-                             <li>
-                            <a asp-area="" asp-controller="Submissions" asp-actions="Index">Submissions</a>
-                        </li>
+                        }
+
+                @if (ViewContext.HttpContext.User.IsInRole("Student") || ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Assignments" asp-actions="Index">Assignments</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Submissions" asp-actions="Index">Submissions</a>
+                    </li>
+                }
             </ul>
 
 
@@ -138,6 +147,7 @@
             </div>
         </nav>
 
+
                     @RenderBody()
        
         </div>
@@ -149,7 +159,7 @@
     <script src="~/Identity/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 
-
+   @* 
       <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
@@ -159,7 +169,7 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-
+*@
 
 </body>
 </html>

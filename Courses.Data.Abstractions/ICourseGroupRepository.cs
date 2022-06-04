@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ExtCore.Data.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Identity.Data.Entities
+namespace Courses.Data.Abstractions
 {
-    public class ApplicationRole : IdentityRole<Guid>
+    public interface ICourseGroupRepository : IRepository
     {
     }
 }

@@ -11,6 +11,7 @@ namespace Groups.Data.Abstractions
     public interface ISubgroupRepository : IRepository
     {
         IEnumerable<Subgroup> All();
+        IEnumerable<Subgroup> AllById(Guid id);
         Subgroup FindById(Guid? id);
         void Create(Subgroup subgroup);
         void Edit(Subgroup subgroup);

@@ -63,3 +63,13 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: red;
+    border-color: red;
+}

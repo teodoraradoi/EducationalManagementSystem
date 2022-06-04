@@ -1,46 +1,61 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<Courses.Data.Entities.Course>
 
-<h1>Courses</h1>
-@*
-@foreach (var person in this.Model)
-{
-  <p>@person.Name</p>
-  <p>@person.Day</p>
-  <p>@person.Time</p>
-  <p>@person.Year</p>
-  <p>@person.Semester</p>
-}
-*@
+<head>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+</head>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
+
+<h1>Courses</h1>
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+
+    <table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+       
+       
+    <thead>
+        <tr>
+                 <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Day</th>
       <th scope="col">Time</th>
       <th scope="col">Year</th>
       <th scope="col">Semester</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+        </tr>
+    </thead>
+
+    <tbody>
      @{int i = 1;}
       @foreach (var course in this.Model)
       {
             <tr>
               <td>@i</td>
-              <td>@course.Name</td>
+              <td>
+                    @if (ViewContext.HttpContext.User.IsInRole("Teacher") || ViewContext.HttpContext.User.IsInRole("Student"))
+                    {
+                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">@course.Name</a>
+                    }
+                       @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+                    {
+                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id">@course.Name</a>
+                    } 
+                  
+              </td>
               <td>@course.Day</td>
               <td>@course.Time</td>
               <td>@course.Year</td>
               <td>@course.Semester</td>
-              <td> <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-dark">Edit</a>
-               <a asp-controller="Courses" asp-action="Delete" asp-route-Id="@course.Id" class="btn btn-dark">Delete</a>
-               <a asp-controller="Assignments" asp-action="Create" asp-route-id="@course.Id" class="btn btn-dark">Create assignment</a></td>
             </tr>
             i++;
       }
   </tbody>
+
+       
 </table>
