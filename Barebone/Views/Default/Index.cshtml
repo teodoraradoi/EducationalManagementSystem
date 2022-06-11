@@ -15,11 +15,11 @@
  <a asp-controller="Subgroups" asp-action="Create" class="btn btn-dark">Create subgroup</a>
  <a asp-controller="Courses" asp-action="Create" class="btn btn-dark">Create course</a>               
  <a asp-controller="Secretaries" asp-action="CreateStudent" class="btn btn-dark">Create student account</a>               
+ <a asp-controller="Teachers" asp-action="Create" class="btn btn-dark">Create teacher account</a>               
  }
 
 @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
 {
-    <a asp-controller="Laboratories" asp-action="Create" class="btn btn-dark">Create laboratory</a>
     <a asp-controller="Assignments" asp-action="Create" class="btn btn-dark">Create assignment</a>
 }
 <br>

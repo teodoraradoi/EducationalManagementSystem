@@ -12,6 +12,7 @@ namespace Groups.Data.Abstractions
     {
         IEnumerable<Subgroup> All();
         IEnumerable<Subgroup> AllById(Guid id);
+        IEnumerable<Subgroup> AllByGroupId(Guid id);
         Subgroup FindById(Guid? id);
         void Create(Subgroup subgroup);
         void Edit(Subgroup subgroup);

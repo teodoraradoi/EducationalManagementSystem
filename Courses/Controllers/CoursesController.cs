@@ -1,12 +1,23 @@
 ﻿using Courses.Data.Abstractions;
 using Courses.Data.Entities;
+using Courses.ViewModels;
 using ExtCore.Data.Abstractions;
+using Groups.Data.Abstractions;
+using Groups.Data.Entities;
 using Identity.Data.Entities;
+using Laboratories.Data.Abstractions;
+using Laboratories.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Teachers.Data.Abstractions;
+using Teachers.Data.Entities;
 
 namespace Courses.Controllers
 {
@@ -24,14 +35,29 @@ namespace Courses.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var user = _userManager.GetUserId(User);
+            var userId = _userManager.GetUserId(User);
             if (User.IsInRole("Student"))
             {
                 return View(this.storage.GetRepository<ICourseRepository>().All());
             }
             if (User.IsInRole("Teacher"))
             {
-                return View(this.storage.GetRepository<ICourseRepository>().All());
+                /*Guid id = new Guid(userId);
+                Teacher currentTeacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(id);
+                IEnumerable<Course> courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(currentTeacher.Id);
+                List<Tuple<Course, Laboratory>> list = new List<Tuple<Course, Laboratory>>();
+
+                foreach(Course course in courses)
+                {
+                    Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(course.Id);
+                    list.Add(new Tuple<Course, Laboratory>(course, laboratory)) ;
+                }
+                return View(list);*/
+
+                Guid id = new Guid(userId);
+                Teacher currentTeacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(id);
+                IEnumerable<Course> courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(currentTeacher.Id);
+                return View(courses);
             }
             return View(this.storage.GetRepository<ICourseRepository>().All());
          
@@ -45,11 +71,47 @@ namespace Courses.Controllers
             return View(course);
         }
 
+        public IEnumerable<SelectListItem> getGroups()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            var allGroups = this.storage.GetRepository<IGroupRepository>().All();
+            foreach (Group item in allGroups)
+            {
+                items.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+            return items;
+        }
+
+
         [Authorize(Roles = "Secretary")]
         // GET: CoursesController/Create
         public ActionResult Create()
         {
-            return View();
+            CourseViewModel viewModel = new CourseViewModel();
+            viewModel.groups = this.getGroups();
+            viewModel.Teachers = this.GetTeachersList();
+            
+            return View(viewModel);
+
+
+
+            /*
+            CourseViewModel viewModel = new CourseViewModel();
+            viewModel.groups = new List<SelectListItem>();
+            var allGroups = this.storage.GetRepository<IGroupRepository>().All();
+            foreach(Group item in allGroups)
+            {
+                viewModel.groups.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+            return View(viewModel);*/
         }
 
 
@@ -57,15 +119,57 @@ namespace Courses.Controllers
         [Authorize(Roles = "Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Course course)
+        public ActionResult Create([FromForm] CourseViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                Guid courseId = Guid.NewGuid();
+
+
+                Course course = viewModel.course;
+                course.Id = courseId;
                 this.storage.GetRepository<ICourseRepository>().Create(course);
                 this.storage.Save();
+
+                //var user = _userManager.GetUserId(User);
+                // add teacher dropdown to course
+
+               List<CourseGroup> courseGroups = new List<CourseGroup>();
+
+                foreach (string selectedId in viewModel.selectedGroups)
+                {
+                    /*CourseGroup courseGroup = new CourseGroup
+                    {
+                        Id = Guid.NewGuid(),
+                        CourseId = courseId,
+                        GroupId = Guid.Parse(selectedId)
+                    };*/
+                    CourseGroup courseGroup = new CourseGroup();
+                    courseGroup.Id = Guid.NewGuid();
+                    courseGroup.CourseId = courseId;
+                    //courseGroup.CourseId = Guid.NewGuid();
+                    courseGroup.GroupId = Guid.Parse(selectedId);
+
+                    courseGroups.Add(courseGroup);
+
+               
+                }
+
+                this.storage.GetRepository<ICourseGroupRepository>().Create(courseGroups);
+                this.storage.Save();
+
                 return RedirectToAction("Index", "Default");
             }
+
             return this.View();
+        }
+
+        public List<Teacher> GetTeachersList()
+        {
+            List<Teacher> list = new List<Teacher>();
+            IEnumerable<Teacher> teachers = this.storage.GetRepository<ITeachersRepository>().All();
+            list = teachers.ToList();
+            return list;
         }
 
         // GET: CoursesController/Edit/5

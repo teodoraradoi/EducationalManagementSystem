@@ -20,10 +20,10 @@ namespace Courses.Data.EntityFramework.Sqlite
                 etb.ToTable("Course");
             });
 
-            modelbuilder.Entity<Course>(etb =>
+            modelbuilder.Entity<CourseGroup>(etb =>
             {
-                etb.HasKey(e => e.Id);
-                etb.Property(e => e.Id);
+                etb.HasKey(e => e.CourseId);
+                etb.Property(e => e.CourseId);
                 etb.ToTable("CourseGroup");
             });
         }

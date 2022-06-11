@@ -9,6 +9,10 @@
 
 <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            @Html.HiddenFor(model => model.Laboratory.CourseId)
+
             <div class="form-group">
                 <label asp-for="Laboratory.Name" class="control-label"></label>
                 <input asp-for="Laboratory.Name" class="form-control" />
@@ -32,12 +36,21 @@
             </div>
 
 
-   
+   @*
 
-                <select asp-for="Laboratory.CourseId" 
-            asp-items="@(new SelectList(Model.Courses, "Id", "Name"))">
-        <option>Please select one</option>
-    </select>
+                <select asp-for="Laboratory.CourseId" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))">
+                    <option>Please select one</option>
+               </select>
+*@
+               <select asp-for="Laboratory.SubgroupId" asp-items="@(new SelectList(Model.Subgroups, "Id", "Name"))">
+                    <option>Please select one</option>
+               </select>
+
+                              <select asp-for="Laboratory.TeacherId" asp-items="@(new SelectList(Model.Teachers, "Id", "Name"))">
+                    <option>Please select one</option>
+               </select>
+
+
 
                 
             <div class="form-group">

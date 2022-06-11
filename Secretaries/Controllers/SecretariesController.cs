@@ -22,12 +22,14 @@ namespace Secretaries.Controllers
         private IStorage storage;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        public readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
-        public SecretariesController(IStorage storage, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public SecretariesController(IStorage storage, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IPasswordHasher<ApplicationUser> passwordHasher)
         {
             this.storage = storage;
             _userManager = userManager;
            _roleManager = roleManager;
+            _passwordHasher = passwordHasher;
         }
 
         [Authorize(Roles = "Secretary")]
@@ -97,10 +99,13 @@ namespace Secretaries.Controllers
                 ApplicationUser newStudent = new ApplicationUser
                 {
                     Id = new Guid(),
-                    UserName = model.Name,
+                    UserName = model.Email,
                     Email = model.Email,
                     EmailConfirmed = true
                 };
+
+                //var hashedPassword = _passwordHasher.HashPassword(newStudent, model.Password);
+
                 var user = await _userManager.CreateAsync(newStudent, model.Password);
                 if(user.Succeeded)
                 {
@@ -124,7 +129,6 @@ namespace Secretaries.Controllers
                 }
             }
             return View();
-            //return RedirectToAction("Default", "Home");
         }
     }
 }

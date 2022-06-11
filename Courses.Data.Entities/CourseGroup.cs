@@ -9,6 +9,7 @@ namespace Courses.Data.Entities
 {
     public class CourseGroup : IEntity
     {
+        public Guid Id { get; set; }
         public Guid CourseId { get; set; }
         public Guid GroupId { get; set; }
 

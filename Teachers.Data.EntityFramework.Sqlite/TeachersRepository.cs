@@ -13,7 +13,17 @@ namespace Teachers.Data.EntityFramework.Sqlite
     {
         public IEnumerable<Teacher> All()
         {
-            return this.dbSet.OrderBy(p => p.Name);
+            return this.dbSet.OrderBy(p => p.Id);
+        }
+
+        public void Create(Teacher teacher)
+        {
+            this.dbSet.Add(teacher);
+        }
+
+        public Teacher FindTeacherByUserId(Guid id)
+        {
+            return this.dbSet.FirstOrDefault(p => p.UserId == id);
         }
     }
 

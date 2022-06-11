@@ -25,8 +25,8 @@ namespace Students.Controllers
         {
             this.storage = storage;
             _userManager = userManager;
-
         }
+
         [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Index()
         {

@@ -1,4 +1,5 @@
-﻿using ExtCore.Data.Abstractions;
+﻿using Courses.Data.Entities;
+using ExtCore.Data.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace Courses.Data.Abstractions
 {
     public interface ICourseGroupRepository : IRepository
     {
+        CourseGroup GetGroupByCourseId(Guid id);
+        void Create(List<CourseGroup> courseGroup);
     }
 }

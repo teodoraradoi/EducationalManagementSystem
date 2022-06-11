@@ -15,5 +15,6 @@ namespace Courses.Data.Abstractions
         void Create(Course course);
         void Edit(Course course);
         void Delete(Guid id);
+        IEnumerable<Course> GetAllByTeacherId(Guid id);
     }
 }

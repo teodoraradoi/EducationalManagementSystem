@@ -12,8 +12,11 @@ namespace Laboratories.Data.Abstractions
     {
         IEnumerable<Laboratory> All();
         Laboratory FindById(Guid? id);
+        IEnumerable<Laboratory> AllByUserId(Guid id);
         void Create(Laboratory laboratory);
         void Edit(Laboratory laboratory);
         void Delete(Guid id);
+
+        IEnumerable<Laboratory> GetAllByCourseId(Guid id);
     }
 }

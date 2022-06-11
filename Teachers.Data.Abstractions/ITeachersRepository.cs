@@ -11,6 +11,7 @@ namespace Teachers.Data.Abstractions
     public interface ITeachersRepository : IRepository
     {
         IEnumerable<Teacher> All();
-
+        void Create(Teacher teacher);
+        Teacher FindTeacherByUserId(Guid id);
     }
 }

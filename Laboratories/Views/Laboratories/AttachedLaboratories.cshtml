@@ -1,7 +1,8 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<Tuple<Laboratories.Data.Entities.Laboratory, Courses.Data.Entities.Course>>
+@model List<Tuple<Laboratories.Data.Entities.Laboratory, Groups.Data.Entities.Subgroup>>
 
-<h1>List of laboratories</h1>
+
+<h1>List of laboratories attached to @ViewBag.CourseName</h1>
 
 
 <table class="table">
@@ -11,7 +12,7 @@
       <th scope="col">Name</th>
       <th scope="col">Day</th>
       <th scope="col">Time</th>
-      <th scope="col">Course</th>
+      <th scope="col">Subgroup</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -21,16 +22,7 @@
       {
             <tr>
               <td>@i</td>
-              <td>
-                   @if (ViewContext.HttpContext.User.IsInRole("Student") || ViewContext.HttpContext.User.IsInRole("Secretary"))
-                    {
-                        <a asp-controller="Laboratories" asp-action="Details" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
-                    }
-                       @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
-                    {
-                        <a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
-                    } 
-              </td>
+              <td><a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id">@list.Item1.Name</a></td>
               <td>@list.Item1.Day</td>
               <td>@list.Item1.Time.ToString("hh:mm")</td>
               <td>@list.Item2.Name</td>

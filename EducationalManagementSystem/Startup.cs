@@ -37,6 +37,9 @@ namespace EducationalManagementSystem
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+           
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             //services.AddControllers().AddApplicationPart();
@@ -47,6 +50,12 @@ namespace EducationalManagementSystem
                 options.ConnectionString = this.Configuration.GetConnectionString("Default");
             }
              );
+
+
+
+        
+
+
 
             //services.AddIdentity<>
             //services.AddScoped<ISecretaryRepository, SecretaryRepository>();

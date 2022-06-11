@@ -25,13 +25,16 @@ namespace Barebone
             serviceCollection.AddDbContext<ApplicationDbContext>(options =>
               options.UseSqlite(configurationBuilder.Build().GetConnectionString("Default")));
 
+            //serviceCollection.Configure<PasswordHasherOptions>(options => options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2);
 
-          
 
             serviceCollection.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddRoles<ApplicationRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders().AddDefaultUI();
+
+
+
 
 
 
@@ -44,7 +47,7 @@ namespace Barebone
 
 
 
-           // serviceCollection.AddDefaultIdentity<ApplicationUser>().AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            // serviceCollection.AddDefaultIdentity<ApplicationUser>().AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 

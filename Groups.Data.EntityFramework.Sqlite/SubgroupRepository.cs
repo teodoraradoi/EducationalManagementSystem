@@ -37,5 +37,10 @@ namespace Groups.Data.EntityFramework.Sqlite
         {
             this.dbSet.Remove((this.FindById(id)));
         }
+
+        public IEnumerable<Subgroup> AllByGroupId(Guid id)
+        {
+            return this.dbSet.Where(s => s.GroupId == id);
+        }
     }
 }

@@ -1,7 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Courses.Data.Entities.Course
-
-
+@model Laboratories.Data.Entities.Laboratory
 <h3>@Html.DisplayFor(model => model.Name)</h3>
 
 
@@ -19,18 +17,6 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Semester)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Semester)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Day)
         </dt>
         <dd class="col-sm-10">
@@ -44,17 +30,15 @@
         </dd>
     </dl>
 
-
-          @if(ViewContext.HttpContext.User.IsInRole("Teacher")) {
+    @if(ViewContext.HttpContext.User.IsInRole("Teacher")) {
               
-              <a asp-controller="Laboratories" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-dark">Create laboratory</a>
-              <a asp-controller="Laboratories" asp-action="AttachedLaboratories" asp-route-id="@Model.Id" class="btn btn-dark">View laboratories for this course</a>
+              <a asp-controller="Course" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark">View Course</a>
 
 
               <a asp-controller="Assignments" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-dark">Create assignment</a>
           }
 
-   <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Back</a>
+   <a asp-controller="Laboratories" asp-action="Index" class="btn btn-secondary">Back</a>
 
 
    <h2>Posts</h2>

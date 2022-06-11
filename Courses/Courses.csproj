@@ -11,7 +11,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Courses.Data.Abstractions\Courses.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Groups.Data.Abstractions\Groups.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Groups.Data.Entities\Groups.Data.Entities.csproj" />
     <ProjectReference Include="..\Identity.Data.EntityFramework\Identity.Data.EntityFramework.csproj" />
+    <ProjectReference Include="..\Laboratories.Data.Abstractions\Laboratories.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Laboratories.Data.Entities\Laboratories.Data.Entities.csproj" />
+    <ProjectReference Include="..\Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Teachers.Data.Entities\Teachers.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

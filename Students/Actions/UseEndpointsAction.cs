@@ -1,15 +1,15 @@
-﻿using System;
+﻿using ExtCore.Mvc.Infrastructure.Actions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ExtCore.Mvc.Infrastructure.Actions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
 
 namespace Students.Actions
 {
-    internal class UseEndpointsAction
+    internal class UseEndpointsAction : IUseEndpointsAction
     {
         public int Priority => 1000;
 

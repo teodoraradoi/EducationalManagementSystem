@@ -29,12 +29,20 @@ namespace Courses.Data.EntityFramework.Sqlite
 
         public Course FindById(Guid? id)
         {
+            Course course = this.dbSet.FirstOrDefault(e => e.Id == id);
+            ///Course course = this.dbSet.FirstOrDefault(e => e.Id == id);
+            //return course;
             return this.dbSet.FirstOrDefault(e => e.Id == id);
         }
 
         public void Delete(Guid id)
         {
             this.dbSet.Remove((this.FindById(id)));
+        }
+
+        public IEnumerable<Course> GetAllByTeacherId(Guid id)
+        {
+            return this.dbSet.Where(l => l.TeacherId == id);
         }
     }
 }

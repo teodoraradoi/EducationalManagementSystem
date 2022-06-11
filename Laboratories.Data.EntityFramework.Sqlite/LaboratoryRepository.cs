@@ -35,5 +35,15 @@ namespace Laboratories.Data.EntityFramework.Sqlite
         {
             this.dbSet.Remove((this.FindById(id)));
         }
+
+        public IEnumerable<Laboratory> AllByUserId(Guid id)
+        {
+            return this.dbSet.Where(l => l.TeacherId == id);
+        }
+
+        public IEnumerable<Laboratory> GetAllByCourseId(Guid id)
+        {
+            return this.dbSet.Where(l => l.CourseId == id);
+        }
     }
 }
