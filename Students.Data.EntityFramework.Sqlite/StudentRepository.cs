@@ -20,5 +20,15 @@ namespace Students.Data.EntityFramework.Sqlite
         {
             this.dbSet.Add(student);
         }
+
+        public Student FindById(Guid id)
+        {
+            return this.dbSet.FirstOrDefault(s => s.Id == id);
+        }
+
+        public Student FindByUserId(Guid id)
+        {
+            return this.dbSet.FirstOrDefault(s => s.UserId == id);
+        }
     }
 }

@@ -17,6 +17,8 @@ using Teachers.Data.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Identity.Data.Entities;
+using Students.Data.Abstractions;
+using Students.Data.Entities;
 
 namespace Laboratories.Controllers
 {
@@ -24,6 +26,7 @@ namespace Laboratories.Controllers
     {
         private IStorage storage;
         private readonly UserManager<ApplicationUser> _userManager;
+
         public LaboratoriesController(IStorage storage, UserManager<ApplicationUser> userManager)
         {
             this.storage = storage;
@@ -52,7 +55,7 @@ namespace Laboratories.Controllers
             {
                 Guid id = new Guid(userId);
                 Teacher currentTeacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(id);
-                IEnumerable<Laboratory> labs = this.storage.GetRepository<ILaboratoryRepository>().AllByUserId(currentTeacher.Id);
+                IEnumerable<Laboratory> labs = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(currentTeacher.Id);
                 List<Tuple<Laboratory, Course>> list = new List<Tuple<Laboratory, Course>>();
 
                 foreach (Laboratory lab in labs)
@@ -63,8 +66,42 @@ namespace Laboratories.Controllers
                 }
                 return View(list);
             }
+            if (User.IsInRole("Student"))
+            {
+                Student student = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
+                IEnumerable<Laboratory> labs = this.storage.GetRepository<ILaboratoryRepository>().AllBySubgroupId(student.SubgroupId);
 
-            return View(this.storage.GetRepository<ILaboratoryRepository>().All());
+                List<Tuple<Laboratory, Course>> list = new List<Tuple<Laboratory, Course>>();
+                foreach (Laboratory lab in labs)
+                {
+                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(lab.CourseId);
+                    list.Add(new Tuple<Laboratory, Course>(lab, course));
+                }
+                return View(list);
+
+
+                /*IEnumerable<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().GetByGroupId(student.GroupId);
+
+                List<Course> courses = new List<Course>();
+                foreach (CourseGroup courseGroup in courseGroups)
+                {
+                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(courseGroup.CourseId);
+                    courses.Add(course);
+                }
+
+                 IEnumerable<Course> studentCourses = courses;
+                List<Laboratory> labs = new List<Laboratory>();
+                foreach (Laboratory lab in labs)
+                {
+                    Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById()
+                }*/
+
+            }
+
+
+
+
+                return View(this.storage.GetRepository<ILaboratoryRepository>().All());
         }
 
         // GET: LaboratoriesController/Details/5

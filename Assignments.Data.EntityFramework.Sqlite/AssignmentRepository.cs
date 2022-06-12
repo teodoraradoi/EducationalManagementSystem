@@ -34,5 +34,10 @@ namespace Assignments.Data.EntityFramework.Sqlite
         {
             this.dbSet.Remove((this.FindById(id)));
         }
+
+        public Assignment FindBySubjectId(Guid id)
+        {
+            return this.dbSet.FirstOrDefault(e => e.SubjectId == id);
+        }
     }
 }

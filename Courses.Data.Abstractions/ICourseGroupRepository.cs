@@ -12,5 +12,6 @@ namespace Courses.Data.Abstractions
     {
         CourseGroup GetGroupByCourseId(Guid id);
         void Create(List<CourseGroup> courseGroup);
+        IEnumerable<CourseGroup> GetByGroupId(Guid id);
     }
 }

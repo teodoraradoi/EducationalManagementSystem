@@ -49,9 +49,8 @@
               
               <a asp-controller="Laboratories" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-dark">Create laboratory</a>
               <a asp-controller="Laboratories" asp-action="AttachedLaboratories" asp-route-id="@Model.Id" class="btn btn-dark">View laboratories for this course</a>
-
-
               <a asp-controller="Assignments" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-dark">Create assignment</a>
+              <a asp-controller="Posts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-dark">Create a post</a>
           }
 
    <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Back</a>

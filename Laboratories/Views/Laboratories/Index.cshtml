@@ -21,16 +21,7 @@
       {
             <tr>
               <td>@i</td>
-              <td>
-                   @if (ViewContext.HttpContext.User.IsInRole("Student") || ViewContext.HttpContext.User.IsInRole("Secretary"))
-                    {
-                        <a asp-controller="Laboratories" asp-action="Details" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
-                    }
-                       @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
-                    {
-                        <a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
-                    } 
-              </td>
+              <td><a asp-controller="Laboratories" asp-action="Details" asp-route-id="@list.Item1.Id">@list.Item1.Name</a></td>
               <td>@list.Item1.Day</td>
               <td>@list.Item1.Time.ToString("hh:mm")</td>
               <td>@list.Item2.Name</td>

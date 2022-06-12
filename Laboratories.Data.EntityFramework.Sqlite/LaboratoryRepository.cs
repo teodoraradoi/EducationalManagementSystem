@@ -36,7 +36,7 @@ namespace Laboratories.Data.EntityFramework.Sqlite
             this.dbSet.Remove((this.FindById(id)));
         }
 
-        public IEnumerable<Laboratory> AllByUserId(Guid id)
+        public IEnumerable<Laboratory> AllByTeacherId(Guid id)
         {
             return this.dbSet.Where(l => l.TeacherId == id);
         }
@@ -44,6 +44,11 @@ namespace Laboratories.Data.EntityFramework.Sqlite
         public IEnumerable<Laboratory> GetAllByCourseId(Guid id)
         {
             return this.dbSet.Where(l => l.CourseId == id);
+        }
+
+        public IEnumerable<Laboratory> AllBySubgroupId(Guid id)
+        {
+            return this.dbSet.Where(l => l.SubgroupId == id);
         }
     }
 }

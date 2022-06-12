@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Views\Students\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="6.0.0" />
   </ItemGroup>
 

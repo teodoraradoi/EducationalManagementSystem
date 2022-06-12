@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Secretaries.ViewModels
+namespace Students.ViewModels
 {
     public class StudentAccountCreateViewModel
     {

@@ -22,6 +22,9 @@ namespace Courses.Data.EntityFramework.Sqlite
             return this.dbSet.FirstOrDefault(c => c.CourseId == id);
         }
 
-
+        public IEnumerable<CourseGroup> GetByGroupId(Guid id)
+        {
+            return this.dbSet.Where(c => c.GroupId == id);
+        }
     }
 }

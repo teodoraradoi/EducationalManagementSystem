@@ -15,5 +15,7 @@ namespace Assignments.Data.Abstractions
         void Create(Assignment assignment);
         void Edit(Assignment assignment);
         void Delete(Guid id);
+
+        Assignment FindBySubjectId(Guid id);
     }
 }

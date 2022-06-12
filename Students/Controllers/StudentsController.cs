@@ -13,6 +13,7 @@ using Groups.Data.Entities;
 using Groups.Data.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Identity.Data.Entities;
+using Students.ViewModels;
 
 namespace Students.Controllers
 {
@@ -20,11 +21,13 @@ namespace Students.Controllers
     {
         private IStorage storage;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public StudentsController(IStorage storage, UserManager<ApplicationUser> userManager)
+        public StudentsController(IStorage storage, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             this.storage = storage;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [Authorize(Roles = "Secretary")]
@@ -40,6 +43,85 @@ namespace Students.Controllers
                 list.Add(new Tuple<ApplicationUser, Group, Subgroup>(user, group, subgroup));
             }
             return View(list);
+        }
+
+        public List<Group> GetGroupsList()
+        {
+            List<Group> list = new List<Group>();
+            IEnumerable<Group> groups = this.storage.GetRepository<IGroupRepository>().All();
+            list = groups.ToList();
+            return list;
+        }
+
+        [HttpGet]
+        public JsonResult GetSubgroupsList(Guid id)
+        {
+            List<Subgroup> list = new List<Subgroup>();
+            IEnumerable<Subgroup> subgroups = this.storage.GetRepository<ISubgroupRepository>().AllById(id);
+            list = subgroups.ToList();
+            return Json(list);
+        }
+        public List<Subgroup> GetSubgroupsList()
+        {
+            List<Subgroup> list = new List<Subgroup>();
+            IEnumerable<Subgroup> subgroups = this.storage.GetRepository<ISubgroupRepository>().All();
+            list = subgroups.ToList();
+            return list;
+        }
+
+        // GET: StudentsController/CreateStudent
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Create()
+        {
+            StudentAccountCreateViewModel model = new StudentAccountCreateViewModel();
+            // model.Groups = this.GetGroupsList();
+            ViewBag.Groups = this.GetGroupsList();
+            //model.Subgroups = this.GetSubgroupsList();
+            //model.Subgroups = new List<Subgroup>();
+            return View(model);
+        }
+
+        [Authorize(Roles = "Secretary")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([FromForm] StudentAccountViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                ApplicationUser newStudent = new ApplicationUser
+                {
+                    Id = new Guid(),
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailConfirmed = true
+                };
+
+                //var hashedPassword = _passwordHasher.HashPassword(newStudent, model.Password);
+
+                var user = await _userManager.CreateAsync(newStudent, model.Password);
+                if (user.Succeeded)
+                {
+                    var createdUser = await _userManager.FindByIdAsync(newStudent.Id.ToString());
+                    Student student = new Student
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = createdUser.Id,
+                        GroupId = new Guid(model.GroupId),
+                        SubgroupId = new Guid(model.SubgroupId)
+                    };
+                    this.storage.GetRepository<IStudentRepository>().Create(student);
+                    this.storage.Save();
+
+                    var studentRole = await _roleManager.FindByNameAsync("Student");
+                    if (studentRole != null)
+                    {
+                        await _userManager.AddToRoleAsync(createdUser, "Student");
+                    }
+                    return RedirectToAction("Index", "Default");
+                }
+            }
+            return View();
         }
     }
 }

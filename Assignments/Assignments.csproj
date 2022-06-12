@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Identity.Data.EntityFramework\Identity.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Laboratories.Data.Abstractions\Laboratories.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Laboratories.Data.Entities\Laboratories.Data.Entities.csproj" />
+    <ProjectReference Include="..\Students.Data.Abstractions\Students.Data.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

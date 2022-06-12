@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Secretaries.ViewModels.StudentAccountCreateViewModel
+@model Students.ViewModels.StudentAccountCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -22,7 +22,7 @@
 <h1>Create student account</h1>
 
  <div class="col-md-4">
-        <form  asp-action="CreateStudent" enctype="multipart/form-data" method="post">
+        <form  asp-action="Create" enctype="multipart/form-data" method="post">
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -89,7 +89,7 @@
 
 
 
-            <input type="submit" name="CreateStudent" value="CreateStudent" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+            <input type="submit" name="Create" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 

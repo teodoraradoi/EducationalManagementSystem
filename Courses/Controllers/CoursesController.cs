@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Students.Data.Abstractions;
+using Students.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +40,19 @@ namespace Courses.Controllers
             var userId = _userManager.GetUserId(User);
             if (User.IsInRole("Student"))
             {
-                return View(this.storage.GetRepository<ICourseRepository>().All());
+                Student student = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
+                IEnumerable<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().GetByGroupId(student.GroupId);
+
+                List<Course> courses = new List<Course>();
+                foreach (CourseGroup courseGroup in courseGroups)
+                {
+                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(courseGroup.CourseId);
+                    courses.Add(course);
+                }
+
+                IEnumerable<Course> studentCourses = courses;
+
+                return View(studentCourses);
             }
             if (User.IsInRole("Teacher"))
             {

@@ -9,5 +9,7 @@ namespace Students.Data.Abstractions
     {
         IEnumerable<Student> All();
         void Create(Student student);
+        Student FindById(Guid id);
+        Student FindByUserId(Guid id);
     }
 }

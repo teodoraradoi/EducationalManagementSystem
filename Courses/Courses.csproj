@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="6.0.0" />
-  </ItemGroup>
+  </ItemGroup>	
 
   <ItemGroup>
     <ProjectReference Include="..\Courses.Data.Abstractions\Courses.Data.Abstractions.csproj" />
@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Identity.Data.EntityFramework\Identity.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Laboratories.Data.Abstractions\Laboratories.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Laboratories.Data.Entities\Laboratories.Data.Entities.csproj" />
+    <ProjectReference Include="..\Students.Data.Abstractions\Students.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Teachers.Data.Entities\Teachers.Data.Entities.csproj" />
   </ItemGroup>
