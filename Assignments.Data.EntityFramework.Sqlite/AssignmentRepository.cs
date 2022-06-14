@@ -39,5 +39,10 @@ namespace Assignments.Data.EntityFramework.Sqlite
         {
             return this.dbSet.FirstOrDefault(e => e.SubjectId == id);
         }
+
+        public IEnumerable<Assignment> AllBySubjectId(Guid id)
+        {
+            return this.dbSet.Where(e => e.SubjectId == id);
+        }
     }
 }

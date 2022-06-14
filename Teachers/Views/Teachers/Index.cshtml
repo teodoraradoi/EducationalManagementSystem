@@ -1,8 +1,48 @@
-﻿@model IEnumerable<Teachers.Data.Entities.Teacher>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Tuple<Teachers.Data.Entities.Teacher, Identity.Data.Entities.ApplicationUser, int, int>>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+     <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
 <h1>Teachers</h1>
 
-@foreach (var person in this.Model)
-{
-  <p>@person.Id</p>
-}
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#teachers-table').DataTable();
+} );
+</script>
+
+    <table id="teachers-table" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Teacher Name</th>
+            <th scope="col">Teacher Email</th>
+            <th scope="col">Number of courses taught</th>
+            <th scope="col">Number of laboratories taught</th>
+        </tr>
+    </thead>
+
+    <tbody>
+     @{int i = 1;}
+      @foreach (var item in this.Model)
+      {
+            <tr>
+              <td>@i</td>
+              <td><a asp-controller="Teachers" asp-action="Details" asp-route-id="@item.Item1.Id">@item.Item1.Name</a></td>
+              <td>@item.Item2.Email</td>
+              <td>@item.Item3</td>
+              <td>@item.Item4</td>
+            </tr>
+            i++;
+      }
+  </tbody>
+
+       
+</table>

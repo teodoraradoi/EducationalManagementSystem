@@ -1,0 +1,83 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Assignments.ViewModels.DetailsForTeacherViewModel
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+<h2>Assignment details</h2>
+
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.assignment.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.assignment.Name)
+        </dd>
+    </dl>
+
+  
+
+
+   <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Back</a>
+
+
+
+   
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">File</th>
+      <th scope="col">Turned In Date</th>
+      <th scope="col">Student</th>
+      <th scope="col">Grade</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int j = 1;}
+      @foreach (var assignment in this.Model.submissionsList)
+      {
+            <tr>
+              <td>@j</td>
+              <td>@assignment.Item1.FilePath</td>
+              <td>@assignment.Item1.TurnedInDate</td>
+              <td>@assignment.Item2.Name</td>
+              <td>@assignment.Item1.Grade</td>
+
+
+
+                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a>
+                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id">Delete</a>
+                    </td>
+
+                
+            </tr>
+            j++;
+      }
+  </tbody>
+</table>
+
+
+
+  
+
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('.table').DataTable();
+} );
+</script>

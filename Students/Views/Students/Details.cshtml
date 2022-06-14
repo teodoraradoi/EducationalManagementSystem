@@ -1,0 +1,197 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Students.ViewModels.DetailsViewModel
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+   <div class="row"> 
+      <div class="col-8">
+
+    
+   <h2>Courses taken by @Html.DisplayFor(model => model.student.Name)</h2>
+
+
+   
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+
+    <table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+       
+       
+    <thead>
+        <tr>
+                 <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Day</th>
+      <th scope="col">Time</th>
+      <th scope="col">Year</th>
+      <th scope="col">Semester</th>
+        </tr>
+    </thead>
+
+    <tbody>
+     @{int i = 1;}
+      @foreach (var course in this.Model.courses)
+      {
+            <tr>
+              <td>@i</td>
+              <td><a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">@course.Name</a></td>
+              <td>@course.Day</td>
+              <td>@course.Time.ToString("hh:mm")</td>
+              <td>@course.Year</td>
+              <td>@course.Semester</td>
+            </tr>
+            i++;
+      }
+  </tbody>
+
+       
+</table>
+
+
+
+
+   <h2>Laboratories taken by @Html.DisplayFor(model => model.student.Name)</h2>
+
+
+   
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Day</th>
+      <th scope="col">Time</th>
+      <th scope="col">Course</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int j = 1;}
+      @foreach (var list in this.Model.laboratories)
+      {
+            <tr>
+              <td>@j</td>
+              <td><a asp-controller="Laboratories" asp-action="Details" asp-route-id="@list.Item1.Id">@list.Item1.Name</a></td>
+              <td>@list.Item1.Day</td>
+              <td>@list.Item1.Time.ToString("hh:mm")</td>
+              <td>@list.Item2.Name</td>
+            </tr>
+            j++;
+      }
+  </tbody>
+</table>
+
+
+   </div>
+ <div class="col-4">
+
+
+           <a asp-controller="Students" asp-action="Index" class="btn btn-secondary">Back</a>
+
+
+
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Student Information</h5>
+            <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.student.Name)
+        </dt>
+        <dd class="col-sm-10">
+            <p class="card-text">@Html.DisplayFor(model => model.student.Name)</p>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.user.Email)
+        </dt>
+        <dd class="col-sm-10">
+            <p class="card-text">@Html.DisplayFor(model => model.user.Email)</p>
+        </dd>
+        <dt class="col-sm-2">
+            Group
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-controller="Groups" asp-action="Details" asp-route-id="@ViewBag.GroupId">@ViewBag.GroupName</a>
+        </dd>
+        <dt class="col-sm-2">
+           Subgr
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-controller="Subgroups" asp-action="Details" asp-route-id="@ViewBag.SubgroupId">@ViewBag.SubgroupName</a>
+        </dd>
+    </dl>
+        <a asp-controller="Students" asp-action="Edit" asp-route-id="@Model.student.Id" class="btn btn-primary special-button">Edit</a>
+        <a asp-controller="Students" asp-action="Delete" asp-route-id="@Model.student.Id" class="btn btn-primary special-button">Delete</a>
+      
+    </div>
+    </div>
+
+</div> 
+   </div> 
+   
+
+   @*
+
+   <script>
+       $(document).ready(function(){
+           $(".special-button").click(function(){
+               @Html.Partial("Delete")
+           });
+       });
+   </script>
+
+   
+
+  <form method="post" asp-action="Index" asp-controller="Home">
+        <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Customer Details Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input type="text" asp-for="student.Name" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Country:</label>
+                            <select asp-for="student.Name" class="form-control">
+                                <option value="">Please select</option>
+                                <option value="India">India</option>
+                                <option value="China">China</option>
+                                <option value="Australia">Australia</option>
+                                <option value="France">France</option>
+                                <option value="Unites States">Unites States</option>
+                                <option value="Russia">Russia</option>
+                                <option value="Canada">Canada</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    *@

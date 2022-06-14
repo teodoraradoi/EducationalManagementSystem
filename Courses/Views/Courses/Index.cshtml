@@ -6,6 +6,11 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+
+
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+
+
 </head>
 
 
@@ -38,14 +43,19 @@ $(document).ready( function () {
             <tr>
               <td>@i</td>
               <td>
-                    @if (ViewContext.HttpContext.User.IsInRole("Teacher") || ViewContext.HttpContext.User.IsInRole("Student"))
+                    @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
                     {
-                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">@course.Name</a>
+                        <a asp-controller="Courses" asp-action="DetailsForTeacher" asp-route-id="@course.Id">@course.Name</a>
                     }
                        @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
                     {
                         <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id">@course.Name</a>
-                    } 
+                    }
+                     @if (ViewContext.HttpContext.User.IsInRole("Student"))
+                    {
+                        <a asp-controller="Courses" asp-action="DetailsForStudent" asp-route-id="@course.Id">@course.Name</a>
+                    }
+
                   
               </td>
               <td>@course.Day</td>

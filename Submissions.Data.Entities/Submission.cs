@@ -20,6 +20,6 @@ namespace Submissions.Data.Entities
         public DateTime TurnedInDate { get; set; }  
         public int Grade { get; set; } 
 
-        // public Student 
+        public Guid StudentId { get; set; }
     }
 }

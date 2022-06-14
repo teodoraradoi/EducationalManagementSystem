@@ -17,6 +17,11 @@ namespace Posts.Data.EntityFramework.Sqlite
             return this.dbSet.OrderBy(p => p.Name);
         }
 
+        public IEnumerable<Post> AllBySubjectId(Guid id)
+        {
+           return this.dbSet.Where(p => p.SubjectId == id);
+        }
+
         public void Create(Post post)
         {
             this.dbSet.Add(post);

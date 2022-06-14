@@ -34,5 +34,10 @@ namespace Submissions.Data.EntityFramework.Sqlite
         {
             this.dbSet.Remove((this.FindById(id)));
         }
+
+        public List<Submission> AllByAssignmentId(Guid id)
+        {
+            return this.dbSet.Where(e => e.AssignmentId == id).ToList();
+        }
     }
 }

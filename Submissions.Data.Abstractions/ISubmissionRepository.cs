@@ -15,5 +15,6 @@ namespace Submissions.Data.Abstractions
         void Create(Submission submission);
         void Edit(Submission submission);
         void Delete(Guid id);
+        List<Submission> AllByAssignmentId(Guid id);
     }
 }

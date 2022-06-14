@@ -20,5 +20,6 @@ namespace Laboratories.Data.Abstractions
         IEnumerable<Laboratory> GetAllByCourseId(Guid id);
 
         IEnumerable<Laboratory> AllBySubgroupId(Guid id);
+
     }
 }

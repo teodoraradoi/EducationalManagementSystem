@@ -1,4 +1,5 @@
 ﻿using ExtCore.Data.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Students.Data.Abstractions;
 using Students.Data.Entities;
 using System;
@@ -21,6 +22,11 @@ namespace Students.Data.EntityFramework.Sqlite
             this.dbSet.Add(student);
         }
 
+        public void Delete(Guid id)
+        {
+            this.dbSet.Remove((this.FindById(id)));
+        }
+
         public Student FindById(Guid id)
         {
             return this.dbSet.FirstOrDefault(s => s.Id == id);
@@ -29,6 +35,11 @@ namespace Students.Data.EntityFramework.Sqlite
         public Student FindByUserId(Guid id)
         {
             return this.dbSet.FirstOrDefault(s => s.UserId == id);
+        }
+
+        public void Update(Student student)
+        {
+            this.storageContext.Entry(student).State = EntityState.Modified;
         }
     }
 }

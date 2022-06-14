@@ -16,6 +16,10 @@ using Students.Data.Abstractions;
 using Students.Data.Entities;
 using System.Linq;
 using Assignments.ViewModels;
+using Submissions.Data.Entities;
+using Submissions.Data.Abstractions;
+using Teachers.Data.Entities;
+using Teachers.Data.Abstractions;
 
 namespace Assignments.Controllers
 {
@@ -34,12 +38,12 @@ namespace Assignments.Controllers
         [Authorize(Roles = "Student, Teacher")]
         public ActionResult Index()
         {
-            var userId = _userManager.GetUserId(User);
+            /*var userId = _userManager.GetUserId(User);
             if (User.IsInRole("Student"))
             {
                 AssignmentsViewModel viewModel = new AssignmentsViewModel();
-                viewModel.coursesAssignments = new List<Tuple<Assignment, Course>>();
-                viewModel.laboratoriesAssignments = new List<Tuple<Assignment, Laboratory>>();
+                viewModel.coursesAssignments = new List<Tuple<Assignment, Course, int>>();
+                viewModel.laboratoriesAssignments = new List<Tuple<Assignment, Laboratory, int>>();
                 Student student = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
 
                 // Get all course assignments for the current student
@@ -72,17 +76,69 @@ namespace Assignments.Controllers
 
                 //Tuple<List<Course>, List<Laboratory>> model = new Tuple<List<Course>, List<Laboratory>>(courses, labs);
                 return View(viewModel);
+            }*/
+
+            AssignmentsViewModel model = new AssignmentsViewModel();
+            model.coursesAssignments = new List<Tuple<Assignment, Course, int>>();
+            model.laboratoriesAssignments = new List<Tuple<Assignment,Laboratory, int>>();
+
+            var userId = _userManager.GetUserId(User);
+            Teacher teacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(Guid.Parse(userId));
+            List<Course> courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(teacher.Id).ToList();
+
+            foreach(Course course in courses)
+            {
+                List<Assignment> courseAssignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList();
+                if(courseAssignments != null)
+                {
+                    foreach(Assignment assignment in courseAssignments)
+                    {
+                        List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id);
+                        model.coursesAssignments.Add(new Tuple<Assignment, Course, int>(assignment, course, submissions.Count()));
+                    }
+                }
             }
 
+            List<Laboratory> laboratories = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(teacher.Id).ToList();
+            foreach (Laboratory laboratory in laboratories)
+            {
+                List<Assignment> labAssignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(laboratory.Id).ToList();
+                if (labAssignments != null)
+                {
+                    foreach (Assignment assignment in labAssignments)
+                    {
+                        List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id);
+                        model.laboratoriesAssignments.Add(new Tuple<Assignment, Laboratory, int>(assignment, laboratory, submissions.Count()));
+                    }
+                }
+            }
+         
 
 
-            
+                /*IEnumerable<Assignment> assignments = this.storage.GetRepository<IAssignmentRepository>().All();
+                foreach(Assignment assignment in assignments)
+                {
+                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(assignment.SubjectId);
+                    if(course != null) //if the assignment is for a course
+                    {
+                        List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id);
+                        model.coursesAssignments.Add(new Tuple<Assignment, Course, int>(assignment, course, submissions.Count()));
+                    }
+                    else // is a laboratory assignment
+                    {
+                        Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(assignment.SubjectId);
+                        List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id);
+                        model.laboratoriesAssignments.Add(new Tuple<Assignment, Laboratory, int>(assignment, laboratory, submissions.Count()));                   
+                    }
+                }*/
 
-                IEnumerable<Assignment> assignments = this.storage.GetRepository<IAssignmentRepository>().All();
+                return View(model);
+
+
             //Tuple<Assignment, Course> courseTuple;
             //Tuple<Assignment, Laboratory> laboratoryTuple;
             //List list = List();
-            List<Tuple<Assignment, Course, Laboratory>> list = new List<Tuple<Assignment, Course, Laboratory>>();
+            /*List<Tuple<Assignment, Course, Laboratory>> list = new List<Tuple<Assignment, Course, Laboratory>>();
             foreach (Assignment assignment in assignments)
             {
                 Course course = this.storage.GetRepository<ICourseRepository>().FindById(assignment.SubjectId);
@@ -99,13 +155,29 @@ namespace Assignments.Controllers
                     }
                 }
             }
-            return View(list);
+            return View(list);*/
         }
 
         // GET: AssignmentsController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            Assignment assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(id);
+            return View(assignment);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DetailsForTeacher(Guid id)
+        {
+            DetailsForTeacherViewModel model = new DetailsForTeacherViewModel();
+            model.submissionsList = new List<Tuple<Submission, Student>>();
+            model.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(id);
+            List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(model.assignment.Id);
+            foreach(Submission submission in submissions)
+            {
+                Student student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
+                model.submissionsList.Add(new Tuple<Submission, Student>(submission, student));
+            }
+            return View(model);
         }
 
         // GET: AssignmentsController/Create
@@ -126,6 +198,22 @@ namespace Assignments.Controllers
             if (ModelState.IsValid)
             {
                 this.storage.GetRepository<IAssignmentRepository>().Create(assignment);
+                /*Course course = this.storage.GetRepository<ICourseRepository>().FindById(assignment.SubjectId);
+            
+                if(course != null) // if the assignment is a course assignment
+                {
+                    List<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().GetGroupByCourseId(course.Id).ToList();
+                }
+                else
+                {
+                    Laboratory lab = this.storage.GetRepository<ILaboratoryRepository>().FindById(assignment.SubjectId);
+                    if (lab != null)
+                    {
+
+                    }
+                }*/
+                
+
                 this.storage.Save();
                 return RedirectToAction("Index", "Default");
             }

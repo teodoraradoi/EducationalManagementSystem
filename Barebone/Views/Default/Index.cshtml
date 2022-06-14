@@ -2,28 +2,39 @@
 
 <head>
     <link rel="stylesheet" href="../../Styles/styles.css"/>
+
+
+      <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
 </head>
 
 @{
     ViewData["Title"] = "Dashboard";
 }
 
+
+@*
+
+        
+
+        <a href="#menu" id="toggle"><span></span></a>
+
+<div id="menu">
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
+*@
+
+
 <h1>Dashboard</h1>
-
- @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {        
- <a asp-controller="Groups" asp-action="Create" class="btn btn-dark">Create group</a>
- <a asp-controller="Subgroups" asp-action="Create" class="btn btn-dark">Create subgroup</a>
- <a asp-controller="Courses" asp-action="Create" class="btn btn-dark">Create course</a>               
- <a asp-controller="Students" asp-action="Create" class="btn btn-dark">Create student account</a>               
- <a asp-controller="Teachers" asp-action="Create" class="btn btn-dark">Create teacher account</a>               
- }
-
-@if (ViewContext.HttpContext.User.IsInRole("Teacher"))
-{
-    <a asp-controller="Assignments" asp-action="Create" class="btn btn-dark">Create assignment</a>
-}
-<br>
-
      
  @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {
 
@@ -32,7 +43,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Students</h5>
-        <p class="card-text">There are currently 500 students enrolled.</p>
+        <p class="card-text">There are currently @ViewBag.NumberOfStudents students enrolled.</p>
         <a asp-controller="Students" asp-action="Index" class="btn btn-primary special-button">View students</a>
       </div>
     </div>
@@ -41,7 +52,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Teachers</h5>
-        <p class="card-text">There are currently 140 teachers.</p>
+        <p class="card-text">There are currently @ViewBag.NumberOfTeachers teachers.</p>
         <a asp-controller="Teachers" asp-action="Index" class="btn btn-primary">View teachers</a>
       </div>
     </div>
@@ -53,7 +64,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Courses</h5>
-        <p class="card-text">There are currently 100 courses.</p>
+        <p class="card-text">There are currently @ViewBag.NumberOfCourses courses.</p>
         <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">View courses</a>
       </div>
     </div>
@@ -62,7 +73,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Laboratories</h5>
-        <p class="card-text">There are currently 100 laboratories.</p>
+        <p class="card-text">There are currently @ViewBag.NumberOfLaboratories laboratories.</p>
         <a asp-controller="Laboratories" asp-action="Index" class="btn btn-primary">View laboratories</a>
       </div>
     </div>
@@ -74,7 +85,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Groups</h5>
-        <p class="card-text">There are currently 30 groups.</p>
+        <p class="card-text">There are currently @ViewBag.NumberOfGroups groups.</p>
         <a asp-controller="Groups" asp-action="Index" class="btn btn-primary">View groups</a>
       </div>
     </div>
@@ -83,7 +94,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Subgroups</h5>
-        <p class="card-text">There are currently 60 subgroups.</p>
+        <p class="card-text">There are currently @ViewBag.NumberOfSubgroups subgroups.</p>
         <a asp-controller="Subgroups" asp-action="Index" class="btn btn-primary">View subgroups</a>
       </div>
     </div>
@@ -171,4 +182,63 @@
   </div>
 </div>
 }
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function(){
+        console.log("this");
+ 
+    var theToggle = document.getElementById('toggle');
+
+// based on Todd Motto functions
+// https://toddmotto.com/labs/reusable-js/
+
+// hasClass
+function hasClass(elem, className) {
+	return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+}
+// addClass
+function addClass(elem, className) {
+    if (!hasClass(elem, className)) {
+    	elem.className += ' ' + className;
+    }
+}
+// removeClass
+function removeClass(elem, className) {
+	var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
+	if (hasClass(elem, className)) {
+        while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+            newClass = newClass.replace(' ' + className + ' ', ' ');
+        }
+        elem.className = newClass.replace(/^\s+|\s+$/g, '');
+    }
+}
+// toggleClass
+function toggleClass(elem, className) {
+	var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, " " ) + ' ';
+    if (hasClass(elem, className)) {
+        while (newClass.indexOf(" " + className + " ") >= 0 ) {
+            newClass = newClass.replace( " " + className + " " , " " );
+        }
+        elem.className = newClass.replace(/^\s+|\s+$/g, '');
+    } else {
+        elem.className += ' ' + className;
+    }
+}
+
+theToggle.onclick = function() {
+   toggleClass(this, 'on');
+   return false;
+}
+   });
+
+</script>
+
+
 

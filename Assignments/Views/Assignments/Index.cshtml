@@ -2,9 +2,17 @@
 @*@model List<Tuple<Assignments.Data.Entities.Assignment, Courses.Data.Entities.Course, Laboratories.Data.Entities.Laboratory>>*@
 @model Assignments.ViewModels.AssignmentsViewModel
 
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
 <h2>Course Assignments</h2>
 
-<table class="table">
+<table class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -13,7 +21,7 @@
       <th scope="col">Subject</th>
       <th scope="col">Date</th>
       <th scope="col">Max Grade</th>
-      <th scope="col">Status</th>
+      <th scope="col">Submissions</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -23,23 +31,30 @@
       {
             <tr>
               <td>@i</td>
-              <td>@assignment.Item1.Name</td>
+              <td>
+
+                   @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+                    {
+                        <a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item1.Id">@assignment.Item1.Name</a>
+                    }
+
+              </td>
               <td>@assignment.Item1.Description</td>
               <td>@assignment.Item2.Name</td>
               <td>@assignment.Item1.DueDate</td>
               <td>@assignment.Item1.MaxGrade</td>
-              <td>@assignment.Item1.Status</td>
+              <td>@assignment.Item3</td>
 
 
                 @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
                 {
-                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id" class="btn btn-dark">Edit</a>
-                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id" class="btn btn-dark">Delete</a>
+                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a>
+                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id">Delete</a>
                     </td>
                 }
                 @if (ViewContext.HttpContext.User.IsInRole("Student"))
                 {
-                 <td><a asp-controller="Submissions" asp-action="Create" asp-route-id="@assignment.Item1.Id" class="btn btn-dark">Submit homework</a></td>
+                 <td><a asp-controller="Submissions" asp-action="Create" asp-route-id="@assignment.Item1.Id">Submit homework</a></td>
                 }
                 
             </tr>
@@ -61,7 +76,7 @@
       <th scope="col">Subject</th>
       <th scope="col">Date</th>
       <th scope="col">Max Grade</th>
-      <th scope="col">Status</th>
+      <th scope="col">Submissions</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -71,23 +86,29 @@
       {
             <tr>
               <td>@j</td>
-              <td>@assignment.Item1.Name</td>
+              <td>
+                    @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+                    {
+                        <a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item1.Id">@assignment.Item1.Name</a>
+                    }
+                   
+              </td>
               <td>@assignment.Item1.Description</td>
               <td>@assignment.Item2.Name</td>
               <td>@assignment.Item1.DueDate</td>
               <td>@assignment.Item1.MaxGrade</td>
-              <td>@assignment.Item1.Status</td>
+              <td>@assignment.Item3</td>
 
 
                 @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
                 {
-                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id" class="btn btn-dark">Edit</a>
-                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id" class="btn btn-dark">Delete</a>
+                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a>
+                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id">Delete</a>
                     </td>
                 }
                 @if (ViewContext.HttpContext.User.IsInRole("Student"))
                 {
-                 <td><a asp-controller="Submissions" asp-action="Create" asp-route-id="@assignment.Item1.Id" class="btn btn-dark">Submit homework</a></td>
+                 <td><a asp-controller="Submissions" asp-action="Create" asp-route-id="@assignment.Item1.Id">Submit homework</a></td>
                 }
                 
             </tr>
@@ -95,3 +116,11 @@
       }
   </tbody>
 </table>
+
+
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('.table').DataTable();
+} );
+</script>

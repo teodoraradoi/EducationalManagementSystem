@@ -1,10 +1,17 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<Groups.Data.Entities.Group>
 
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
 <h1>Groups</h1>
 
 
-<table class="table">
+<table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -35,3 +42,10 @@
       }
   </tbody>
 </table>
+
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>

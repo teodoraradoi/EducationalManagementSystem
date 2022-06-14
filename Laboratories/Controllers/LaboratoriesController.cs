@@ -19,6 +19,11 @@ using Microsoft.AspNetCore.Identity;
 using Identity.Data.Entities;
 using Students.Data.Abstractions;
 using Students.Data.Entities;
+using Posts.Data.Abstractions;
+using Assignments.Data.Entities;
+using Submissions.Data.Entities;
+using Assignments.Data.Abstractions;
+using Submissions.Data.Abstractions;
 
 namespace Laboratories.Controllers
 {
@@ -104,11 +109,62 @@ namespace Laboratories.Controllers
                 return View(this.storage.GetRepository<ILaboratoryRepository>().All());
         }
 
-        // GET: LaboratoriesController/Details/5
-        public ActionResult Details(Guid id)
+        [Authorize(Roles = "Student")]
+        public ActionResult DetailsForStudent(Guid id)
+        {
+            var userId = _userManager.GetUserId(User);
+            Student currentStudent = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
+            Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(id);
+            DetailsForStudentViewModel model = new DetailsForStudentViewModel()
+            {
+                laboratory = laboratory,
+                //course = this.storage.GetRepository<ICourseRepository>().FindById
+                posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(laboratory.Id).ToList(),
+            };
+
+
+            List<Tuple<Assignment, Submission>> Done = new List<Tuple<Assignment, Submission>>();
+            List<Assignment> assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(laboratory.Id).ToList();
+            List<Assignment> ToDo = assignments;
+            foreach (Assignment assignment in assignments.ToList())
+            {
+                List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id);
+                foreach (Submission submission in submissions)
+                {
+                    if (submission.StudentId == currentStudent.Id)
+                    {
+                        Tuple<Assignment, Submission> tuple = new Tuple<Assignment, Submission>(assignment, submission);
+                        Done.Add(tuple);
+                        Assignment alreadyDone = assignment;
+                        ToDo.Remove(alreadyDone); ; 
+                    }
+                }
+            }
+
+            model.ToDo = ToDo;
+            model.Done = Done;
+
+            //Teacher teacher = this.storage.GetRepository<ITeachersRepository>().FindById(course.TeacherId);
+            //model.teacher = teacher;
+            return View(model);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DetailsForTeacher(Guid id)
         {
             Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(id);
-            return View(laboratory);
+            DetailsForTeacherViewModel model = new DetailsForTeacherViewModel()
+            {
+                laboratory = laboratory,
+                assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(laboratory.Id).ToList(),
+                posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(laboratory.Id).ToList(),
+            };
+
+            Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(laboratory.SubgroupId);
+            Group group = this.storage.GetRepository<IGroupRepository>().FindById(subgroup.GroupId);
+            model.group = new Tuple<Group, Subgroup>(group, subgroup);
+            
+            return View(model);
         }
 
         public ActionResult AttachedLaboratories(Guid id)

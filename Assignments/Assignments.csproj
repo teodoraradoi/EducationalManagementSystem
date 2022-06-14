@@ -17,6 +17,9 @@
     <ProjectReference Include="..\Laboratories.Data.Abstractions\Laboratories.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Laboratories.Data.Entities\Laboratories.Data.Entities.csproj" />
     <ProjectReference Include="..\Students.Data.Abstractions\Students.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Submissions.Data.Abstractions\Submissions.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Teachers.Data.Entities\Teachers.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

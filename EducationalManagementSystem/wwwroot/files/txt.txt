@@ -1,0 +1,7 @@
+
+Sistem de management didactic cu arhitectura de tip monolit modular
+
+
+
+
+Dezvoltarea unui sistem de gestiune pentru sustinerea activităților didactice la nivelul unei facultăți. Sistemul trebuie implementat în conformitate cu arhitectura Monolit Modular

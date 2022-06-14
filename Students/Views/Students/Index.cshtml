@@ -1,11 +1,12 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<Tuple<Identity.Data.Entities.ApplicationUser, Groups.Data.Entities.Group, Groups.Data.Entities.Subgroup>>
+@model List<Tuple<Students.Data.Entities.Student, Identity.Data.Entities.ApplicationUser, Groups.Data.Entities.Group, Groups.Data.Entities.Subgroup>>
 
 <head>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
 </head>
 
 <h1>Students</h1>
@@ -22,7 +23,7 @@ $(document).ready( function () {
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Student name</th>
+            <th scope="col">Student Name</th>
             <th scope="col">Student Email</th>
             <th scope="col">Specialization name</th>
             <th scope="col">Group</th>
@@ -36,11 +37,11 @@ $(document).ready( function () {
       {
             <tr>
               <td>@i</td>
-              <td>@student.Item1.UserName</td>
-              <td>@student.Item1.Email</td>
-              <td>@student.Item2.SpecializationName</td>
-              <td>@student.Item2.Name</td>
+              <td><a asp-controller="students" asp-action="Details" asp-route-id="@student.Item1.Id">@student.Item1.Name</a></td>
+              <td>@student.Item2.Email</td>
+              <td>@student.Item3.SpecializationName</td>
               <td>@student.Item3.Name</td>
+              <td>@student.Item4.Name</td>
             </tr>
             i++;
       }

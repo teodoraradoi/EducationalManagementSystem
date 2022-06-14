@@ -13,5 +13,8 @@ namespace Teachers.Data.Abstractions
         IEnumerable<Teacher> All();
         void Create(Teacher teacher);
         Teacher FindTeacherByUserId(Guid id);
+        Teacher FindById(Guid id);
+        void Update(Teacher teacher);
+        void Delete(Guid id);
     }
 }

@@ -10,6 +10,7 @@
 
 <!DOCTYPE html>
 <html>
+    
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,6 +32,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
     <script src="https://kit.fontawesome.com/c3901b143b.js" crossorigin="anonymous"></script>
+
+
+          <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
 
 
 
@@ -74,42 +82,49 @@
                     </ul>
                 </li>*@
                        <li>
-                            <a asp-area="" asp-controller="Default" asp-actions="Index">Home</a>
+                          <a href="@Url.Action("Index", "Default")">Home</a>
                         </li>
                          @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
                 {
                     <li>
-                        <a asp-area="" asp-controller="Secretaries" asp-actions="Index">Secretaries</a>
+                        <a href="@Url.Action("Index", "Secretaries")">Secretaries</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Teachers" asp-actions="Index">Teachers</a>
+                        <a href="@Url.Action("Index", "Teachers")">Teachers</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Students" asp-actions="Index">Students</a>
+                        <a href="@Url.Action("Index", "Students")">Students</a>
                     </li>
                 }
-                <li>
-                            <a asp-area="" asp-controller="Courses" asp-actions="Index">Courses</a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Laboratories" asp-actions="Index">Laboratories</a>
-                        </li>
-                        @if (ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Teacher")){
-                        <li>
-                            <a asp-area="" asp-controller="Groups" asp-actions="Index">Groups</a>
-                        </li>
-                          <li>
-                            <a asp-area="" asp-controller="Subgroups" asp-actions="Index">Subgroups</a>
-                        </li>
-                        }
-
-                @if (ViewContext.HttpContext.User.IsInRole("Student") || ViewContext.HttpContext.User.IsInRole("Teacher"))
+                @if (ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Student") || ViewContext.HttpContext.User.IsInRole("Teacher"))
                 {
-                    <li>
-                        <a asp-area="" asp-controller="Assignments" asp-actions="Index">Assignments</a>
+                     <li>
+                        <a href="@Url.Action("Index", "Courses")">Courses</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Submissions" asp-actions="Index">Submissions</a>
+                        <a href="@Url.Action("Index", "Laboratories")">Laboratories</a>
+                    </li>
+                }
+
+                @if (ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Teacher")) {
+                    <li>
+                        <a href="@Url.Action("Index", "Groups")">Groups</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Subgroups")">Subgroups</a>
+                    </li>
+                }
+
+                @if (ViewContext.HttpContext.User.IsInRole("Teacher") || ViewContext.HttpContext.User.IsInRole("Student"))
+                    {
+                    <li>
+                        <a href="@Url.Action("Index", "Assignments")">Assignments</a>
+                    </li>
+                }
+                @if(ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
+                  <li>
+                        <a href="@Url.Action("Index", "Submissions")">Submissions</a>
                     </li>
                 }
             </ul>
@@ -123,7 +138,36 @@
 
 
             <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
+
+@if(ViewContext.HttpContext.User.IsInRole("Secretary")) { 
+
+                        <a href="#menu" id="toggle"><span></span></a>
+
+<div id="menu">
+  <ul>
+
+          
+           <li><a asp-controller="Groups" asp-action="Create">Create group</a></li>
+           <li><a asp-controller="Subgroups" asp-action="Create">Create subgroup</a></li>
+           <li><a asp-controller="Courses" asp-action="Create">Create course</a>     </li>
+           <li><a asp-controller="Students" asp-action="Create">Create student account</a>       </li>
+           <li> <a asp-controller="Teachers" asp-action="Create">Create teacher account</a>   </li>
+
+
+       
+                
+ 
+
+
+  </ul>
+</div>
+
+}
             <div class="container">
+
+
+
+
               
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -146,18 +190,12 @@
                 </div>
             </div>
         </nav>
-        @*
+        
 
-        <a href="#menu" id="toggle"><span></span></a>
 
-<div id="menu">
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</div>
-*@
+
+
+
 
                     @RenderBody()
        
@@ -186,7 +224,7 @@
 </html>
 
 
-@*
+
 <script>
     $(document).ready(function(){
         console.log("this");
@@ -237,4 +275,3 @@ theToggle.onclick = function() {
 
 </script>
 
-*@

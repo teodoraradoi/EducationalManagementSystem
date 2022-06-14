@@ -1,0 +1,117 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Courses.ViewModels.DetailsForTeacherViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+<h3>@Html.DisplayFor(model => model.course.Name)</h3>
+
+
+<div class="row"> 
+    <div class="col-8">
+
+    
+   <h2>Posts</h2>
+
+
+   
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+
+    <table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">DateCreated</th>
+        </tr>
+    </thead>
+
+    <tbody>
+     @{int i = 1;}
+      @foreach (var post in this.Model.posts)
+      {
+            <tr>
+              <td>@i</td>
+              <td>@post.Name</td>
+              <td>@post.Description</td>
+              <td>@post.DateCreated</td>
+            </tr>
+            i++;
+      }
+  </tbody>
+
+       
+</table>
+
+
+   <h2>Assignments</h2>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">DueDate</th>
+      <th scope="col">MaxGrade</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int j = 1;}
+      @foreach (var assignment in this.Model.assignments)
+      {
+            <tr>
+              <td>@j</td>
+              <td>@assignment.Name</td>
+              <td>@assignment.Description</td>
+              <td>@assignment.DueDate</td>
+              <td>@assignment.MaxGrade</td>
+            </tr>
+            j++;
+      }
+  </tbody>
+</table>
+
+
+   </div>
+ <div class="col-4">
+
+
+           <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Back</a>
+
+
+
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Course Information</h5>
+            <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.course.Name)
+        </dt>
+        <dd class="col-sm-10">
+            <p class="card-text">@Html.DisplayFor(model => model.course.Name)</p>
+        </dd>
+      
+    </dl>
+
+      
+    </div>
+    </div>
+
+</div> 
+   </div> 

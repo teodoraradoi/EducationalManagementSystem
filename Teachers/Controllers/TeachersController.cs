@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Courses.Data.Entities;
 using Laboratories.Data.Entities;
+using Courses.Data.Abstractions;
+using System.Linq;
+using Laboratories.Data.Abstractions;
 
 namespace Teachers.Controllers
 {
@@ -20,35 +23,41 @@ namespace Teachers.Controllers
         private IStorage storage;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private ITeachersRepository teachersRepo;  
 
         public TeachersController(IStorage storage, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             this.storage = storage;
             _userManager = userManager;
             _roleManager = roleManager;
+            teachersRepo = this.storage.GetRepository<ITeachersRepository>();
         }
 
         // GET: TeachersController
         [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Index()
-        {/*
-            //IEnumerable<ApplicationUser> teachers = 
-            List<Tuple<ApplicationUser, Course, Laboratory>> list = new List<Tuple<ApplicationUser, Course, Laboratory>>();
-            foreach (Teacher student in teachers)
+        {
+            IEnumerable<Teacher> teachers = this.storage.GetRepository<ITeachersRepository>().All();
+            List<Tuple<Teacher, ApplicationUser, int , int>> list = new List<Tuple<Teacher, ApplicationUser, int, int>>();
+            foreach (Teacher teacher in teachers)
             {
-                ApplicationUser user = await _userManager.FindByIdAsync(student.UserId.ToString());
-                Group group = this.storage.GetRepository<IGroupRepository>().FindById(student.GroupId);
-                Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(student.SubgroupId);
-                list.Add(new Tuple<ApplicationUser, Group, Subgroup>(user, group, subgroup));
+                ApplicationUser user = await _userManager.FindByIdAsync(teacher.UserId.ToString());
+                List<Course> coursesTaught = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(teacher.Id).ToList();
+                List<Laboratory> laboratoriesTaught = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(teacher.Id).ToList();
+                list.Add(new Tuple<Teacher, ApplicationUser, int, int>(teacher, user, coursesTaught.Count(), laboratoriesTaught.Count()));
             }
-            return View(list);*/
-            return View(this.storage.GetRepository<ITeachersRepository>().All());
+            return View(list);
         }
 
         // GET: TeachersController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            DetailsViewModel viewModel = new DetailsViewModel();
+            Teacher teacher = teachersRepo.FindById(id);
+            viewModel.teacher = teacher;
+            viewModel.courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(teacher.Id).ToList();
+            viewModel.laboratories = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(teacher.Id).ToList();
+            return View(viewModel);
         }
 
         // GET: TeachersController/Create
@@ -98,45 +107,69 @@ namespace Teachers.Controllers
         }
 
         // GET: TeachersController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            return View();
+            Teacher teacher = teachersRepo.FindById(id);
+            ApplicationUser user = await _userManager.FindByIdAsync(teacher.UserId.ToString());
+            DetailsViewModel detailsViewModel = new DetailsViewModel()
+            {
+                teacher = teacher,
+                user = user
+            };
+            //Tuple<Teacher, ApplicationUser> tuple = new Tuple<Teacher, ApplicationUser>(teacher, user);
+            return View(detailsViewModel);
         }
 
         // POST: TeachersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, DetailsViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                Teacher teacher = teachersRepo.FindById(id);
+                teacher.Name = model.teacher.Name;
+                this.storage.GetRepository<ITeachersRepository>().Update(teacher);
+                this.storage.Save();
 
-        // GET: TeachersController/Delete/5
-        public ActionResult Delete(int id)
-        {
+                ApplicationUser user = await _userManager.FindByIdAsync(teacher.UserId.ToString());
+                user.Email = model.user.Email;
+                user.UserName = model.user.Email;
+                await _userManager.UpdateAsync(user);
+                
+
+                return RedirectToAction("Index", "Default");
+            }
             return View();
         }
 
-        // POST: TeachersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        // GET: TeachersController/Delete/5
+        public async Task<IActionResult> Delete(Guid id)
         {
-            try
+            Teacher teacher = teachersRepo.FindById(id);
+            ApplicationUser user = await _userManager.FindByIdAsync(teacher.UserId.ToString());
+            DetailsViewModel model = new DetailsViewModel()
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                teacher = teacher,
+                user = user
+            };
+            return View(model);
+        }
+
+        // POST: TeachersController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            Teacher teacher = teachersRepo.FindById(id);
+            ApplicationUser user = await _userManager.FindByIdAsync(teacher.UserId.ToString());
+            teachersRepo.Delete(id);
+            this.storage.Save();
+
+            await _userManager.RemoveFromRoleAsync(user, "Teacher");
+            await _userManager.DeleteAsync(user);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

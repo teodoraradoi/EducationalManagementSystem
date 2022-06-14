@@ -1,34 +1,74 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<Tuple<Laboratories.Data.Entities.Laboratory, Courses.Data.Entities.Course>>
 
-<h1>List of laboratories</h1>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+<h1>Laboratories</h1>
 
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
+<table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+       
+       
+    <thead>
+        <tr>
+                 <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Day</th>
       <th scope="col">Time</th>
       <th scope="col">Course</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+        </tr>
+    </thead>
+
+    <tbody>
      @{int i = 1;}
       @foreach (var list in this.Model)
       {
             <tr>
               <td>@i</td>
-              <td><a asp-controller="Laboratories" asp-action="Details" asp-route-id="@list.Item1.Id">@list.Item1.Name</a></td>
+              <td>
+                    @if(ViewContext.HttpContext.User.IsInRole("Student"))
+                    {
+                        <a asp-controller="Laboratories" asp-action="DetailsForStudent" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
+                    }
+                    @if(ViewContext.HttpContext.User.IsInRole("Secretary"))
+                    {
+                        @list.Item1.Name
+                    }
+                    @if(ViewContext.HttpContext.User.IsInRole("Teacher"))
+                    {
+                        <a asp-controller="Laboratories" asp-action="DetailsForTeacher" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
+                    }
+
+              </td>
               <td>@list.Item1.Day</td>
               <td>@list.Item1.Time.ToString("hh:mm")</td>
-              <td>@list.Item2.Name</td>
-              <td> <a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id" class="btn btn-dark">Edit laboratory</a>
-               <a asp-controller="Laboratories" asp-action="Delete" asp-route-Id="@list.Item1.Id" class="btn btn-dark">Delete laboratory</a></td>
+              <td>
+                  @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+                    {
+                        <a asp-controller="Courses" asp-action="DetailsForTeacher" asp-route-id="@list.Item2.Id">@list.Item2.Name</a>
+                    }
+                     @if (ViewContext.HttpContext.User.IsInRole("Student"))
+                    {
+                        <a asp-controller="Courses" asp-action="DetailsForStudent" asp-route-id="@list.Item2.Id">@list.Item2.Name</a>
+                    }
+                     @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+                    {
+                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@list.Item2.Id">@list.Item2.Name</a>
+                    }
+              </td>
             </tr>
             i++;
       }
   </tbody>
 </table>
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>

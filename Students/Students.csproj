@@ -14,6 +14,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Barebone\Barebone.csproj" />
 		<ProjectReference Include="..\Groups.Data.Abstractions\Groups.Data.Abstractions.csproj" />
 		<ProjectReference Include="..\Groups.Data.Entities\Groups.Data.Entities.csproj" />
 		<ProjectReference Include="..\Identity.Data.EntityFramework\Identity.Data.EntityFramework.csproj" />

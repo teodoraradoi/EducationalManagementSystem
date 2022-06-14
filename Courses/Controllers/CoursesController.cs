@@ -1,4 +1,6 @@
-﻿using Courses.Data.Abstractions;
+﻿using Assignments.Data.Abstractions;
+using Assignments.Data.Entities;
+using Courses.Data.Abstractions;
 using Courses.Data.Entities;
 using Courses.ViewModels;
 using ExtCore.Data.Abstractions;
@@ -12,8 +14,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Posts.Data.Abstractions;
 using Students.Data.Abstractions;
 using Students.Data.Entities;
+using Submissions.Data.Abstractions;
+using Submissions.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,12 +82,100 @@ namespace Courses.Controllers
          
         }
 
-        // GET: CoursesController/Details/5
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Details(Guid id)
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DetailsForTeacher(Guid id)
         {
             Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
-            return View(course);
+            DetailsForTeacherViewModel model = new DetailsForTeacherViewModel()
+            {
+                course = course,
+                assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList(),
+                posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(course.Id).ToList(),
+                laboratories = this.storage.GetRepository<ILaboratoryRepository>().GetAllByCourseId(course.Id).ToList()
+            };
+            List<CourseGroup> list = this.storage.GetRepository<ICourseGroupRepository>().GetByGroupId(course.Id).ToList();
+            foreach (CourseGroup item in list)
+            {
+                Group group = this.storage.GetRepository<IGroupRepository>().FindById(item.GroupId);
+                model.groups.Add(group);
+            }
+            return View(model);
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult DetailsForStudent(Guid id)
+        {
+            var userId = _userManager.GetUserId(User);
+            Student currentStudent = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
+            Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+            DetailsForStudentViewModel model = new DetailsForStudentViewModel()
+            {
+                course = course,
+                //assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList(),
+                posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(course.Id).ToList(),             
+            };
+
+            
+            List<Tuple<Assignment, Submission>> Done = new List<Tuple<Assignment, Submission>>();
+            List<Assignment> assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList(); // get all assigments for this course
+            List<Assignment> ToDo = assignments;
+            foreach (Assignment assignment in assignments.ToList())
+            {
+                List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id); // get all submissions for each assigment
+                foreach(Submission submission in submissions) 
+                {
+                    if(submission.StudentId == currentStudent.Id) // if the student already submitted their work for this assignment
+                    {
+                        Tuple<Assignment, Submission> tuple = new Tuple<Assignment, Submission>(assignment, submission);
+                        Done.Add(tuple);
+                        Assignment alreadyDone = assignment;
+                        ToDo.Remove(alreadyDone); ;
+                        //break; // ?? 
+                    }
+                    /*else
+                    {
+                        ToDo.Add(assignment);
+                       // break; // ?? 
+                    }*/
+                }
+            }
+
+           
+            
+            model.ToDo = ToDo;
+            model.Done = Done;
+
+
+
+            /*List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().All().ToList();
+            foreach(Submission submission in submissions)
+            {
+                foreach(Assignment assignment in assignments)
+                {
+                    if(submission.AssignmentId == assignment.Id)
+                    {
+                        assignments.Remove(assignment);
+                    }
+                }   
+            }*/
+        
+
+            // Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(currentStudent.SubgroupId);
+            List<Laboratory> laboratories = this.storage.GetRepository<ILaboratoryRepository>().GetAllByCourseId(id).ToList();
+            Laboratory studentLab = new Laboratory();
+            foreach (Laboratory lab in laboratories)
+            {
+                //studentLab = this.storage.GetRepository<ILaboratoryRepository>().AllBySubgroupId(currentStudent.SubgroupId).FirstOrDefault();
+                if(lab.SubgroupId == currentStudent.SubgroupId)
+                {
+                    studentLab = lab;
+                    break;
+                }
+            }
+            model.laboratory = studentLab;
+            Teacher teacher = this.storage.GetRepository<ITeachersRepository>().FindById(course.TeacherId);
+            model.teacher = teacher;
+            return View(model);
         }
 
         public IEnumerable<SelectListItem> getGroups()

@@ -15,6 +15,7 @@ namespace Posts.Data.Abstractions
         public void Create(Post post);
         public void Edit(Post post);
         public void Delete(Guid id);
+        public IEnumerable<Post> AllBySubjectId(Guid id);
 
     }
 }

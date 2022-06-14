@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Teachers.ViewModels.DetailsViewModel
+
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+
+
+<h1>Edit account</h1>
+
+ <div class="col-md-4">
+        <form  asp-action="Edit" enctype="multipart/form-data" method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+             <div class="form-group">
+                <label asp-for="teacher.Name"></label>
+                <input asp-for="teacher.Name" class="form-control" />
+                <span asp-validation-for="teacher.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.Email"></label>
+                <input asp-for="user.Email" class="form-control" />
+                <span asp-validation-for="user.Email" class="text-danger"></span>
+            </div>
+            <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.teacher.Id" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>

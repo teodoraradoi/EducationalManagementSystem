@@ -1,31 +1,85 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<Tuple<Submissions.Data.Entities.Submission, Assignments.Data.Entities.Assignment>>
+@*@model List<Tuple<Assignments.Data.Entities.Assignment, Courses.Data.Entities.Course, Laboratories.Data.Entities.Laboratory>>*@
+@model Submissions.ViewModels.IndexViewModel
 
-<h1>List of submissions</h1>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
-<table class="table">
+<h2>Course Assignment Submissions</h2>
+
+<table class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">File uploaded</th>
+      <th scope="col">File</th>
+      <th scope="col">Status</th>
       <th scope="col">Assignment</th>
-      <th scope="col">Turned in date</th>
-      <th scope="col">Actions</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Turned in Date</th>
+      <th scope="col">Student</th>
+      <th scope="col">Grade</th>
     </tr>
   </thead>
   <tbody>
      @{int i = 1;}
-      @foreach (var list in this.Model)
+      @foreach (var item in this.Model.courseSubmissions)
       {
             <tr>
               <td>@i</td>
-              <td>@list.Item1.FilePath</td>
-              <td>@list.Item2.Name</td>
-              <td>@list.Item1.TurnedInDate</td>
-              <td> <a asp-controller="Submissions" asp-action="Edit" asp-route-id="@list.Item1.Id" class="btn btn-dark">Edit</a>
-               <a asp-controller="Submissions" asp-action="Delete" asp-route-Id="@list.Item1.Id" class="btn btn-dark">Delete</a></td>
+              <td>@item.Item1.FilePath</td>
+              <td>@item.Item1.Status</td>
+              <td>@item.Item2.Name</td>
+              <td>@item.Item3.Name</td>
+              <td>@item.Item1.TurnedInDate</td>
+              <td>@item.Item4.Name</td>
             </tr>
             i++;
       }
   </tbody>
 </table>
+
+
+<h2>Laboratory Assignment Submissions</h2>
+
+<table class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">File</th>
+      <th scope="col">Status</th>
+      <th scope="col">Assignment</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Turned in Date</th>
+      <th scope="col">Student</th>
+      <th scope="col">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+     @{int j = 1;}
+      @foreach (var item in this.Model.laboratorySubmissions)
+      {
+            <tr>
+              <td>@j</td>
+              <td>@item.Item1.FilePath</td>
+              <td>@item.Item1.Status</td>
+              <td>@item.Item2.Name</td>
+              <td>@item.Item3.Name</td>
+              <td>@item.Item1.TurnedInDate</td>
+              <td>@item.Item4.Name</td>
+            </tr>
+           j++;
+      }
+  </tbody>
+</table>
+
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('.table').DataTable();
+} );
+</script>

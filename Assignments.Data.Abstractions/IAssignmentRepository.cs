@@ -17,5 +17,7 @@ namespace Assignments.Data.Abstractions
         void Delete(Guid id);
 
         Assignment FindBySubjectId(Guid id);
+        IEnumerable<Assignment> AllBySubjectId(Guid id);
+
     }
 }
