@@ -5,11 +5,14 @@
     <link rel="stylesheet" href="../../Styles/styles.css"/>
 </head>
 
-<h3>Are you sure you want to delete this?</h3>
-
 @{
     ViewData["Title"] = "Delete";
 }
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Delete Account</h5>
 
 <div>
     <hr />
@@ -31,4 +34,7 @@
     <form asp-action="Delete">
         <input type="submit" value="Delete" asp-route-id="@Model.teacher.Id" class="btn btn-danger" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
+</div>
+  </div>
+</div>
 </div>

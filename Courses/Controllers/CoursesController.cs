@@ -21,8 +21,10 @@ using Submissions.Data.Abstractions;
 using Submissions.Data.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Teachers.Data.Abstractions;
 using Teachers.Data.Entities;
 
@@ -79,7 +81,7 @@ namespace Courses.Controllers
                 return View(courses);
             }
             return View(this.storage.GetRepository<ICourseRepository>().All());
-         
+
         }
 
         [Authorize(Roles = "Teacher")]
@@ -99,6 +101,11 @@ namespace Courses.Controllers
                 Group group = this.storage.GetRepository<IGroupRepository>().FindById(item.GroupId);
                 model.groups.Add(group);
             }
+            if (model.course.GradingMethod != null)
+            {
+                string[] gradingMethod = model.course.GradingMethod.ToString().Split("-");
+                ViewBag.GradingMethod = gradingMethod[0] + "% Final Exam Grade + " + gradingMethod[1] + "% Laboratory Grade";
+            }
             return View(model);
         }
 
@@ -112,19 +119,19 @@ namespace Courses.Controllers
             {
                 course = course,
                 //assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList(),
-                posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(course.Id).ToList(),             
+                posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(course.Id).ToList(),
             };
 
-            
+
             List<Tuple<Assignment, Submission>> Done = new List<Tuple<Assignment, Submission>>();
             List<Assignment> assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList(); // get all assigments for this course
             List<Assignment> ToDo = assignments;
             foreach (Assignment assignment in assignments.ToList())
             {
                 List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().AllByAssignmentId(assignment.Id); // get all submissions for each assigment
-                foreach(Submission submission in submissions) 
+                foreach (Submission submission in submissions)
                 {
-                    if(submission.StudentId == currentStudent.Id) // if the student already submitted their work for this assignment
+                    if (submission.StudentId == currentStudent.Id) // if the student already submitted their work for this assignment
                     {
                         Tuple<Assignment, Submission> tuple = new Tuple<Assignment, Submission>(assignment, submission);
                         Done.Add(tuple);
@@ -140,8 +147,8 @@ namespace Courses.Controllers
                 }
             }
 
-           
-            
+
+
             model.ToDo = ToDo;
             model.Done = Done;
 
@@ -158,7 +165,7 @@ namespace Courses.Controllers
                     }
                 }   
             }*/
-        
+
 
             // Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(currentStudent.SubgroupId);
             List<Laboratory> laboratories = this.storage.GetRepository<ILaboratoryRepository>().GetAllByCourseId(id).ToList();
@@ -166,7 +173,7 @@ namespace Courses.Controllers
             foreach (Laboratory lab in laboratories)
             {
                 //studentLab = this.storage.GetRepository<ILaboratoryRepository>().AllBySubgroupId(currentStudent.SubgroupId).FirstOrDefault();
-                if(lab.SubgroupId == currentStudent.SubgroupId)
+                if (lab.SubgroupId == currentStudent.SubgroupId)
                 {
                     studentLab = lab;
                     break;
@@ -175,6 +182,11 @@ namespace Courses.Controllers
             model.laboratory = studentLab;
             Teacher teacher = this.storage.GetRepository<ITeachersRepository>().FindById(course.TeacherId);
             model.teacher = teacher;
+            if (model.course.GradingMethod != null)
+            {
+                string[] gradingMethod = model.course.GradingMethod.ToString().Split("-");
+                ViewBag.GradingMethod = gradingMethod[0] + "% Final Exam Grade + " + gradingMethod[1] + "% Laboratory Grade";
+            }
             return View(model);
         }
 
@@ -201,7 +213,7 @@ namespace Courses.Controllers
             CourseViewModel viewModel = new CourseViewModel();
             viewModel.groups = this.getGroups();
             viewModel.Teachers = this.GetTeachersList();
-            
+
             return View(viewModel);
 
 
@@ -231,8 +243,6 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 Guid courseId = Guid.NewGuid();
-
-
                 Course course = viewModel.course;
                 course.Id = courseId;
                 this.storage.GetRepository<ICourseRepository>().Create(course);
@@ -241,7 +251,7 @@ namespace Courses.Controllers
                 //var user = _userManager.GetUserId(User);
                 // add teacher dropdown to course
 
-               List<CourseGroup> courseGroups = new List<CourseGroup>();
+                List<CourseGroup> courseGroups = new List<CourseGroup>();
 
                 foreach (string selectedId in viewModel.selectedGroups)
                 {
@@ -259,7 +269,7 @@ namespace Courses.Controllers
 
                     courseGroups.Add(courseGroup);
 
-               
+
                 }
 
                 this.storage.GetRepository<ICourseGroupRepository>().Create(courseGroups);
@@ -269,6 +279,65 @@ namespace Courses.Controllers
             }
 
             return this.View();
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult CreateGradingMethod(Guid id)
+        {
+            GradingMethodViewModel viewModel = new GradingMethodViewModel();
+            viewModel.id = id;
+            Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+            ViewBag.CourseName = course.Name;
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateGradingMethod(Guid id, GradingMethodViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+                course.GradingMethod = viewModel.FinalExamPercent + "-" + viewModel.LaboratoryPercent;
+                //course.GradingMethod = viewModel.FinalExamPercent + "% Final Exam Grade + " + viewModel.LaboratoryPercent + "% Laboratory Grade";
+                course.AttendanceMatters = viewModel.AttendanceMatters;
+                this.storage.GetRepository<ICourseRepository>().Edit(course);
+                this.storage.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult EditGradingMethod(Guid id)
+        {
+            Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+            GradingMethodViewModel viewModel = new GradingMethodViewModel();
+            string[] gradingMethod = course.GradingMethod.ToString().Split("-");
+            viewModel.FinalExamPercent = Convert.ToInt32(gradingMethod[0]);
+            viewModel.LaboratoryPercent = Convert.ToInt32(gradingMethod[1]);
+            viewModel.AttendanceMatters = course.AttendanceMatters;
+            viewModel.id = id;
+            ViewBag.CourseName = course.Name;
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditGradingMethod(Guid id, GradingMethodViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+                course.GradingMethod = viewModel.FinalExamPercent + "-" + viewModel.LaboratoryPercent;
+                course.AttendanceMatters = viewModel.AttendanceMatters;
+                this.storage.GetRepository<ICourseRepository>().Edit(course);
+                this.storage.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
 
         public List<Teacher> GetTeachersList()
@@ -283,31 +352,53 @@ namespace Courses.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Edit(Guid? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
-           
-            return View(course);
+            CourseViewModel viewModel = new CourseViewModel();
+            viewModel.course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+            viewModel.groups = this.getGroups();
+            viewModel.Teachers = this.GetTeachersList();
+
+            return View(viewModel);
         }
 
         // POST: CoursesController/Edit/5
         [Authorize(Roles = "Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Guid Id, [Bind("Id,Name,Year,Semester,Day,Time")] Course course)
+        public ActionResult Edit(Guid Id, [Bind("Id,Name,Year,Semester,Day,Time,TeacherId")] Course course, [FromForm] IEnumerable<string> selectedGroups)
         {
-            /*if (id != course.Id)
-            {
-                return NotFound();
-            }*/
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 this.storage.GetRepository<ICourseRepository>().Edit(course);
                 this.storage.Save();
-                
-                return RedirectToAction(nameof(Index));
+
+/*
+                List<CourseGroup> courseGroups = new List<CourseGroup>();
+
+                foreach (string selectedId in viewModel.selectedGroups)
+                {
+                    /*CourseGroup courseGroup = new CourseGroup
+                    {
+                        Id = Guid.NewGuid(),
+                        CourseId = courseId,
+                        GroupId = Guid.Parse(selectedId)
+                    };
+                    CourseGroup courseGroup = new CourseGroup();
+                    courseGroup.Id = Guid.NewGuid();
+                    courseGroup.CourseId = courseId;
+                    //courseGroup.CourseId = Guid.NewGuid();
+                    courseGroup.GroupId = Guid.Parse(selectedId);
+
+                    courseGroups.Add(courseGroup);*/
+
+
+
+
+
+                    return RedirectToAction(nameof(Index));
             }
             return View();
         }
@@ -335,6 +426,7 @@ namespace Courses.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             this.storage.GetRepository<ICourseRepository>().Delete(id);
+            //this.storage.GetRepository<ICourseGroupRepository>().
             this.storage.Save();
             return RedirectToAction(nameof(Index));
         }

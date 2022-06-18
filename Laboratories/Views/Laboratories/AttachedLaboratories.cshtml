@@ -1,11 +1,29 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<Tuple<Laboratories.Data.Entities.Laboratory, Groups.Data.Entities.Subgroup>>
 
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
-<h1>List of laboratories attached to @ViewBag.CourseName</h1>
+<h2>Laboratories attached to @ViewBag.CourseName</h2>
 
 
-<table class="table">
+
+   @{
+      if(Model.Count == 0)
+        {
+            <tr><td>There aren't any laboratories attached to this course.</td></tr>
+        }
+        else
+        {
+       
+             int i = 1;
+
+    <table id="labs_table" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -17,19 +35,33 @@
     </tr>
   </thead>
   <tbody>
-     @{int i = 1;}
+
+                
       @foreach (var list in this.Model)
       {
             <tr>
               <td>@i</td>
-              <td><a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id">@list.Item1.Name</a></td>
+              <td><a asp-controller="Laboratories" asp-action="DetailsForTeacher" asp-route-id="@list.Item1.Id">@list.Item1.Name</a></td>
               <td>@list.Item1.Day</td>
               <td>@list.Item1.Time.ToString("hh:mm")</td>
               <td>@list.Item2.Name</td>
-              <td> <a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id" class="btn btn-dark">Edit laboratory</a>
-               <a asp-controller="Laboratories" asp-action="Delete" asp-route-Id="@list.Item1.Id" class="btn btn-dark">Delete laboratory</a></td>
+              <td> <a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.Item1.Id">Edit</a> | 
+               <a asp-controller="Laboratories" asp-action="Delete" asp-route-Id="@list.Item1.Id" >Delete</a></td>
             </tr>
             i++;
       }
+     
+
   </tbody>
 </table>
+
+
+        }
+   }
+
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#labs_table').DataTable();
+} );
+</script>

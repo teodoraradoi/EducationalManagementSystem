@@ -50,10 +50,11 @@ namespace Teachers.Controllers
         }
 
         // GET: TeachersController/Details/5
-        public ActionResult Details(Guid id)
+        public async Task<IActionResult> Details(Guid id)
         {
             DetailsViewModel viewModel = new DetailsViewModel();
             Teacher teacher = teachersRepo.FindById(id);
+            viewModel.user = await _userManager.FindByIdAsync(teacher.UserId.ToString());
             viewModel.teacher = teacher;
             viewModel.courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(teacher.Id).ToList();
             viewModel.laboratories = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(teacher.Id).ToList();

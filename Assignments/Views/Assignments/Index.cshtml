@@ -18,7 +18,7 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Description</th>
-      <th scope="col">Subject</th>
+      <th scope="col">Class</th>
       <th scope="col">Date</th>
       <th scope="col">Max Grade</th>
       <th scope="col">Submissions</th>
@@ -31,39 +31,28 @@
       {
             <tr>
               <td>@i</td>
-              <td>
-
-                   @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+              <td><a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item1.Id">@assignment.Item1.Name</a></td>
+                  @if(assignment.Item1.Description.Length < 40)
                     {
-                        <a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item1.Id">@assignment.Item1.Name</a>
+                        <td>@assignment.Item1.Description</td>
                     }
-
-              </td>
-              <td>@assignment.Item1.Description</td>
-              <td>@assignment.Item2.Name</td>
-              <td>@assignment.Item1.DueDate</td>
+                    else
+                    {
+                        <td>@assignment.Item1.Description.Substring(0,40)... <a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item1.Id">[View More]</a></td>
+                    }     
+              <td><a asp-controller="Courses" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item2.Id">@assignment.Item2.Name</a></td>
+              <td>@Convert.ToDateTime(assignment.Item1.DueDate).ToString("dd/MM/yyyy hh:mm")</td>
               <td>@assignment.Item1.MaxGrade</td>
               <td>@assignment.Item3</td>
-
-
-                @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
-                {
-                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a>
-                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id">Delete</a>
-                    </td>
-                }
-                @if (ViewContext.HttpContext.User.IsInRole("Student"))
-                {
-                 <td><a asp-controller="Submissions" asp-action="Create" asp-route-id="@assignment.Item1.Id">Submit homework</a></td>
-                }
-                
+              <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a> | 
+                        <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id">Delete</a></td>
             </tr>
             i++;
       }
   </tbody>
 </table>
 
-
+ <hr />
 
 <h2>Laboratory Assignments</h2>
 
@@ -73,7 +62,7 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Description</th>
-      <th scope="col">Subject</th>
+      <th scope="col">Class</th>
       <th scope="col">Date</th>
       <th scope="col">Max Grade</th>
       <th scope="col">Submissions</th>
@@ -93,8 +82,15 @@
                     }
                    
               </td>
-              <td>@assignment.Item1.Description</td>
-              <td>@assignment.Item2.Name</td>
+              @if(assignment.Item1.Description.Length < 40)
+                    {
+                        <td>@assignment.Item1.Description</td>
+                    }
+                    else
+                    {
+                        <td>@assignment.Item1.Description.Substring(0,40)... <a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item1.Id">[View More]</a></td>
+                    }     
+              <td><a asp-controller="Laboratories" asp-action="DetailsForTeacher" asp-route-id="@assignment.Item2.Id"> @assignment.Item2.Name</a></td>
               <td>@assignment.Item1.DueDate</td>
               <td>@assignment.Item1.MaxGrade</td>
               <td>@assignment.Item3</td>
@@ -102,7 +98,7 @@
 
                 @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
                 {
-                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a>
+                    <td> <a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit</a> | 
                         <a asp-controller="Assignments" asp-action="Delete" asp-route-Id="@assignment.Item1.Id">Delete</a>
                     </td>
                 }

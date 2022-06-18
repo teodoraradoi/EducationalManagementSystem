@@ -26,6 +26,7 @@ $(document).ready( function () {
             <th scope="col">Teacher Email</th>
             <th scope="col">Number of courses taught</th>
             <th scope="col">Number of laboratories taught</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
 
@@ -39,6 +40,8 @@ $(document).ready( function () {
               <td>@item.Item2.Email</td>
               <td>@item.Item3</td>
               <td>@item.Item4</td>
+              <td> <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@item.Item1.Id">Edit</a> | 
+                    <a asp-controller="Teachers" asp-action="Delete" asp-route-id="@item.Item1.Id">Delete</a></td>
             </tr>
             i++;
       }

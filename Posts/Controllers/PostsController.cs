@@ -54,7 +54,7 @@ namespace Posts.Controllers
                 post.DateCreated = DateTime.Now;
                 postRepo.Create(post);
                 this.storage.Save();
-                return RedirectToAction("Index", "Courses");
+                return RedirectToAction("Index", "Default");
             }
             return this.View();
         }
@@ -74,7 +74,7 @@ namespace Posts.Controllers
             post.Id = id;
             postRepo.Edit(post);
             this.storage.Save();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Default");
         }
 
         // GET: PostsController/Delete/5

@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Teachers.Data.Abstractions;
 using Teachers.Data.Entities;
 
@@ -134,6 +135,15 @@ namespace Submissions.Controllers
                     StudentId = currentStudent.Id
                 };
 
+                Assignment assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(model.AssignmentId);
+                if (DateTime.Compare(assignment.DueDate, submission.TurnedInDate) > 0)
+                {
+                    submission.Status = "Submitted in time";
+                }
+                else
+                {
+                    submission.Status = "Submitted late";
+                }
 
                 this.storage.GetRepository<ISubmissionRepository>().Create(submission);
                 this.storage.Save();
@@ -161,25 +171,44 @@ namespace Submissions.Controllers
         // GET: SubmissionsController/Edit/5
         public ActionResult Edit(Guid id)
         {
-            SubmissionViewModel submission = new SubmissionViewModel();
-            submission.AssignmentId = id;
-            return View(submission);
+            SubmissionViewModel model = new SubmissionViewModel();
+            model.AssignmentId = id;
+            var userId = _userManager.GetUserId(User);
+            Student currentStudent = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
+            Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindByStudentAndAssignmentId(currentStudent.Id, id);
+            model.Id = submission.Id;       
+           
+            return View(model);
         }
 
         // POST: SubmissionsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([FromForm] SubmissionViewModel model)
+        public ActionResult Edit(Guid id, [FromForm] SubmissionViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+                Student currentStudent = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
                 string uniqueFileName = UploadedFile(model);
                 Submission submission = new Submission
                 {
                     FilePath = uniqueFileName,
                     AssignmentId = model.AssignmentId,
-                    TurnedInDate = DateTime.Now
+                    TurnedInDate = DateTime.Now,
+                    StudentId = currentStudent.Id,
+                    Id = id
                 };
+
+                Assignment assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(model.AssignmentId);
+                if (DateTime.Compare(assignment.DueDate, submission.TurnedInDate) > 0)
+                {
+                    submission.Status = "Submitted in time";
+                }
+                else
+                {
+                    submission.Status = "Submitted late";
+                }
 
                 this.storage.GetRepository<ISubmissionRepository>().Edit(submission);
                 this.storage.Save();
@@ -207,6 +236,111 @@ namespace Submissions.Controllers
             {
                 return View();
             }
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult CreateGrade(Guid id)
+        {
+            GradeViewModel grade = new GradeViewModel();
+            grade.SubmissionId = id;
+            Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
+            grade.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
+            grade.student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
+            return View(grade);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateGrade(Guid id, [FromForm] int grade)
+        {
+            if (ModelState.IsValid)
+            {
+                //GradeViewModel grade = new GradeViewModel();
+                //grade.SubmissionId = id;
+                Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
+                submission.Grade = grade;
+                this.storage.GetRepository<ISubmissionRepository>().Edit(submission);
+                this.storage.Save();
+                //grade.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
+               // grade.student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult EditGrade(Guid id)
+        {
+            GradeViewModel grade = new GradeViewModel();
+            grade.SubmissionId = id;
+            Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
+            grade.Grade = submission.Grade;
+            grade.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
+            grade.student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
+            return View(grade);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditGrade(Guid id, [FromForm] int grade)
+        {
+            if (ModelState.IsValid)
+            {
+                //GradeViewModel grade = new GradeViewModel();
+                //grade.SubmissionId = id;
+                Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
+                submission.Grade = grade;
+                this.storage.GetRepository<ISubmissionRepository>().Edit(submission);
+                this.storage.Save();
+                //grade.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
+                // grade.student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> Download(string filename)
+        {
+            if (filename == null)
+                return Content("filename is not availble");
+
+            var path = Path.Combine(webHostEnvironment.WebRootPath, "files", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, GetContentType(path), Path.GetFileName(path));
+        }
+
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"},
+                {".zip", "application/zip" }
+            };
         }
     }
 }

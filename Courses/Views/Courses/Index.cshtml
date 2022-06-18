@@ -33,6 +33,10 @@ $(document).ready( function () {
       <th scope="col">Time</th>
       <th scope="col">Year</th>
       <th scope="col">Semester</th>
+        @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+         {
+                        <th scope="col">Actions</th>
+        }
         </tr>
     </thead>
 
@@ -49,7 +53,7 @@ $(document).ready( function () {
                     }
                        @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
                     {
-                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id">@course.Name</a>
+                        @course.Name
                     }
                      @if (ViewContext.HttpContext.User.IsInRole("Student"))
                     {
@@ -62,6 +66,11 @@ $(document).ready( function () {
               <td>@course.Time.ToString("hh:mm")</td>
               <td>@course.Year</td>
               <td>@course.Semester</td>
+                @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+                    {
+                        <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id">Edit</a> |
+                            <a asp-controller="Courses" asp-action="Delete" asp-route-id="@course.Id">Delete</a></td>
+                    }
             </tr>
             i++;
       }

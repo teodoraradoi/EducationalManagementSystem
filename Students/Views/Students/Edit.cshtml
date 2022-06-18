@@ -10,14 +10,16 @@
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
 </head>
 
-<h1>Edit account</h1>
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Edit Account</h5>
+    <hr/>
 
- <div class="col-md-4">
         <form  asp-action="Edit" enctype="multipart/form-data" method="post">
-
-            <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
 
              <div class="form-group">
@@ -35,7 +37,7 @@
              <div class="input-box">
                 <label class="label-text">Group</label>
                 <div class="form-group">
-                <select id="groupDropdown" asp-for="GroupId" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))">
+                <select class="custom-select" id="groupDropdown" asp-for="GroupId" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))">
                     <option value="">Select group...</option>
                  </select>
                  <span asp-validation-for="GroupId" class="text-danger"></span>
@@ -46,16 +48,19 @@
         <div class="input-box">
             <label class="label-text">Subgroup</label>
             <div class="form-group">
-                <select id="subgroupDropdown" asp-for="SubgroupId" class="form-control">
+                <select class="custom-select" id="subgroupDropdown" asp-for="SubgroupId" class="form-control">
                     <option value="">Select subgroup...</option>
                 </select>
                 <span asp-validation-for="SubgroupId" class="text-danger"></span>
             </div>
         </div>
 
-            <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.Id" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+            <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.Id" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
+
+      </div>
+</div>
 
     
 
@@ -67,7 +72,6 @@
 
             if($("#groupDropdown").val() != null) {
                 var groupId = $("#groupDropdown").val();
-                console.log(groupId);
                 
         $.getJSON("/Students/GetSubgroupsList", { Id: groupId }, function (data) {
             var item = "";
@@ -75,13 +79,10 @@
             //$("#subgroupDropdown").find('option').not(':first').remove();
             //item += '<option value="">Select subgroup...</option>'
             $.each(data, function (i, subgroup) {
-                console.log(subgroup)
                 let id =  subgroup.id;
                 let name = subgroup.name;
                 item += '<option value="' + id + '">' + name + '</option>'
-                console.log(item)
             });
-            console.log(item);
             $("#subgroupDropdown").html(item);
         });
             }
@@ -92,7 +93,6 @@
 
     $("#groupDropdown").change(function () {
         var groupId = $(this).val();
-        console.log(groupId);
 
         $.getJSON("/Students/GetSubgroupsList", { Id: groupId }, function (data) {
             var item = "";
@@ -100,13 +100,10 @@
             //$("#subgroupDropdown").find('option').not(':first').remove();
             item += '<option value="">Select subgroup...</option>'
             $.each(data, function (i, subgroup) {
-                console.log(subgroup)
                 let id =  subgroup.id;
                 let name = subgroup.name;
                 item += '<option value="' + id + '">' + name + '</option>'
-                console.log(item)
             });
-            console.log(item);
             $("#subgroupDropdown").html(item);
         });
 

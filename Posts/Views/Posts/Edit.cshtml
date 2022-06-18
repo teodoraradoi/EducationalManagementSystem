@@ -1,13 +1,23 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Posts.Data.Entities.Post
 
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+
 @{
     ViewData["Title"] = "Create";
 }
 
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Edit Post</h5>
+       <hr />
+
 <div class="container">
     <div class="col">
-        <h1>Edit post</h1>
     <form asp-action="Edit" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -29,8 +39,13 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" name="Edit" value="Edit"  asp-route-id="@Model.Id" class="btn btn-success" /> <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" name="Edit" value="Edit"  asp-route-id="@Model.Id" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
                 </div>
     </form>
     </div>
+</div>
+
+
+  </div>
+</div>
 </div>

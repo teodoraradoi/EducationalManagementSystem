@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<Tuple<Laboratories.Data.Entities.Laboratory, Courses.Data.Entities.Course>>
+@model List<Laboratories.ViewModels.IndexViewModel>
 
 <head>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
@@ -16,11 +16,19 @@
        
     <thead>
         <tr>
-                 <th scope="col">#</th>
+       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Day</th>
       <th scope="col">Time</th>
+      <th scope="col">Group</th>
+      <th scope="col">Subgroup</th>
+       @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+            {
+                <th scope="col">Teacher</th>
+            }
+            
       <th scope="col">Course</th>
+      <th scope="col">Actions</th>
         </tr>
     </thead>
 
@@ -31,36 +39,39 @@
             <tr>
               <td>@i</td>
               <td>
-                    @if(ViewContext.HttpContext.User.IsInRole("Student"))
-                    {
-                        <a asp-controller="Laboratories" asp-action="DetailsForStudent" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
-                    }
                     @if(ViewContext.HttpContext.User.IsInRole("Secretary"))
                     {
-                        @list.Item1.Name
+                        @list.laboratory.Name
                     }
                     @if(ViewContext.HttpContext.User.IsInRole("Teacher"))
                     {
-                        <a asp-controller="Laboratories" asp-action="DetailsForTeacher" asp-route-id="@list.Item1.Id">@list.Item1.Name</a>
+                        <a asp-controller="Laboratories" asp-action="DetailsForTeacher" asp-route-id="@list.laboratory.Id">@list.laboratory.Name</a>
                     }
 
               </td>
-              <td>@list.Item1.Day</td>
-              <td>@list.Item1.Time.ToString("hh:mm")</td>
+              <td>@list.laboratory.Day</td>
+              <td>@list.laboratory.Time.ToString("hh:mm")</td>
+              <td><a asp-controller="Groups" asp-action="Edit" asp-route-id="@list.group.Id">@list.group.Name</a></td>
+              <td><a asp-controller="Subgroups" asp-action="Edit" asp-route-id="@list.subgroup.Id">@list.subgroup.Name</a></td>
+
+                              @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
+                {
+                     <td><a asp-controller="Teachers" asp-action="Details" asp-route-id="@list.teacher.Id">@list.teacher.Name</a></td>
+                }
               <td>
                   @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
                     {
-                        <a asp-controller="Courses" asp-action="DetailsForTeacher" asp-route-id="@list.Item2.Id">@list.Item2.Name</a>
-                    }
-                     @if (ViewContext.HttpContext.User.IsInRole("Student"))
-                    {
-                        <a asp-controller="Courses" asp-action="DetailsForStudent" asp-route-id="@list.Item2.Id">@list.Item2.Name</a>
+                        <a asp-controller="Courses" asp-action="DetailsForTeacher" asp-route-id="@list.course.Id">@list.course.Name</a>
                     }
                      @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
                     {
-                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@list.Item2.Id">@list.Item2.Name</a>
+                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@list.course.Id">@list.course.Name</a>
                     }
               </td>
+              <td><a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.laboratory.Id">Edit</a> | 
+               <a asp-controller="Laboratories" asp-action="Delete" asp-route-Id="@list.laboratory.Id" >Delete</a></td>
+
+               
             </tr>
             i++;
       }

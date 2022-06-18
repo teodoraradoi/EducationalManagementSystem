@@ -1,13 +1,21 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Laboratories.ViewModels.CreateViewModel
 
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create a laboratory</h1>
-
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Create Laboratory</h5>
+    <hr />
 <form asp-action="Create" enctype="multipart/form-data" method="post">
+      
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -20,14 +28,24 @@
             </div>
 
                         
-                   <select class="form-control" aria-label="Day" asp-for="Laboratory.Day">
-          <option selected>Please select the day</option>
-          <option value="1">Monday</option>
-          <option value="2">Tuesday</option>
-          <option value="3">Wednesday</option>
-          <option value="4">Thursday</option>
-           <option value="5">Friday</option>
-       </select>
+             <div class="form-group">
+                <label asp-for="Laboratory.Day" class="control-label"></label>
+                <select class="form-control" aria-label="Day" asp-for="Laboratory.Day">
+                  <option selected>Select a day...</option>
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                   <option value="5">Friday</option>
+               </select>
+                <span asp-validation-for="Laboratory.Day" class="text-danger"></span>
+            </div>
+
+
+
+
+
+
 
                   <div class="form-group">
                 <label asp-for="Laboratory.Time" class="control-label"></label>
@@ -42,20 +60,36 @@
                     <option>Please select one</option>
                </select>
 *@
-               <select asp-for="Laboratory.SubgroupId" asp-items="@(new SelectList(Model.Subgroups, "Id", "Name"))">
-                    <option>Please select one</option>
-               </select>
 
-                              <select asp-for="Laboratory.TeacherId" asp-items="@(new SelectList(Model.Teachers, "Id", "Name"))">
-                    <option>Please select one</option>
+            <div class="form-group">
+                <label asp-for="Laboratory.SubgroupId" class="control-label">Subgroup</label>
+                <select class="custom-select" asp-for="Laboratory.SubgroupId" asp-items="@(new SelectList(Model.Subgroups, "Id", "Name"))">
+                    <option>Select Subgroup...</option>
                </select>
+                <span asp-validation-for="Laboratory.SubgroupId" class="text-danger"></span>
+            </div>
+
+
+               
+            <div class="form-group">
+                <label asp-for="Laboratory.TeacherId" class="control-label">Teacher</label>
+                <select class="custom-select" asp-for="Laboratory.TeacherId" asp-items="@(new SelectList(Model.Teachers, "Id", "Name"))">
+                    <option>Select Teacher...</option>
+               </select>
+               <span asp-validation-for="Laboratory.TeacherId" class="text-danger"></span>
+            </div>
+
 
 
 
                 
             <div class="form-group">
-                <input type="submit" name="Create" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <input type="submit" name="Create" value="Create" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
 </form>
+
+  </div>
+</div>
+</div>
            
 

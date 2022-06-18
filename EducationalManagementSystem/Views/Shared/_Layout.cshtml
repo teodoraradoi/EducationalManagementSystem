@@ -81,14 +81,15 @@
 
                     </ul>
                 </li>*@
+
+                @if (ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Student") || ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
                        <li>
                           <a href="@Url.Action("Index", "Default")">Home</a>
                         </li>
+                }
                          @if (ViewContext.HttpContext.User.IsInRole("Secretary"))
                 {
-                    <li>
-                        <a href="@Url.Action("Index", "Secretaries")">Secretaries</a>
-                    </li>
                     <li>
                         <a href="@Url.Action("Index", "Teachers")">Teachers</a>
                     </li>
@@ -101,12 +102,21 @@
                      <li>
                         <a href="@Url.Action("Index", "Courses")">Courses</a>
                     </li>
+                }
+                @if(ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
                     <li>
                         <a href="@Url.Action("Index", "Laboratories")">Laboratories</a>
                     </li>
                 }
+                 @if(ViewContext.HttpContext.User.IsInRole("Student"))
+                {
+                    <li>
+                        <a href="@Url.Action("StudentIndex", "Laboratories")">Laboratories</a>
+                    </li>
+                }
 
-                @if (ViewContext.HttpContext.User.IsInRole("Secretary") || ViewContext.HttpContext.User.IsInRole("Teacher")) {
+                @if (ViewContext.HttpContext.User.IsInRole("Secretary")) {
                     <li>
                         <a href="@Url.Action("Index", "Groups")">Groups</a>
                     </li>
@@ -115,10 +125,17 @@
                     </li>
                 }
 
-                @if (ViewContext.HttpContext.User.IsInRole("Teacher") || ViewContext.HttpContext.User.IsInRole("Student"))
+                @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
                     {
                     <li>
                         <a href="@Url.Action("Index", "Assignments")">Assignments</a>
+                    </li>
+                }
+                
+                @if(ViewContext.HttpContext.User.IsInRole("Student"))
+                    {
+                    <li>
+                        <a href="@Url.Action("StudentIndex", "Assignments")">Assignments</a>
                     </li>
                 }
                 @if(ViewContext.HttpContext.User.IsInRole("Teacher"))
@@ -141,24 +158,17 @@
 
 @if(ViewContext.HttpContext.User.IsInRole("Secretary")) { 
 
-                        <a href="#menu" id="toggle"><span></span></a>
+                        <a href="#menu" id="toggle" style="position: relative; left: 18px;"><span></span></a>
 
-<div id="menu">
-  <ul>
+<div id="menu" style="top: 115px; left:-4px;">
+  <ul id="menu_ul">
 
           
-           <li><a asp-controller="Groups" asp-action="Create">Create group</a></li>
-           <li><a asp-controller="Subgroups" asp-action="Create">Create subgroup</a></li>
-           <li><a asp-controller="Courses" asp-action="Create">Create course</a>     </li>
-           <li><a asp-controller="Students" asp-action="Create">Create student account</a>       </li>
-           <li> <a asp-controller="Teachers" asp-action="Create">Create teacher account</a>   </li>
-
-
-       
-                
- 
-
-
+           <li id="menu_li"><a asp-controller="Groups" asp-action="Create" id="menu_a">Create Group</a></li>
+           <li id="menu_li"><a asp-controller="Subgroups" asp-action="Create" id="menu_a">Create Subgroup</a></li>
+           <li id="menu_li"><a asp-controller="Courses" asp-action="Create" id="menu_a">Create Course</a>     </li>
+           <li id="menu_li"><a asp-controller="Students" asp-action="Create" id="menu_a">Create Student Account</a>       </li>
+           <li id="menu_li"> <a asp-controller="Teachers" asp-action="Create" id="menu_a">Create Teacher Account</a>   </li>
   </ul>
 </div>
 

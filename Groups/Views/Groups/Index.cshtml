@@ -34,8 +34,8 @@
               <td>@group.SpecializationName</td>
               <td>@group.Year</td>
               @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {
-              <td> <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" class="btn btn-dark">Edit</a>
-               <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-dark">Delete</a></td>
+              <td> <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id">Edit</a> | 
+               <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id">Delete</a></td>
               }
             </tr>
             i++;

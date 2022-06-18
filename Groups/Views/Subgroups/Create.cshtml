@@ -1,15 +1,24 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Groups.ViewModels.CreateViewModel
 
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create a subgroup</h1>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 30rem;">
+  <div class="card-body">
+    <h5 class="card-title">Create Subgroup</h5>
+
 
 
 <form asp-action="Create" enctype="multipart/form-data" method="post">
+    <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Subgroup.Name" class="control-label"></label>
@@ -18,16 +27,16 @@
             </div>
 
 
-   
+   <div class="form-group">
 
-                <select asp-for="Subgroup.GroupId" 
+                <select class="custom-select" asp-for="Subgroup.GroupId" 
             asp-items="@(new SelectList(Model.Groups, "Id", "Name"))">
-        <option>Please select one</option>
+        <option>Select group...</option>
     </select>
            
 
          
-
+               </div>
    @*
             <div class="form-group">
                 <label asp-for="GroupId" class="control-label"></label>
@@ -52,6 +61,11 @@
 >*@
             
             <div class="form-group">
-                <input type="submit" name="Create" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <input type="submit" name="Create" value="Create" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
 </form>
+
+
+  </div>
+</div>
+</div>

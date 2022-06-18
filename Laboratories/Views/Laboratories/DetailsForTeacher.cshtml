@@ -12,7 +12,17 @@
     <link rel="stylesheet" href="../../Styles/styles.css"/>
 </head>
 
-<h3>@Html.DisplayFor(model => model.laboratory.Name)</h3>
+
+    <a href="#menu" id="toggle"style="position: relative; top:-70px; left: 20px;"><span></span></a>
+
+    <div id="menu" style="top: 127px; left: 23px">
+      <ul id="menu_ul">
+
+           <li id="menu_li"> <a asp-controller="Assignments" asp-action="Create" asp-route-id="@Model.laboratory.Id" id="menu_a">Create New Assignment</a></li>
+           <li id="menu_li"> <a asp-controller="Posts" asp-action="Create" asp-route-id="@Model.laboratory.Id" id="menu_a">Create New Post</a></li>
+          
+      </ul>
+    </div>
 
 
 <div class="row"> 
@@ -32,17 +42,14 @@ $(document).ready( function () {
 
 
 
-
-
-
-
     <table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
     <thead>
         <tr>
           <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Description</th>
-              <th scope="col">DateCreated</th>
+              <th scope="col">Date Created</th>
+              <th scope="col">Actions</th>
         </tr>
     </thead>
 
@@ -52,9 +59,17 @@ $(document).ready( function () {
       {
             <tr>
               <td>@i</td>
-              <td>@post.Name</td>
-              <td>@post.Description</td>
+              <td><a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@post.Name</a></td>
+              @if(post.Description.Length < 15)
+                    {
+                        <td>@post.Description</td>
+                    }
+                    else
+                    {
+                        <td>@post.Description.Substring(0,15)... <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">[View More]</a></td>
+                    }   
               <td>@post.DateCreated</td>
+              <td><a asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">Edit</a> | <a asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">Delete</a></td>
             </tr>
             i++;
       }
@@ -63,7 +78,7 @@ $(document).ready( function () {
        
 </table>
 
-
+<hr/>
    <h2>Assignments</h2>
 
 
@@ -73,8 +88,9 @@ $(document).ready( function () {
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Description</th>
-      <th scope="col">DueDate</th>
-      <th scope="col">MaxGrade</th>
+      <th scope="col">Due Date</th>
+      <th scope="col">Max Grade</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -83,10 +99,18 @@ $(document).ready( function () {
       {
             <tr>
               <td>@j</td>
-              <td>@assignment.Name</td>
-              <td>@assignment.Description</td>
+              <td><a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Id">@assignment.Name</a></td>
+               @if(assignment.Description.Length < 15)
+                    {
+                        <td>@assignment.Description</td>
+                    }
+                    else
+                    {
+                        <td>@assignment.Description.Substring(0,15)... <a asp-controller="Assignments" asp-action="DetailsForTeacher" asp-route-id="@assignment.Id">[View More]</a></td>
+                    }  
               <td>@assignment.DueDate</td>
               <td>@assignment.MaxGrade</td>
+            <td><a asp-controller="Assignments" asp-action="Edit" asp-route-id="@assignment.Id">Edit</a> | <a asp-controller="Assignments" asp-action="Delete" asp-route-id="@assignment.Id">Delete</a></td>
             </tr>
             j++;
       }
@@ -98,35 +122,30 @@ $(document).ready( function () {
  <div class="col-4">
 
 
-           <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Back</a>
-
-
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Laboratory Information</h5>
             <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.laboratory.Name)
-        </dt>
-        <dd class="col-sm-10">
-            <p class="card-text">@Html.DisplayFor(model => model.laboratory.Name)</p>
-        </dd>
-        <div class="w-100"></div>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.group.Item1.Name)
-        </dt>
-        <dd class="col-sm-10">
-            <p class="card-text">@Html.DisplayFor(model => model.group.Item1.Name)</p>
-        </dd>
-                <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.group.Item2.Name)
-        </dt>
-        <dd class="col-sm-10">
-            <p class="card-text">@Html.DisplayFor(model => model.group.Item2.Name)</p>
-        </dd>
-      
-    </dl>
+      <dt class="col-sm-3">Name</dt>
+      <dd class="col-sm-9"><p class="card-text">@Html.DisplayFor(model => model.laboratory.Name)</p></dd>
 
+      <dt class="col-sm-3">Year</dt>
+      <dd class="col-sm-9"><p class="card-text">@Html.DisplayFor(model => model.course.Year)</p></dd>
+
+      <dt class="col-sm-3">Semester</dt>
+      <dd class="col-sm-9"><p class="card-text">@Html.DisplayFor(model => model.course.Semester)</p></dd>
+
+      <dt class="col-sm-3">Day</dt>
+      <dd class="col-sm-9"><p class="card-text">@Html.DisplayFor(model => model.laboratory.Day)</p></dd>
+
+        <dt class="col-sm-3">Time</dt>
+      <dd class="col-sm-9"><p class="card-text">@Html.DisplayFor(model => model.laboratory.Time)</p></dd>
+
+              <dt class="col-sm-3">Course</dt>
+      <dd class="col-sm-9"><p class="card-text"><a asp-controller="Courses" asp-action="DetailsForTeacher" asp-route-id="@Model.course.Id" style="font-size: 1.1em;">@Html.DisplayFor(model => model.course.Name)</a></p></dd>
+        </dl>
+
+        
       
     </div>
     </div>

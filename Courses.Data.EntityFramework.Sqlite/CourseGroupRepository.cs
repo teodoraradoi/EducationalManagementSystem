@@ -26,5 +26,19 @@ namespace Courses.Data.EntityFramework.Sqlite
         {
             return this.dbSet.Where(c => c.GroupId == id);
         }
+
+        public List<CourseGroup> AllByCourseId(Guid id)
+        {
+            List<CourseGroup> courseGroups = new List<CourseGroup>();
+           // courseGroups = this.dbSet.(t => t.CourseId == id).ToList();
+            courseGroups = this.dbSet.AsNoTracking().
+                Where(c => c.CourseId == id).ToList();
+            return courseGroups;
+        }
+
+        public IEnumerable<CourseGroup> All()
+        {
+            return this.dbSet.OrderBy(t => t.Id);
+        }
     }
 }

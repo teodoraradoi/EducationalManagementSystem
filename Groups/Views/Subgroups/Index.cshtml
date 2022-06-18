@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../Styles/styles.css"/>
 </head>
 
-<h1>List of subgroups</h1>
+<h1>Subgroups</h1>
 
 <table id="table_id" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
   <thead>
@@ -27,8 +27,8 @@
               <td>@i</td>
               <td>@list.Item1.Name</td>
               <td>@list.Item2.Name</td>
-              <td> <a asp-controller="Subgroups" asp-action="Edit" asp-route-id="@list.Item1.Id" class="btn btn-dark">Edit</a>
-               <a asp-controller="Subgroups" asp-action="Delete" asp-route-Id="@list.Item1.Id" class="btn btn-dark">Delete</a></td>
+              <td> <a asp-controller="Subgroups" asp-action="Edit" asp-route-id="@list.Item1.Id">Edit</a> | 
+               <a asp-controller="Subgroups" asp-action="Delete" asp-route-Id="@list.Item1.Id">Delete</a></td>
             </tr>
             i++;
       }

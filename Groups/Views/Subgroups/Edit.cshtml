@@ -1,12 +1,19 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Groups.ViewModels.CreateViewModel
 
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit subgroup</h1>
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Edit Subgroup</h5>
+    <hr/>
 
 
 <form asp-action="Edit" enctype="multipart/form-data" method="post">
@@ -17,13 +24,19 @@
                 <span asp-validation-for="Subgroup.Name" class="text-danger"></span>
             </div>
 
-
-                <select asp-for="Subgroup.GroupId" 
-            asp-items="@(new SelectList(Model.Groups, "Id", "Name"))">
-        <option>Please select one</option>
-    </select>
+            <div class="form-group">
+                <label asp-for="Subgroup.GroupId" class="control-label">Subgroup</label>
+                 <select class="custom-select" asp-for="Subgroup.GroupId" 
+                        asp-items="@(new SelectList(Model.Groups, "Id", "Name"))">
+                      <option>Select subgroup...</option>
+                </select>
+             <span asp-validation-for="Subgroup.GroupId" class="text-danger"></span>
+            </div>
             
             <div class="form-group">
-                <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.Subgroup.Id" class="btn btn-success" /> <a asp-controller="Subgroup" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.Subgroup.Id" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
 </form>
+  </div>
+</div>
+</div>

@@ -100,37 +100,34 @@ $(document).ready( function () {
  <div class="col-4">
 
 
-           <a asp-controller="Students" asp-action="Index" class="btn btn-secondary">Back</a>
-
-
 
 
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Student Information</h5>
             <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.student.Name)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             <p class="card-text">@Html.DisplayFor(model => model.student.Name)</p>
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.user.Email)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             <p class="card-text">@Html.DisplayFor(model => model.user.Email)</p>
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             Group
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             <a asp-controller="Groups" asp-action="Details" asp-route-id="@ViewBag.GroupId">@ViewBag.GroupName</a>
         </dd>
-        <dt class="col-sm-2">
-           Subgr
+        <dt class="col-sm-3">
+           Subgroup
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             <a asp-controller="Subgroups" asp-action="Details" asp-route-id="@ViewBag.SubgroupId">@ViewBag.SubgroupName</a>
         </dd>
     </dl>

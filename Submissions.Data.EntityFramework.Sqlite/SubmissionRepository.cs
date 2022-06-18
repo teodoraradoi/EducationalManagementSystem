@@ -39,5 +39,18 @@ namespace Submissions.Data.EntityFramework.Sqlite
         {
             return this.dbSet.Where(e => e.AssignmentId == id).ToList();
         }
+
+        public Submission FindByStudentAndAssignmentId(Guid studentId, Guid assignmentId)
+        {
+            List<Submission> submissions = this.AllByAssignmentId(assignmentId);
+            foreach(Submission submission in submissions)
+            {
+                if(submission.StudentId == studentId)
+                {
+                    return submission;
+                }
+            }
+            return null;
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace Submissions.Data.Abstractions
         void Edit(Submission submission);
         void Delete(Guid id);
         List<Submission> AllByAssignmentId(Guid id);
+        public Submission FindByStudentAndAssignmentId(Guid studentId, Guid assignmentId);
     }
 }

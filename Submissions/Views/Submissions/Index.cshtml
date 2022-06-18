@@ -1,5 +1,4 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@*@model List<Tuple<Assignments.Data.Entities.Assignment, Courses.Data.Entities.Course, Laboratories.Data.Entities.Laboratory>>*@
 @model Submissions.ViewModels.IndexViewModel
 
 <head>
@@ -31,12 +30,22 @@
       {
             <tr>
               <td>@i</td>
-              <td>@item.Item1.FilePath</td>
+              <td><a asp-controller="Submissions" asp-action="Download" asp-route-filename="@item.Item1.FilePath">@item.Item1.FilePath</a></td>
               <td>@item.Item1.Status</td>
               <td>@item.Item2.Name</td>
               <td>@item.Item3.Name</td>
               <td>@item.Item1.TurnedInDate</td>
               <td>@item.Item4.Name</td>
+              @if(item.Item1.Grade == 0) {
+                      <td>
+                          <a asp-controller="Submissions" asp-action="CreateGrade" asp-route-id="@item.Item1.Id">Grade</a>
+                     </td>
+              }
+              else {
+                   <td>
+                      <a asp-controller="Submissions" asp-action="EditGrade" asp-route-id="@item.Item1.Id">@item.Item1.Grade</a>
+                 </td>
+              }
             </tr>
             i++;
       }
@@ -65,17 +74,29 @@
       {
             <tr>
               <td>@j</td>
-              <td>@item.Item1.FilePath</td>
+              <td><a asp-controller="Submissions" asp-action="Download" asp-route-filename="@item.Item1.FilePath">@item.Item1.FilePath</a></td>
               <td>@item.Item1.Status</td>
               <td>@item.Item2.Name</td>
               <td>@item.Item3.Name</td>
               <td>@item.Item1.TurnedInDate</td>
               <td>@item.Item4.Name</td>
+              @if(item.Item1.Grade == 0) {
+                      <td>
+                          <a asp-controller="Submissions" asp-action="CreateGrade" asp-route-id="@item.Item1.Id">Grade</a>
+                     </td>
+              }
+              else {
+                   <td>
+                      <a asp-controller="Submissions" asp-action="EditGrade" asp-route-id="@item.Item1.Id">@item.Item1.Grade</a>
+                 </td>
+              }
             </tr>
            j++;
       }
   </tbody>
 </table>
+
+
 
 
 <script type='text/javascript'>

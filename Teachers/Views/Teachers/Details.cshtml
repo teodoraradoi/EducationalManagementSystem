@@ -51,7 +51,7 @@ $(document).ready( function () {
       {
             <tr>
               <td>@i</td>
-              <td><a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">@course.Name</a></td>
+              <td>@course.Name</td>
               <td>@course.Day</td>
               <td>@course.Time.ToString("hh:mm")</td>
               <td>@course.Year</td>
@@ -64,7 +64,7 @@ $(document).ready( function () {
        
 </table>
 
-
+<hr/>
 
 
    <h2>Laboratories taught by @Html.DisplayFor(model => model.teacher.Name)</h2>
@@ -88,7 +88,7 @@ $(document).ready( function () {
       {
             <tr>
               <td>@j</td>
-              <td><a asp-controller="Laboratories" asp-action="Details" asp-route-id="@list.Id">@list.Name</a></td>
+              <td>@list.Name</td>
               <td>@list.Day</td>
               <td>@list.Time.ToString("hh:mm")</td>
               <td>@list.Name</td>
@@ -103,7 +103,7 @@ $(document).ready( function () {
  <div class="col-4">
 
 
-           <a asp-controller="Teachers" asp-action="Index" class="btn btn-secondary">Back</a>
+
 
 
 
@@ -111,12 +111,27 @@ $(document).ready( function () {
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Teacher Information</h5>
-        <p class="card-text">@Html.DisplayNameFor(model => model.teacher.Name)</p>
-        <p class="card-text">@Html.DisplayFor(model => model.teacher.Name)</p>
+        <hr/>
+        <dl class="row">
+            <dt class="col">
+                Name
+            </dt>
+            <dd class="col">
+                <p class="card-text">@Html.DisplayFor(model => model.teacher.Name)</p>
+            </dd>
+            <div class="w-100"></div>
+            <dt class="col">
+                Email
+            </dt>
+            <dd class="col">
+                <p class="card-text">@Html.DisplayFor(model => model.user.Email)</p>
+            </dd>
+        </dl> 
         <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@Model.teacher.Id" class="btn btn-primary special-button">Edit</a>
         <a asp-controller="Teachers" asp-action="Delete" asp-route-id="@Model.teacher.Id" class="btn btn-primary special-button">Delete</a>
-      </div>
+
     </div>
+
 
 </div> 
    </div> 

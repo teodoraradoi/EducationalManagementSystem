@@ -1,6 +1,11 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Courses.ViewModels.CourseViewModel
 
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -13,11 +18,14 @@
 *@
 
 
-<h1>Create a course</h1>
-
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Create Course</h5>
 
 
 <form asp-action="Create" enctype="multipart/form-data" method="post">
+        <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="course.Name" class="control-label"></label>
@@ -25,15 +33,18 @@
                 <span asp-validation-for="course.Name" class="text-danger"></span>
             </div>
 
-            
+             <div class="form-group">
+                <label asp-for="course.Day" class="control-label">Day</label>
            <select class="form-control" aria-label="Day" asp-for="course.Day">
-              <option selected>Please select the day</option>
+              <option selected>Select a day...</option>
               <option value="1">Monday</option>
               <option value="2">Tuesday</option>
               <option value="3">Wednesday</option>
               <option value="4">Thursday</option>
                <option value="5">Friday</option>
            </select>
+                   <span asp-validation-for="course.Day" class="text-danger"></span>
+            </div>
 
 
             <div class="form-group">
@@ -58,10 +69,13 @@
                 <span asp-validation-for="course.Semester" class="text-danger"></span>
             </div>
 
-
-           <select asp-for="course.TeacherId" asp-items="@(new SelectList(Model.Teachers, "Id", "Name"))">
-                    <option>Please select one</option>
+            <div class="form-group">
+                <label asp-for="course.TeacherId" class="control-label">Teacher</label>
+           <select  class="custom-select" asp-for="course.TeacherId" asp-items="@(new SelectList(Model.Teachers, "Id", "Name"))">
+                    <option>Select teacher...</option>
            </select>
+                        <span asp-validation-for="course.TeacherId" class="text-danger"></span>
+            </div>
 
 
 
@@ -76,16 +90,23 @@
                 <select id="dropDownList" name="selectedGroups" asp-for="selectedGroups" asp-items="@Model.groups" multiple class="form-control"></select>
            </div>  
 *@
-           @Html.ListBoxFor(m => m.selectedGroups, Model.groups)          
+
+
+
+           @Html.ListBoxFor(m => m.selectedGroups, Model.groups, new {@style = "width: 200px; margin-top: 10px; margin-bottom: 20px;"})          
             
-
+ 
       
-
+           
 
             <div class="form-group">
-                <input type="submit" name="Create" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <input type="submit" name="Create" value="Create" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
 </form>
+
+  </div>
+</div>
+</div>
 
 @*
     <script>

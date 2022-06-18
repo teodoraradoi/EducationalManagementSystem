@@ -2,8 +2,6 @@
 
 <head>
     <link rel="stylesheet" href="../../Styles/styles.css"/>
-
-
       <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -15,23 +13,6 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-
-
-@*
-
-        
-
-        <a href="#menu" id="toggle"><span></span></a>
-
-<div id="menu">
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</div>
-
-*@
 
 
 <h1>Dashboard</h1>
@@ -109,7 +90,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Courses</h5>
-        <p class="card-text">You teach 10 courses.</p>
+        <p class="card-text">You teach @ViewBag.NumberOfCourses course(s).</p>
         <a asp-controller="Courses" asp-action="Index" class="btn btn-primary special-button">View courses</a>
       </div>
     </div>
@@ -118,7 +99,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Laboratories</h5>
-        <p class="card-text">You teach 3 laboratories.</p>
+        <p class="card-text">You teach @ViewBag.NumberOfLaboratories laboratories.</p>
         <a asp-controller="Laboratories" asp-action="Index" class="btn btn-primary">View laboratories</a>
       </div>
     </div>
@@ -126,21 +107,21 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-6">
+<div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Students</h5>
-        <p class="card-text">You have 140 students.</p>
-        <a asp-controller="Students" asp-action="Index" class="btn btn-primary">View students</a>
+        <h5 class="card-title">Assignments</h5>
+        <p class="card-text">There are currently @ViewBag.NumberOfCourseAssignments course assignments and @ViewBag.NumberOfLaboratoryAssignments laboratory assignments.</p>
+        <a asp-controller="Assignments" asp-action="Index" class="btn btn-primary">View assignments</a>
       </div>
     </div>
   </div>
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Assignments</h5>
-        <p class="card-text">There are currently 10 active assignments.</p>
-        <a asp-controller="Assignments" asp-action="Index" class="btn btn-primary">View assignments</a>
+        <h5 class="card-title">Submissions</h5>
+        <p class="card-text">You have @ViewBag.CourseAssignmentSubmissions course assignment submissions and @ViewBag.LaboratoryAssignmentSubmissions laboratory assignment submissions.</p>
+        <a asp-controller="Submissions" asp-action="Index" class="btn btn-primary">View submissions</a>
       </div>
     </div>
   </div>
@@ -149,38 +130,45 @@
 
 @if(ViewContext.HttpContext.User.IsInRole("Student")) {
 
-<div class="row">
-  <div class="col-sm-6">
+
+ <div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+
+
+
+
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Courses</h5>
-        <p class="card-text">You are enrolled in 7 courses.</p>
+        <p class="card-text">You are enrolled in @ViewBag.Courses courses.</p>
         <a asp-controller="Courses" asp-action="Index" class="btn btn-primary special-button">View courses</a>
       </div>
     </div>
-  </div>
-  <div class="col-sm-6">
+
+    </div>
+    
+
+
+    <div class="col-md-6">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Laboratories</h5>
-        <p class="card-text">You are enrolled in 7 laboratories.</p>
+        <p class="card-text">You are enrolled in @ViewBag.Labs laboratories.</p>
         <a asp-controller="Laboratories" asp-action="Index" class="btn btn-primary">View laboratories</a>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Assignments</h5>
-        <p class="card-text">You have 3 assignments.</p>
-        <a asp-controller="Assignments" asp-action="Index" class="btn btn-primary">View assignments</a>
-      </div>
+
+
+
+
     </div>
+
   </div>
-</div>
+
+
 }
 
 
@@ -189,7 +177,7 @@
 
 
 
-
+@*
 <script>
     $(document).ready(function(){
         console.log("this");
@@ -239,6 +227,4 @@ theToggle.onclick = function() {
    });
 
 </script>
-
-
-
+*@

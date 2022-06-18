@@ -28,6 +28,7 @@ $(document).ready( function () {
             <th scope="col">Specialization name</th>
             <th scope="col">Group</th>
             <th scope="col">Subgroup</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
 
@@ -42,6 +43,9 @@ $(document).ready( function () {
               <td>@student.Item3.SpecializationName</td>
               <td>@student.Item3.Name</td>
               <td>@student.Item4.Name</td>
+              <td> <a asp-controller="Students" asp-action="Edit" asp-route-id="@student.Item1.Id">Edit</a> | 
+        <a asp-controller="Students" asp-action="Delete" asp-route-id="@student.Item1.Id">Delete</a>
+      </td>
             </tr>
             i++;
       }

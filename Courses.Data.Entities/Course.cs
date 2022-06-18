@@ -21,5 +21,7 @@ namespace Courses.Data.Entities
         public int Year { get; set; }
         public int Semester { get; set; }
         public Guid TeacherId { get; set; }
+        public string GradingMethod { get; set; }
+        public bool AttendanceMatters { get; set; }
     }
 }

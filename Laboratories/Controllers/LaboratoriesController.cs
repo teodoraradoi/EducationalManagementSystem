@@ -38,46 +38,55 @@ namespace Laboratories.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "Secretary, Teacher, Student")]
+        [Authorize(Roles = "Secretary, Teacher")]
         // GET: LaboratoriesController
         public ActionResult Index()
         {
             var userId = _userManager.GetUserId(User);
+            List<IndexViewModel> list = new List<IndexViewModel>();
+            List<Laboratory> laboratories = new List<Laboratory>();
+
             if (User.IsInRole("Secretary"))
             {
-                IEnumerable labs = this.storage.GetRepository<ILaboratoryRepository>().All();
-                List<Tuple<Laboratory, Course>> list = new List<Tuple<Laboratory, Course>>();
-
-                foreach (Laboratory lab in labs)
-                {
-                    Guid courseId = lab.CourseId;
-                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(courseId);
-                    list.Add(new Tuple<Laboratory, Course>(lab, course));
-                }
-                return View(list);
+                laboratories = this.storage.GetRepository<ILaboratoryRepository>().All().ToList();
             }
-            if (User.IsInRole("Teacher"))
+            else
             {
                 Guid id = new Guid(userId);
                 Teacher currentTeacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(id);
-                IEnumerable<Laboratory> labs = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(currentTeacher.Id);
-                List<Tuple<Laboratory, Course>> list = new List<Tuple<Laboratory, Course>>();
-
-                foreach (Laboratory lab in labs)
-                {
-                    Guid courseId = lab.CourseId;
-                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(courseId);
-                    list.Add(new Tuple<Laboratory, Course>(lab, course));
-                }
-                return View(list);
+                laboratories = this.storage.GetRepository<ILaboratoryRepository>().AllByTeacherId(currentTeacher.Id).ToList();
             }
-            if (User.IsInRole("Student"))
-            {
-                Student student = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
-                IEnumerable<Laboratory> labs = this.storage.GetRepository<ILaboratoryRepository>().AllBySubgroupId(student.SubgroupId);
 
-                List<Tuple<Laboratory, Course>> list = new List<Tuple<Laboratory, Course>>();
-                foreach (Laboratory lab in labs)
+            foreach (Laboratory lab in laboratories)
+            {
+                Guid courseId = lab.CourseId;
+                Course course = this.storage.GetRepository<ICourseRepository>().FindById(courseId);
+                Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(lab.SubgroupId);
+                Group group = this.storage.GetRepository<IGroupRepository>().FindById(subgroup.GroupId);
+
+                IndexViewModel indexViewModel = new IndexViewModel();
+                indexViewModel.laboratory = lab;
+                indexViewModel.course = course;
+                indexViewModel.group = group;
+                indexViewModel.subgroup = subgroup;
+                indexViewModel.teacher = this.storage.GetRepository<ITeachersRepository>().FindById(lab.TeacherId);
+
+                list.Add(indexViewModel);      
+            }
+
+            return View(list);
+        }
+
+        [Authorize(Roles = "Student")]
+        // GET: LaboratoriesController
+        public ActionResult StudentIndex()
+        {
+            var userId = _userManager.GetUserId(User);
+            Student student = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
+            IEnumerable<Laboratory> labs = this.storage.GetRepository<ILaboratoryRepository>().AllBySubgroupId(student.SubgroupId);
+
+            List<Tuple<Laboratory, Course>> list = new List<Tuple<Laboratory, Course>>();
+            foreach (Laboratory lab in labs)
                 {
                     Course course = this.storage.GetRepository<ICourseRepository>().FindById(lab.CourseId);
                     list.Add(new Tuple<Laboratory, Course>(lab, course));
@@ -101,12 +110,6 @@ namespace Laboratories.Controllers
                     Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById()
                 }*/
 
-            }
-
-
-
-
-                return View(this.storage.GetRepository<ILaboratoryRepository>().All());
         }
 
         [Authorize(Roles = "Student")]
@@ -158,6 +161,7 @@ namespace Laboratories.Controllers
                 laboratory = laboratory,
                 assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(laboratory.Id).ToList(),
                 posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(laboratory.Id).ToList(),
+                course = this.storage.GetRepository<ICourseRepository>().FindById(laboratory.CourseId)
             };
 
             Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(laboratory.SubgroupId);
@@ -213,12 +217,38 @@ namespace Laboratories.Controllers
         public ActionResult Create(Guid id)
         {
             CreateViewModel createViewModel = new CreateViewModel();
-            //createViewModel.Courses = this.GetCoursesList();
+            Course course  = this.storage.GetRepository<ICourseRepository>().FindById(id);
             createViewModel.Laboratory = new Laboratory();
             createViewModel.Laboratory.CourseId = id;
+            createViewModel.Subgroups = new List<Subgroup>();
 
-            CourseGroup courseGroup = this.storage.GetRepository<ICourseGroupRepository>().GetGroupByCourseId(id);
-            createViewModel.Subgroups = this.GetSubgroupList(courseGroup.GroupId);
+            List<CourseGroup> all = this.storage.GetRepository<ICourseGroupRepository>().AllByCourseId(id);
+            List<CourseGroup> courseGroups = new List<CourseGroup>();
+            foreach (CourseGroup courseGroup in all)
+            {
+                if(courseGroup.CourseId == id)
+                {
+                    courseGroups.Add(courseGroup);
+                }
+            }
+
+            //List<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().AllByCourseId(course.Id).ToList();
+            List<List<Subgroup>> subgroups = new List<List<Subgroup>>();
+            foreach(CourseGroup item in courseGroups)
+            {
+                Guid groupId = item.GroupId;
+                subgroups.Add(this.GetSubgroupList(groupId));
+            }
+            foreach(List<Subgroup> list in subgroups)
+            {
+                foreach(Subgroup subgr in list)
+                {
+                    createViewModel.Subgroups.Add(subgr);
+                }
+             
+               // createViewModel.Subgroups = subgroups;
+            }
+            
             createViewModel.Teachers = this.GetTeachersList();
             return View(createViewModel);
         }
@@ -238,6 +268,34 @@ namespace Laboratories.Controllers
             }
             return this.View();
         }
+
+        /*[Authorize(Roles = "Teacher")]
+        public ActionResult CreateGradingMethod(Guid id)
+        {
+            GradingMethodViewModel viewModel = new GradingMethodViewModel();
+            viewModel.id = id;
+            Laboratory course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+            ViewBag.CourseName = course.Name;
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateGradingMethod(Guid id, GradingMethodViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
+                course.GradingMethod = viewModel.FinalExamPercent + "-" + viewModel.LaboratoryPercent;
+                //course.GradingMethod = viewModel.FinalExamPercent + "% Final Exam Grade + " + viewModel.LaboratoryPercent + "% Laboratory Grade";
+                course.AttendanceMatters = viewModel.AttendanceMatters;
+                this.storage.GetRepository<ICourseRepository>().Edit(course);
+                this.storage.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }*/
 
         // GET: LaboratoriesController/Edit/5
         public ActionResult Edit(Guid id)

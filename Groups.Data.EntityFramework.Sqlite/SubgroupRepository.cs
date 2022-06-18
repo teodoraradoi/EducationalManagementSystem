@@ -38,9 +38,9 @@ namespace Groups.Data.EntityFramework.Sqlite
             this.dbSet.Remove((this.FindById(id)));
         }
 
-        public IEnumerable<Subgroup> AllByGroupId(Guid id)
+        public List<Subgroup> AllByGroupId(Guid id)
         {
-            return this.dbSet.Where(s => s.GroupId == id);
+            return this.dbSet.AsNoTracking().Where(s => s.GroupId == id).ToList();
         }
     }
 }

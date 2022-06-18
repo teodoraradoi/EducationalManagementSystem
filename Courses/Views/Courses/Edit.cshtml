@@ -1,56 +1,88 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Courses.Data.Entities.Course
+@model Courses.ViewModels.CourseViewModel
+
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit course</h1>
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Edit Course</h5>
+    <hr />
 
 <form asp-action="Edit" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="course.Name" class="control-label"></label>
+                <input asp-for="course.Name" class="form-control" />
+                <span asp-validation-for="course.Name" class="text-danger"></span>
             </div>
 
-            
-                   <select class="form-control" aria-label="Day" asp-for="Day">
-          <option selected>Please select the day</option>
-          <option value="1">Monday</option>
-          <option value="2">Tuesday</option>
-          <option value="3">Wednesday</option>
-          <option value="4">Thursday</option>
-           <option value="5">Friday</option>
-       </select>
+                         <div class="form-group">
+                <label asp-for="course.Day" class="control-label">Day</label>
+                  <select class="form-control" aria-label="Day" asp-for="course.Day">
+                      <option selected>Please select the day</option>
+                      <option value="1">Monday</option>
+                      <option value="2">Tuesday</option>
+                      <option value="3">Wednesday</option>
+                      <option value="4">Thursday</option>
+                       <option value="5">Friday</option>
+                 </select>
+        <span asp-validation-for="course.Day" class="text-danger"></span>
+            </div>
 
 
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
+                <label asp-for="course.Time" class="control-label"></label>
+                <input asp-for="course.Time" class="form-control" />
+                <span asp-validation-for="course.Time" class="text-danger"></span>
             </div>
 
          
 
             <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
+                <label asp-for="course.Year" class="control-label"></label>
+                <input asp-for="course.Year" class="form-control" />
+                <span asp-validation-for="course.Year" class="text-danger"></span>
             </div>
 
 
             
                         <div class="form-group">
-                <label asp-for="Semester" class="control-label"></label>
-                <input asp-for="Semester" class="form-control" />
-                <span asp-validation-for="Semester" class="text-danger"></span>
+                <label asp-for="course.Semester" class="control-label"></label>
+                <input asp-for="course.Semester" class="form-control" />
+                <span asp-validation-for="course.Semester" class="text-danger"></span>
             </div>
+
+
+
+                        <div class="form-group">
+                <label asp-for="course.TeacherId" class="control-label">Teacher</label>
+           <select  class="custom-select" asp-for="course.TeacherId" asp-items="@(new SelectList(Model.Teachers, "Id", "Name"))">
+                    <option>Select teacher...</option>
+           </select>
+                        <span asp-validation-for="course.TeacherId" class="text-danger"></span>
+            </div>
+
+
+            
+           @Html.ListBoxFor(m => m.selectedGroups, Model.groups, new {@style = "width: 200px; margin-top: 10px; margin-bottom: 20px;"})          
+
+
+
             
 
             <div class="form-group">
-                <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.Id" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <input type="submit" name="Edit" value="Edit" asp-route-id="@Model.course.Id" class="btn btn-primary" /> <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
 </form>
+
+  </div>
+</div>
+</div>
    
