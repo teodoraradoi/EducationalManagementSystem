@@ -13,7 +13,6 @@ namespace Submissions.Data.Entities
     public class Submission : IEntity
     {
         public Guid Id { get; set; }
-        //[NotMapped]
         public string FilePath { get; set; }
         public string Status { get; set; }
         public Guid AssignmentId { get; set; }

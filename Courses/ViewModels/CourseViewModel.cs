@@ -13,9 +13,7 @@ namespace Courses.ViewModels
     public class CourseViewModel
     {
         public Course course { get; set; }
-        //public List<SelectListItem> groups { get; set; }
        public IEnumerable<SelectListItem> groups { get; set; }
-        //public CourseGroup CourseGroup { get; set; }
 
         public IEnumerable<string> selectedGroups { get; set; }
         public List<Teacher> Teachers { get; set; }

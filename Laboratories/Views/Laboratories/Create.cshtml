@@ -43,23 +43,12 @@
 
 
 
-
-
-
-
                   <div class="form-group">
                 <label asp-for="Laboratory.Time" class="control-label"></label>
                 <input asp-for="Laboratory.Time" class="form-control" />
                 <span asp-validation-for="Laboratory.Time" class="text-danger"></span>
             </div>
 
-
-   @*
-
-                <select asp-for="Laboratory.CourseId" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))">
-                    <option>Please select one</option>
-               </select>
-*@
 
             <div class="form-group">
                 <label asp-for="Laboratory.SubgroupId" class="control-label">Subgroup</label>

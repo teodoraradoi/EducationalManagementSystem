@@ -34,32 +34,8 @@
         <option>Select group...</option>
         <span asp-validation-for="Subgroup.GroupId" class="text-danger"></span>
     </select>
-           
-
-         
+          
                </div>
-   @*
-            <div class="form-group">
-                <label asp-for="GroupId" class="control-label"></label>
-                <input asp-for="GroupId" class="form-control" />
-                <span asp-validation-for="GroupId" class="text-danger"></span>
-            </div>
-
-
-                                    <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-
-  <select class="custom-select" id="Year">
-    <option selected>Choose...</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-  </select>
->*@
             
             <div class="form-group">
                 <input type="submit" name="Create" value="Create" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>

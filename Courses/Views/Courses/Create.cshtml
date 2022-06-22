@@ -10,13 +10,6 @@
     ViewData["Title"] = "Create";
 }
 
-@*
-<head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.1/js/bootstrap-multiselect.min.js"></script>
-</head>
-*@
-
 
 <div class="h-100 d-flex align-items-center justify-content-center">
   <div class="card" style="width: 35rem;">
@@ -78,21 +71,6 @@
             </div>
 
 
-
-
-            @*
-            <select multiple="multiple" class="multi-select" asp-for="CourseGroup.GroupId" asp-items="@(new SelectList(Model.groups, "Id", "Name"))">
-                <option>Please select one</option>
-            </select>
-*@
-@*
-            <div class="form-group">  
-                <select id="dropDownList" name="selectedGroups" asp-for="selectedGroups" asp-items="@Model.groups" multiple class="form-control"></select>
-           </div>  
-*@
-
-
-
            @Html.ListBoxFor(m => m.selectedGroups, Model.groups, new {@style = "width: 200px; margin-top: 10px; margin-bottom: 20px;"})          
             
  
@@ -107,13 +85,3 @@
   </div>
 </div>
 </div>
-
-@*
-    <script>
-        console.log('in script')
-        $(document).ready(function () {
-            console.log('hello')
-            $('#dropDownList').multiselect();
-        });
-    </script>
- *@

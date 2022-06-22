@@ -15,8 +15,6 @@ namespace Assignments.Data.Entities
         public string Description { get; set; }
         public Guid SubjectId { get; set; }
 
-        //[DataType(DataType.DateTime)]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         public DateTime DueDate { get; set; }
         public int MaxGrade { get; set; } 
     }

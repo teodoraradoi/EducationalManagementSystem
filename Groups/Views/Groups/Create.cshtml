@@ -38,23 +38,6 @@
                 <input asp-for="Year" class="form-control" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
-
-   @*
-
-                                    <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-
-  <select class="custom-select" id="Year">
-    <option selected>Choose...</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-  </select>
->*@
             
             <div class="form-group">
                 <input type="submit" name="Create" value="Create" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
@@ -66,38 +49,4 @@
 </div>
 </div>
 
-
-@*
-<form asp-action="Create" enctype="multipart/form-data">
-   
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                   <div class="form-group">
-                <label asp-for="SpecializationName" class="control-label"></label>
-                <input asp-for="SpecializationName" class="form-control" />
-                <span asp-validation-for="SpecializationName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-
-       <select class="form-select" aria-label="Year">
-          <option selected>Please select the year</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="3">4</option>
-       </select>
-
-
-        </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
-            </div>
-        </div>
-
-</form>
-
-*@
           

@@ -91,25 +91,7 @@ namespace Laboratories.Controllers
                     Course course = this.storage.GetRepository<ICourseRepository>().FindById(lab.CourseId);
                     list.Add(new Tuple<Laboratory, Course>(lab, course));
                 }
-                return View(list);
-
-
-                /*IEnumerable<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().GetByGroupId(student.GroupId);
-
-                List<Course> courses = new List<Course>();
-                foreach (CourseGroup courseGroup in courseGroups)
-                {
-                    Course course = this.storage.GetRepository<ICourseRepository>().FindById(courseGroup.CourseId);
-                    courses.Add(course);
-                }
-
-                 IEnumerable<Course> studentCourses = courses;
-                List<Laboratory> labs = new List<Laboratory>();
-                foreach (Laboratory lab in labs)
-                {
-                    Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById()
-                }*/
-
+                return View(list); 
         }
 
         [Authorize(Roles = "Student")]
@@ -121,7 +103,6 @@ namespace Laboratories.Controllers
             DetailsForStudentViewModel model = new DetailsForStudentViewModel()
             {
                 laboratory = laboratory,
-                //course = this.storage.GetRepository<ICourseRepository>().FindById
                 posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(laboratory.Id).ToList(),
             };
 
@@ -147,8 +128,6 @@ namespace Laboratories.Controllers
             model.ToDo = ToDo;
             model.Done = Done;
 
-            //Teacher teacher = this.storage.GetRepository<ITeachersRepository>().FindById(course.TeacherId);
-            //model.teacher = teacher;
             return View(model);
         }
 
@@ -188,19 +167,9 @@ namespace Laboratories.Controllers
             return View(list);
         }
 
-
-        /*public List<Course> GetCoursesList()
-        {
-            List<Course> list = new List<Course>();
-            IEnumerable<Course> courses = this.storage.GetRepository<ICourseRepository>().All();
-            list = courses.ToList();
-            return list;
-        }*/
-
         public List<Subgroup> GetSubgroupList(Guid id)
         {
             List<Subgroup> list = new List<Subgroup>();
-            //IEnumerable<Subgroup> subgroups = this.storage.GetRepository<ISubgroupRepository>().All();
             IEnumerable<Subgroup> subgroups = this.storage.GetRepository<ISubgroupRepository>().AllByGroupId(id);
             list = subgroups.ToList();
             return list;
@@ -232,7 +201,6 @@ namespace Laboratories.Controllers
                 }
             }
 
-            //List<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().AllByCourseId(course.Id).ToList();
             List<List<Subgroup>> subgroups = new List<List<Subgroup>>();
             foreach(CourseGroup item in courseGroups)
             {
@@ -245,8 +213,6 @@ namespace Laboratories.Controllers
                 {
                     createViewModel.Subgroups.Add(subgr);
                 }
-             
-               // createViewModel.Subgroups = subgroups;
             }
             
             createViewModel.Teachers = this.GetTeachersList();
@@ -261,41 +227,12 @@ namespace Laboratories.Controllers
 
             if (ModelState.IsValid)
             {
-                //laboratory.Id = Guid.NewGuid();
                 this.storage.GetRepository<ILaboratoryRepository>().Create(laboratory);
                 this.storage.Save();
                 return RedirectToAction("Index", "Default");
             }
             return this.View();
         }
-
-        /*[Authorize(Roles = "Teacher")]
-        public ActionResult CreateGradingMethod(Guid id)
-        {
-            GradingMethodViewModel viewModel = new GradingMethodViewModel();
-            viewModel.id = id;
-            Laboratory course = this.storage.GetRepository<ICourseRepository>().FindById(id);
-            ViewBag.CourseName = course.Name;
-            return View(viewModel);
-        }
-
-        [Authorize(Roles = "Teacher")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateGradingMethod(Guid id, GradingMethodViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
-                course.GradingMethod = viewModel.FinalExamPercent + "-" + viewModel.LaboratoryPercent;
-                //course.GradingMethod = viewModel.FinalExamPercent + "% Final Exam Grade + " + viewModel.LaboratoryPercent + "% Laboratory Grade";
-                course.AttendanceMatters = viewModel.AttendanceMatters;
-                this.storage.GetRepository<ICourseRepository>().Edit(course);
-                this.storage.Save();
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
-        }*/
 
         // GET: LaboratoriesController/Edit/5
         public ActionResult Edit(Guid id)
@@ -306,25 +243,12 @@ namespace Laboratories.Controllers
             }
 
             CreateViewModel createViewModel = new CreateViewModel();
-            //createViewModel.Courses = this.GetCoursesList();
             createViewModel.Laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(id);
-            //createViewModel.Laboratory.CourseId = id;
 
             CourseGroup courseGroup = this.storage.GetRepository<ICourseGroupRepository>().GetGroupByCourseId(createViewModel.Laboratory.CourseId);
             createViewModel.Subgroups = this.GetSubgroupList(courseGroup.GroupId);
             createViewModel.Teachers = this.GetTeachersList();
             return View(createViewModel);
-
-
-
-
-            
-            /*Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(id);
-            CreateViewModel createViewModel = new CreateViewModel();
-            //createViewModel.Courses = this.GetCoursesList();
-            createViewModel.Laboratory = laboratory;
-
-            return View(createViewModel);*/
         }
 
         // POST: LaboratoriesController/Edit/5

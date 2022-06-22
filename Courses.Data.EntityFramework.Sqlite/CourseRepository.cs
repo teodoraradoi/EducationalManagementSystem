@@ -30,8 +30,6 @@ namespace Courses.Data.EntityFramework.Sqlite
         public Course FindById(Guid? id)
         {
             Course course = this.dbSet.FirstOrDefault(e => e.Id == id);
-            ///Course course = this.dbSet.FirstOrDefault(e => e.Id == id);
-            //return course;
             return this.dbSet.FirstOrDefault(e => e.Id == id);
         }
 

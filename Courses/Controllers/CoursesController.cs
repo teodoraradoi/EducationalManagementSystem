@@ -63,18 +63,6 @@ namespace Courses.Controllers
             }
             if (User.IsInRole("Teacher"))
             {
-                /*Guid id = new Guid(userId);
-                Teacher currentTeacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(id);
-                IEnumerable<Course> courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(currentTeacher.Id);
-                List<Tuple<Course, Laboratory>> list = new List<Tuple<Course, Laboratory>>();
-
-                foreach(Course course in courses)
-                {
-                    Laboratory laboratory = this.storage.GetRepository<ILaboratoryRepository>().FindById(course.Id);
-                    list.Add(new Tuple<Course, Laboratory>(course, laboratory)) ;
-                }
-                return View(list);*/
-
                 Guid id = new Guid(userId);
                 Teacher currentTeacher = this.storage.GetRepository<ITeachersRepository>().FindTeacherByUserId(id);
                 IEnumerable<Course> courses = this.storage.GetRepository<ICourseRepository>().GetAllByTeacherId(currentTeacher.Id);
@@ -118,7 +106,6 @@ namespace Courses.Controllers
             DetailsForStudentViewModel model = new DetailsForStudentViewModel()
             {
                 course = course,
-                //assignments = this.storage.GetRepository<IAssignmentRepository>().AllBySubjectId(course.Id).ToList(),
                 posts = this.storage.GetRepository<IPostRepository>().AllBySubjectId(course.Id).ToList(),
             };
 
@@ -137,42 +124,17 @@ namespace Courses.Controllers
                         Done.Add(tuple);
                         Assignment alreadyDone = assignment;
                         ToDo.Remove(alreadyDone); ;
-                        //break; // ?? 
                     }
-                    /*else
-                    {
-                        ToDo.Add(assignment);
-                       // break; // ?? 
-                    }*/
                 }
             }
-
-
 
             model.ToDo = ToDo;
             model.Done = Done;
 
-
-
-            /*List<Submission> submissions = this.storage.GetRepository<ISubmissionRepository>().All().ToList();
-            foreach(Submission submission in submissions)
-            {
-                foreach(Assignment assignment in assignments)
-                {
-                    if(submission.AssignmentId == assignment.Id)
-                    {
-                        assignments.Remove(assignment);
-                    }
-                }   
-            }*/
-
-
-            // Subgroup subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(currentStudent.SubgroupId);
             List<Laboratory> laboratories = this.storage.GetRepository<ILaboratoryRepository>().GetAllByCourseId(id).ToList();
             Laboratory studentLab = new Laboratory();
             foreach (Laboratory lab in laboratories)
             {
-                //studentLab = this.storage.GetRepository<ILaboratoryRepository>().AllBySubgroupId(currentStudent.SubgroupId).FirstOrDefault();
                 if (lab.SubgroupId == currentStudent.SubgroupId)
                 {
                     studentLab = lab;
@@ -215,22 +177,6 @@ namespace Courses.Controllers
             viewModel.Teachers = this.GetTeachersList();
 
             return View(viewModel);
-
-
-
-            /*
-            CourseViewModel viewModel = new CourseViewModel();
-            viewModel.groups = new List<SelectListItem>();
-            var allGroups = this.storage.GetRepository<IGroupRepository>().All();
-            foreach(Group item in allGroups)
-            {
-                viewModel.groups.Add(new SelectListItem
-                {
-                    Text = item.Name,
-                    Value = item.Id.ToString()
-                });
-            }
-            return View(viewModel);*/
         }
 
 
@@ -248,28 +194,16 @@ namespace Courses.Controllers
                 this.storage.GetRepository<ICourseRepository>().Create(course);
                 this.storage.Save();
 
-                //var user = _userManager.GetUserId(User);
-                // add teacher dropdown to course
-
                 List<CourseGroup> courseGroups = new List<CourseGroup>();
 
                 foreach (string selectedId in viewModel.selectedGroups)
                 {
-                    /*CourseGroup courseGroup = new CourseGroup
-                    {
-                        Id = Guid.NewGuid(),
-                        CourseId = courseId,
-                        GroupId = Guid.Parse(selectedId)
-                    };*/
                     CourseGroup courseGroup = new CourseGroup();
                     courseGroup.Id = Guid.NewGuid();
                     courseGroup.CourseId = courseId;
-                    //courseGroup.CourseId = Guid.NewGuid();
                     courseGroup.GroupId = Guid.Parse(selectedId);
 
                     courseGroups.Add(courseGroup);
-
-
                 }
 
                 this.storage.GetRepository<ICourseGroupRepository>().Create(courseGroups);
@@ -300,7 +234,6 @@ namespace Courses.Controllers
             {
                 Course course = this.storage.GetRepository<ICourseRepository>().FindById(id);
                 course.GradingMethod = viewModel.FinalExamPercent + "-" + viewModel.LaboratoryPercent;
-                //course.GradingMethod = viewModel.FinalExamPercent + "% Final Exam Grade + " + viewModel.LaboratoryPercent + "% Laboratory Grade";
                 course.AttendanceMatters = viewModel.AttendanceMatters;
                 this.storage.GetRepository<ICourseRepository>().Edit(course);
                 this.storage.Save();
@@ -372,23 +305,9 @@ namespace Courses.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
                 course.Id = Id;
                 this.storage.GetRepository<ICourseRepository>().Edit(course);
                 this.storage.Save();
-
-               /* List<CourseGroup> existing = this.storage.GetRepository<ICourseGroupRepository>().AllByCourseId(course.Id);
-
-                this.storage.GetRepository<ICourseGroupRepository>().Delete(existing.ToArray());
-                this.storage.Save();*/
-                /* foreach(CourseGroup item in existing)
-                 {
-                     this.storage.GetRepository<ICourseGroupRepository>().Delete(item);
-                     this.storage.Save();
-                 }*/
-
-
 
                 List<CourseGroup> courseGroups = new List<CourseGroup>();
                 foreach (string selectedId in selectedGroups)
@@ -435,7 +354,6 @@ namespace Courses.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             this.storage.GetRepository<ICourseRepository>().Delete(id);
-            //this.storage.GetRepository<ICourseGroupRepository>().
             this.storage.Save();
             return RedirectToAction(nameof(Index));
         }

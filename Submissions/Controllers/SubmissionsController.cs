@@ -85,20 +85,6 @@ namespace Submissions.Controllers
             }
 
             return RedirectToAction("Index");
-
-
-
-
-            /*
-                IEnumerable submissions = this.storage.GetRepository<ISubmissionRepository>().All();
-            List<Tuple<Submission, Assignment>> list = new List<Tuple<Submission, Assignment>>();
-
-            foreach (Submission submission in submissions)
-            {
-                Assignment assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
-                list.Add(new Tuple<Submission, Assignment>(submission, assignment));
-            }
-            return View(list);*/
         }
 
         // GET: SubmissionsController/Details/5
@@ -255,14 +241,10 @@ namespace Submissions.Controllers
         {
             if (ModelState.IsValid)
             {
-                //GradeViewModel grade = new GradeViewModel();
-                //grade.SubmissionId = id;
                 Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
                 submission.Grade = grade;
                 this.storage.GetRepository<ISubmissionRepository>().Edit(submission);
                 this.storage.Save();
-                //grade.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
-               // grade.student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -287,14 +269,10 @@ namespace Submissions.Controllers
         {
             if (ModelState.IsValid)
             {
-                //GradeViewModel grade = new GradeViewModel();
-                //grade.SubmissionId = id;
                 Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
                 submission.Grade = grade;
                 this.storage.GetRepository<ISubmissionRepository>().Edit(submission);
                 this.storage.Save();
-                //grade.assignment = this.storage.GetRepository<IAssignmentRepository>().FindById(submission.AssignmentId);
-                // grade.student = this.storage.GetRepository<IStudentRepository>().FindById(submission.StudentId);
                 return RedirectToAction(nameof(Index));
             }
             return View();

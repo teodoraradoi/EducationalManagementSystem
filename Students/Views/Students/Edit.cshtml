@@ -76,8 +76,6 @@
         $.getJSON("/Students/GetSubgroupsList", { Id: groupId }, function (data) {
             var item = "";
             $("#subgroupDropdown").find('option').not(':first').remove();
-            //$("#subgroupDropdown").find('option').not(':first').remove();
-            //item += '<option value="">Select subgroup...</option>'
             $.each(data, function (i, subgroup) {
                 let id =  subgroup.id;
                 let name = subgroup.name;
@@ -97,7 +95,6 @@
         $.getJSON("/Students/GetSubgroupsList", { Id: groupId }, function (data) {
             var item = "";
             $("#subgroupDropdown").find('option').not(':first').remove();
-            //$("#subgroupDropdown").find('option').not(':first').remove();
             item += '<option value="">Select subgroup...</option>'
             $.each(data, function (i, subgroup) {
                 let id =  subgroup.id;

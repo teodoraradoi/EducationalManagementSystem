@@ -22,19 +22,7 @@ namespace Identity.Data.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            this.RegisterEntities(modelBuilder);
-
-            /*string ROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
-
-            //seed admin role
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Name = "Secretary",
-                NormalizedName = "SECRETARY",
-                Id = ROLE_ID,
-                ConcurrencyStamp = ROLE_ID
-            });*/
-         
+            this.RegisterEntities(modelBuilder);         
         }
     }
 }

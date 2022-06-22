@@ -103,6 +103,7 @@ namespace Barebone.Controllers
                     }
                 }
             }
+            
             if (User.IsInRole("Student"))
             {
                 
@@ -129,7 +130,7 @@ namespace Barebone.Controllers
                 ViewBag.Group = this.storage.GetRepository<IGroupRepository>().FindById(student.GroupId);
                 ViewBag.Subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(student.SubgroupId);
             }
-
+            
 
             return View();
         }

@@ -78,10 +78,7 @@ namespace Students.Controllers
         public ActionResult Create()
         {
             StudentAccountCreateViewModel model = new StudentAccountCreateViewModel();
-            // model.Groups = this.GetGroupsList();
             ViewBag.Groups = this.GetGroupsList();
-            //model.Subgroups = this.GetSubgroupsList();
-            //model.Subgroups = new List<Subgroup>();
             return View(model);
         }
 
@@ -100,8 +97,6 @@ namespace Students.Controllers
                     Email = model.Email,
                     EmailConfirmed = true
                 };
-
-                //var hashedPassword = _passwordHasher.HashPassword(newStudent, model.Password);
 
                 var user = await _userManager.CreateAsync(newStudent, model.Password);
                 if (user.Succeeded)

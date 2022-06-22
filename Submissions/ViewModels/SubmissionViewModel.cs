@@ -16,7 +16,6 @@ namespace Submissions.ViewModels
         public Guid AssignmentId { get; set; }
         public DateTime TurnedInDate { get; set; }
         public int Grade { get; set; }
-
-        // public Student 
+ 
     }
 }

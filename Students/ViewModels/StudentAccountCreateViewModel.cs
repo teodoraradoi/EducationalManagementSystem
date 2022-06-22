@@ -28,7 +28,5 @@ namespace Students.ViewModels
         public string ConfirmPassword { get; set; }
         public Guid GroupId { get; set; }
         public Guid SubgroupId { get; set; }
-        //public List<Group> Groups { get; set; }
-       // public List<Subgroup> Subgroups { get; set; }
     }
 }

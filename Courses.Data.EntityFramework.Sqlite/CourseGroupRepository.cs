@@ -30,7 +30,6 @@ namespace Courses.Data.EntityFramework.Sqlite
         public List<CourseGroup> AllByCourseId(Guid id)
         {
             List<CourseGroup> courseGroups = new List<CourseGroup>();
-           // courseGroups = this.dbSet.(t => t.CourseId == id).ToList();
             courseGroups = this.dbSet.AsNoTracking().
                 Where(c => c.CourseId == id).ToList();
             return courseGroups;

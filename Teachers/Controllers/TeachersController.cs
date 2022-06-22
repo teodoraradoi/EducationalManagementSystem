@@ -117,7 +117,6 @@ namespace Teachers.Controllers
                 teacher = teacher,
                 user = user
             };
-            //Tuple<Teacher, ApplicationUser> tuple = new Tuple<Teacher, ApplicationUser>(teacher, user);
             return View(detailsViewModel);
         }
 

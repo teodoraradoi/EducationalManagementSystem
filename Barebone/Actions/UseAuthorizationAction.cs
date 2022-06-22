@@ -14,9 +14,6 @@ namespace Barebone.Actions
 
         public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
         {
-         
-                //applicationBuilder.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             applicationBuilder.UseHsts();
 
             applicationBuilder.UseHttpsRedirection();

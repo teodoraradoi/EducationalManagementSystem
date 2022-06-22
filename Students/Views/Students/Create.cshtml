@@ -62,17 +62,6 @@
                 </div>
              </div>
 
-            @*
-
-                  <div class="form-group">
-            <select id="subgroupDropdown" asp-for="SubgroupId">
-                <option>Please select one</option>
-             </select>
-            </div>
-
-*@
-
-
     
         <div class="input-box">
             <label class="label-text">Subgroup</label>
@@ -108,16 +97,12 @@
         $.getJSON("/Students/GetSubgroupsList", { Id: groupId }, function (data) {
             var item = "";
             $("#subgroupDropdown").find('option').not(':first').remove();
-            //$("#subgroupDropdown").find('option').not(':first').remove();
             item += '<option value="">Select subgroup...</option>'
             $.each(data, function (i, subgroup) {
-                console.log(subgroup)
                 let id =  subgroup.id;
                 let name = subgroup.name;
                 item += '<option value="' + id + '">' + name + '</option>'
-                console.log(item)
             });
-            console.log(item);
             $("#subgroupDropdown").html(item);
         });
     });
