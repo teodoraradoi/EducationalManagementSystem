@@ -1,4 +1,9 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Identity.Data.Entities
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <head>
     <link rel="stylesheet" href="../../Styles/styles.css"/>
@@ -13,11 +18,21 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
+   
 
 
-<h1>Dashboard</h1>
-     
+@if(!User.Identity.IsAuthenticated)
+{
+    var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
+     if (result.Success)
+     {
+                        await Html.RenderPartialAsync("_LoginPartial");
+     }
+
+}              
+
  @if(ViewContext.HttpContext.User.IsInRole("Secretary")) {
+     <h1>Dashboard</h1>
 
 <div class="row">
   <div class="col-sm-6">
@@ -84,6 +99,7 @@
 }
 
  @if(ViewContext.HttpContext.User.IsInRole("Teacher")) {
+     <h1>Dashboard</h1>
 
 <div class="row">
   <div class="col-sm-6">
@@ -129,17 +145,17 @@
 }
 
 @if(ViewContext.HttpContext.User.IsInRole("Student")) {
-
-
- <div class="row justify-content-center">
-
-    <div class="col-md-6">
+    <h1>Dashboard</h1>
 
 
 
+      <div class="row ">
+
+    <div class="col-md-8">
 
 
-    <div class="card">
+
+            <div class="card">
       <div class="card-body">
         <h5 class="card-title">Courses</h5>
         <p class="card-text">You are enrolled in @ViewBag.Courses courses.</p>
@@ -147,11 +163,10 @@
       </div>
     </div>
 
-    </div>
+    
     
 
 
-    <div class="col-md-6">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Laboratories</h5>
@@ -161,70 +176,41 @@
     </div>
 
 
+    </div>
+
+    <div class="col-md-4">
 
 
+         <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Your information</h5>
+        
+        <dl class="row">
+        <dt class="col-sm-4">
+           Group
+        </dt>
+        <dd class="col-sm-8">
+            @ViewBag.Group.Name
+        </dd>
+
+                <dt class="col-sm-4">
+           Subgroup
+        </dt>
+        <dd class="col-sm-8">
+            @ViewBag.Subgroup.Name
+        </dd>
+        
+    </dl>
+
+      </div>
+    </div>
 
     </div>
 
   </div>
 
 
+
+  
+
 }
-
-
-
-
-
-
-
-@*
-<script>
-    $(document).ready(function(){
-        console.log("this");
- 
-    var theToggle = document.getElementById('toggle');
-
-// based on Todd Motto functions
-// https://toddmotto.com/labs/reusable-js/
-
-// hasClass
-function hasClass(elem, className) {
-	return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
-}
-// addClass
-function addClass(elem, className) {
-    if (!hasClass(elem, className)) {
-    	elem.className += ' ' + className;
-    }
-}
-// removeClass
-function removeClass(elem, className) {
-	var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
-	if (hasClass(elem, className)) {
-        while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
-            newClass = newClass.replace(' ' + className + ' ', ' ');
-        }
-        elem.className = newClass.replace(/^\s+|\s+$/g, '');
-    }
-}
-// toggleClass
-function toggleClass(elem, className) {
-	var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, " " ) + ' ';
-    if (hasClass(elem, className)) {
-        while (newClass.indexOf(" " + className + " ") >= 0 ) {
-            newClass = newClass.replace( " " + className + " " , " " );
-        }
-        elem.className = newClass.replace(/^\s+|\s+$/g, '');
-    } else {
-        elem.className += ' ' + className;
-    }
-}
-
-theToggle.onclick = function() {
-   toggleClass(this, 'on');
-   return false;
-}
-   });
-
-</script>
-*@

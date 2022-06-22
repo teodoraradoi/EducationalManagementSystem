@@ -256,6 +256,13 @@ namespace Assignments.Controllers
             if (ModelState.IsValid)
             {
                 assignment.SubjectId = id;
+                assignment.Id = Guid.NewGuid();
+                if(assignment.Description == null)
+                {
+                    assignment.Description = "";
+                }
+
+
                 this.storage.GetRepository<IAssignmentRepository>().Create(assignment);
                 /*Course course = this.storage.GetRepository<ICourseRepository>().FindById(assignment.SubjectId);
             

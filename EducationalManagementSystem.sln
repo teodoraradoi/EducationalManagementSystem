@@ -93,13 +93,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Submissions.Data.EntityFram
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostsExtension", "PostsExtension", "{B00EFC7E-3D81-4C6E-86D8-AB242FFBA404}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posts", "Posts\Posts.csproj", "{A409A03D-A813-4085-94E7-1391297C0669}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Posts", "Posts\Posts.csproj", "{A409A03D-A813-4085-94E7-1391297C0669}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posts.Data.Entities", "Posts.Data.Entities\Posts.Data.Entities.csproj", "{4FBB9F73-F035-497D-BFC0-D8CA86F7DD98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Posts.Data.Entities", "Posts.Data.Entities\Posts.Data.Entities.csproj", "{4FBB9F73-F035-497D-BFC0-D8CA86F7DD98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posts.Data.Abstractions", "Posts.Data.Abstractions\Posts.Data.Abstractions.csproj", "{2330176C-067F-484F-B080-6C5B17E7D899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Posts.Data.Abstractions", "Posts.Data.Abstractions\Posts.Data.Abstractions.csproj", "{2330176C-067F-484F-B080-6C5B17E7D899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posts.Data.EntityFramework.Sqlite", "Posts.Data.EntityFramework.Sqlite\Posts.Data.EntityFramework.Sqlite.csproj", "{D722625B-8CD7-43FB-9D21-4A3A7F67B217}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Posts.Data.EntityFramework.Sqlite", "Posts.Data.EntityFramework.Sqlite\Posts.Data.EntityFramework.Sqlite.csproj", "{D722625B-8CD7-43FB-9D21-4A3A7F67B217}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

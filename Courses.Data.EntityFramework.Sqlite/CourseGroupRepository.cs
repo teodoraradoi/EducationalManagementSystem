@@ -40,5 +40,10 @@ namespace Courses.Data.EntityFramework.Sqlite
         {
             return this.dbSet.OrderBy(t => t.Id);
         }
+
+        public void Delete(CourseGroup[] courseGroups)
+        {
+            this.dbSet.RemoveRange(courseGroups);
+        }
     }
 }

@@ -1,25 +1,39 @@
-﻿<h1>Create secretary account</h1>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Secretaries.ViewModels.SecretaryViewModel
 
-<form asp-action="Create" enctype="multipart/form-data">
-   
-        <div class="col">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Create Secretary Account</h5>
+        <form  asp-action="Create" enctype="multipart/form-data" method="post">
+             <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+             <div class="form-group">
+                <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
-                <div class="custom-file">
-                    <input asp-for="Picture" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-                <span asp-validation-for="Picture" class="text-danger"></span>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-        </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            
-</form>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <input type="submit" name="Create" value="Create" class="btn btn-primary" /> <a asp-controller="Default" asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+  </div>
+</div>
+</div>

@@ -1,8 +1,43 @@
-﻿@model IEnumerable<Secretaries.Data.Entities.Secretary>
+﻿@model List<Secretaries.ViewModels.IndexViewModel>
 
-<h1>List of Secretaries</h1>
-@*
-@foreach (var person in this.Model)
-{
-  <p>@person.Name</p>
-}*@
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.jqueryui.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.jqueryui.min.js" defer></script>
+     <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
+<h1>Secretaries</h1>
+
+    <table id="teachers-table" class="table table-bordered dt-responsive nowrap table-hover" style=" color: black;text-align: center;" width="100%">
+
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Secretary Name</th>
+            <th scope="col">Secretary Email</th>
+        </tr>
+    </thead>
+
+    <tbody>
+     @{int i = 1;}
+      @foreach (var item in this.Model)
+      {
+            <tr>
+              <td>@i</td>
+              <td>@item.secretary.Name</td>
+              <td>@item.user.Email</td>
+            </tr>
+            i++;
+      }
+  </tbody>
+
+       
+</table>
+
+<script type='text/javascript'>
+$(document).ready( function () {
+    $('#teachers-table').DataTable();
+} );
+</script>

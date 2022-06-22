@@ -15,5 +15,7 @@ namespace Courses.Data.Abstractions
         IEnumerable<CourseGroup> GetByGroupId(Guid id);
         List<CourseGroup> AllByCourseId(Guid id);
         IEnumerable<CourseGroup> All();
+
+        public void Delete(CourseGroup[] items);
     }
 }

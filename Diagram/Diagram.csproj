@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Assignments.Data.Abstractions\Assignments.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Assignments.Data.Entities\Assignments.Data.Entities.csproj" />
+    <ProjectReference Include="..\Assignments.Data.EntityFramework.Sqlite\Assignments.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Assignments\Assignments.csproj" />
+    <ProjectReference Include="..\Barebone\Barebone.csproj" />
+    <ProjectReference Include="..\Courses.Data.Abstractions\Courses.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Courses.Data.Entities\Courses.Data.Entities.csproj" />
+    <ProjectReference Include="..\Courses.Data.EntityFramework.Sqlite\Courses.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Courses\Courses.csproj" />
+    <ProjectReference Include="..\EducationalManagementSystem\EducationalManagementSystem.csproj" />
+    <ProjectReference Include="..\Groups.Data.Abstractions\Groups.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Groups.Data.Entities\Groups.Data.Entities.csproj" />
+    <ProjectReference Include="..\Groups.Data.EntityFramework.Sqlite\Groups.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Groups\Groups.csproj" />
+    <ProjectReference Include="..\Identity.Data.Entities\Identity.Data.Entities.csproj" />
+    <ProjectReference Include="..\Identity.Data.EntityFramework\Identity.Data.EntityFramework.csproj" />
+    <ProjectReference Include="..\Laboratories.Data.Abstractions\Laboratories.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Laboratories.Data.Entities\Laboratories.Data.Entities.csproj" />
+    <ProjectReference Include="..\Laboratories.Data.EntityFramework.Sqlite\Laboratories.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Laboratories\Laboratories.csproj" />
+    <ProjectReference Include="..\Posts.Data.Abstractions\Posts.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Posts.Data.Entities\Posts.Data.Entities.csproj" />
+    <ProjectReference Include="..\Posts.Data.EntityFramework.Sqlite\Posts.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Posts\Posts.csproj" />
+    <ProjectReference Include="..\Secretaries.Data.Abstractions\Secretaries.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Secretaries.Data.Entities\Secretaries.Data.Entities.csproj" />
+    <ProjectReference Include="..\Secretaries.Data.EntityFramework.Sqlite\Secretaries.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Secretaries\Secretaries.csproj" />
+    <ProjectReference Include="..\Students.Data.Abstractions\Students.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Students.Data.Entities\Students.Data.Entities.csproj" />
+    <ProjectReference Include="..\Students.Data.EntityFramework.Sqlite\Students.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Students\Students.csproj" />
+    <ProjectReference Include="..\Submissions.Data.Abstractions\Submissions.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Submissions.Data.Entities\Submissions.Data.Entities.csproj" />
+    <ProjectReference Include="..\Submissions.Data.EntityFramework.Sqlite\Submissions.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Submissions\Submissions.csproj" />
+    <ProjectReference Include="..\Teachers.Data.Abstractions\Teachers.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Teachers.Data.Entities\Teachers.Data.Entities.csproj" />
+    <ProjectReference Include="..\Teachers.Data.EntityFramework.Sqlite\Teachers.Data.EntityFramework.Sqlite.csproj" />
+    <ProjectReference Include="..\Teachers\Teachers.csproj" />
+  </ItemGroup>
+
+</Project>

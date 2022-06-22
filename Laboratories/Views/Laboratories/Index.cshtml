@@ -28,7 +28,11 @@
             }
             
       <th scope="col">Course</th>
-      <th scope="col">Actions</th>
+            @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+            {
+                <th scope="col">Actions</th>
+            }
+            
         </tr>
     </thead>
 
@@ -68,8 +72,11 @@
                         <a asp-controller="Courses" asp-action="Edit" asp-route-id="@list.course.Id">@list.course.Name</a>
                     }
               </td>
-              <td><a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.laboratory.Id">Edit</a> | 
+                @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
+                     <td><a asp-controller="Laboratories" asp-action="Edit" asp-route-id="@list.laboratory.Id">Edit</a> | 
                <a asp-controller="Laboratories" asp-action="Delete" asp-route-Id="@list.laboratory.Id" >Delete</a></td>
+                }
 
                
             </tr>

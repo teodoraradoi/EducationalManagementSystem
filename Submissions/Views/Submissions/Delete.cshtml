@@ -1,5 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Submissions.Data.Entities.Submission
+
+<head>
+    <link rel="stylesheet" href="../../Styles/styles.css"/>
+</head>
+
 @{
+    ViewData["Title"] = "Delete";
 }
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="card" style="width: 30rem;">
+  <div class="card-body">
+    <h5 class="card-title">Delete Submission</h5>
+
+    <dl class="row">
+        <dt class="col-sm-4">
+            File
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.FilePath)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" asp-route-id="@Model.Id" class="btn btn-danger" /> <a asp-controller="Assignments" asp-action="StudentIndex" class="btn btn-secondary">Cancel</a>
+    </form>
+
+
+  </div>
+</div>
+</div>

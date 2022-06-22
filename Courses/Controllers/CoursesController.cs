@@ -372,33 +372,42 @@ namespace Courses.Controllers
         {
             if (ModelState.IsValid)
             {
+
+
+                course.Id = Id;
                 this.storage.GetRepository<ICourseRepository>().Edit(course);
                 this.storage.Save();
 
-/*
-                List<CourseGroup> courseGroups = new List<CourseGroup>();
+               /* List<CourseGroup> existing = this.storage.GetRepository<ICourseGroupRepository>().AllByCourseId(course.Id);
 
-                foreach (string selectedId in viewModel.selectedGroups)
-                {
-                    /*CourseGroup courseGroup = new CourseGroup
-                    {
-                        Id = Guid.NewGuid(),
-                        CourseId = courseId,
-                        GroupId = Guid.Parse(selectedId)
-                    };
+                this.storage.GetRepository<ICourseGroupRepository>().Delete(existing.ToArray());
+                this.storage.Save();*/
+                /* foreach(CourseGroup item in existing)
+                 {
+                     this.storage.GetRepository<ICourseGroupRepository>().Delete(item);
+                     this.storage.Save();
+                 }*/
+
+
+
+                List<CourseGroup> courseGroups = new List<CourseGroup>();
+                foreach (string selectedId in selectedGroups)
+                {   
                     CourseGroup courseGroup = new CourseGroup();
                     courseGroup.Id = Guid.NewGuid();
-                    courseGroup.CourseId = courseId;
-                    //courseGroup.CourseId = Guid.NewGuid();
+                    courseGroup.CourseId = course.Id;
                     courseGroup.GroupId = Guid.Parse(selectedId);
 
-                    courseGroups.Add(courseGroup);*/
+                    courseGroups.Add(courseGroup);
+
+                }
+
+                this.storage.GetRepository<ICourseGroupRepository>().Create(courseGroups);
+                this.storage.Save();
 
 
 
-
-
-                    return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             return View();
         }

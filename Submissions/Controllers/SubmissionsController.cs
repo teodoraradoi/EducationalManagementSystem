@@ -218,24 +218,23 @@ namespace Submissions.Controllers
         }
 
         // GET: SubmissionsController/Delete/5
-        public ActionResult Delete(int id)
+        [Authorize(Roles = "Student")]
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            Submission submission = this.storage.GetRepository<ISubmissionRepository>().FindById(id);
+            return View(submission);
         }
 
         // POST: SubmissionsController/Delete/5
+        [Authorize(Roles = "Student")]
+        [HttpPost, ActionName("Delete")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(Guid id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            this.storage.GetRepository<ISubmissionRepository>().Delete(id);
+            this.storage.Save();
+            return RedirectToAction("StudentIndex", "Assignments");
         }
 
         [Authorize(Roles = "Teacher")]

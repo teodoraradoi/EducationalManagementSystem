@@ -28,10 +28,11 @@
 
 
    <div class="form-group">
-
+        <label asp-for="Subgroup.GroupId" class="control-label">Group</label>
                 <select class="custom-select" asp-for="Subgroup.GroupId" 
             asp-items="@(new SelectList(Model.Groups, "Id", "Name"))">
         <option>Select group...</option>
+        <span asp-validation-for="Subgroup.GroupId" class="text-danger"></span>
     </select>
            
 

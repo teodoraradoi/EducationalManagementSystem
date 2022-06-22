@@ -46,14 +46,22 @@
                     {
                         <td>Not graded yet</td>
                     }
-                               @if(assignment.Item3.Status != null)
+                @if(assignment.Item3.Status != null)
                 {
                     <td>@assignment.Item3.Status</td>
                 }
                 else
                 {
-                    <td style="color: red;">Missing</td>
+                    @if(DateTime.Compare(assignment.Item1.DueDate, DateTime.Now) < 0)
+                    {
+                        <td style="color: red;">Missing</td>
+                    }
+                    else
+                    {
+                        <td>Not submitted yet</td>
+                    }
                 }
+                
              
 
                 @if (assignment.Item3.FilePath == null)
@@ -63,7 +71,7 @@
                 else
                 {
                     <td><a asp-controller="Submissions" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit your work</a> | 
-                        <a asp-controller="Submissions" asp-action="Delete" asp-route-id="@assignment.Item1.Id">Delete Submission</a></td>           
+                        <a asp-controller="Submissions" asp-action="Delete" asp-route-id="@assignment.Item3.Id">Delete Submission</a></td>           
                 }
                 
             </tr>
@@ -128,7 +136,7 @@
                 else
                 {
                     <td><a asp-controller="Submissions" asp-action="Edit" asp-route-id="@assignment.Item1.Id">Edit your work</a> | 
-                        <a asp-controller="Submissions" asp-action="Delete" asp-route-id="@assignment.Item1.Id">Delete Submission</a></td>           
+                        <a asp-controller="Submissions" asp-action="Delete" asp-route-id="@assignment.Item3.Id">Delete Submission</a></td>           
                 }
                 
             </tr>

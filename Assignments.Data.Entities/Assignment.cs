@@ -18,10 +18,6 @@ namespace Assignments.Data.Entities
         //[DataType(DataType.DateTime)]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         public DateTime DueDate { get; set; }
-        public int MaxGrade { get; set; }
-        public string Status { get; set; } // ? not sure.. 
-
-        //public Teacher
-
+        public int MaxGrade { get; set; } 
     }
 }

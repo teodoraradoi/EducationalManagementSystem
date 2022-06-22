@@ -38,6 +38,13 @@ namespace Barebone.Controllers
 
         public ActionResult Index()
         {
+
+            if(!User.Identity.IsAuthenticated)
+            {
+                return View("LoggedOut");
+            }
+
+
             var userId = _userManager.GetUserId(User);
             if (User.IsInRole("Secretary"))
             {
@@ -98,6 +105,7 @@ namespace Barebone.Controllers
             }
             if (User.IsInRole("Student"))
             {
+                
                 Student student = this.storage.GetRepository<IStudentRepository>().FindByUserId(Guid.Parse(userId));
                 IEnumerable<CourseGroup> courseGroups = this.storage.GetRepository<ICourseGroupRepository>().GetByGroupId(student.GroupId);
                 List<Course> courses = new List<Course>();
@@ -117,6 +125,9 @@ namespace Barebone.Controllers
                     list.Add(new Tuple<Laboratory, Course>(lab, course));
                 }
                 ViewBag.Labs = list.Count;
+
+                ViewBag.Group = this.storage.GetRepository<IGroupRepository>().FindById(student.GroupId);
+                ViewBag.Subgroup = this.storage.GetRepository<ISubgroupRepository>().FindById(student.SubgroupId);
             }
 
 
